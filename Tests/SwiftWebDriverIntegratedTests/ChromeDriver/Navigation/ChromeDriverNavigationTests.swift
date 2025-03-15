@@ -17,6 +17,48 @@ class ChromeDriverNavigationTests: XCTestCase, WebPageTestable {
         Args(.noSandbox),
         Args(.disableDevShmUsage)
     ])
+    
+    func testExecuteJavascript() async throws {
+        guard let url = URL(string: webDriverURL) else {
+            XCTFail()
+            return
+        }
+        
+        let driver = WebDriver(
+            driver: ChromeDriver(
+                driverURL: url,
+                browserObject: chromeOption
+            )
+        )
+        
+        defer {
+            Task.detached {
+                do {
+                    try await driver.stop()
+                } catch {
+                    XCTFail(error.localizedDescription)
+                }
+            }
+        }
+        
+        
+        do {
+            try await driver.start()
+            try await driver.navigateTo(urlString: testPageURLString)
+            try await driver.waitUntil(.css(.name("h1")))
+            try await driver.executeJavascriptSync("document.body.innerHTML = '<p>hello</p>'", args: [])
+            try await Task.sleep(nanoseconds: 1 * 1_000_000_000 )
+            let output = try await driver.executeJavascriptSync("return document.body.innerText", args: [])
+            let output2 = try await driver.findElement(.tagName("p")).text()
+            let output3 = try await driver.executeJavascriptSync("return 1 + 1", args: [])
+            XCTAssertEqual("hello", output.value.stringValue)
+            XCTAssertEqual("hello", output2)
+            XCTAssertEqual(output3.value.doubleValue, 2)
+            try await Task.sleep(nanoseconds: 10 * 1_000_000_000 )
+            print(output)
+            
+        } catch {}
+    }
 
     func testGetNavigationTitle() async throws {
         

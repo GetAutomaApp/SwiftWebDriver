@@ -16,7 +16,7 @@ protocol WebPageTestable {
     var testPageURLString: String { get }
 }
 extension WebPageTestable {
-    var webDriverURL: String { "http://localhost:4444" }
+    var webDriverURL: String { "http://thirsty_mendeleev.orb.local:4444" }
     var testPageBaseURL: URL {
         URL(string: "https://example.com")!
     }

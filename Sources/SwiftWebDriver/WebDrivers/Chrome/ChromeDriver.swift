@@ -230,4 +230,25 @@ public class ChromeDriver: Driver {
         }
     }
     
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    @discardableResult
+    public func executeJavascriptSync(_ script: String, args: [String]) async throws -> PostExecuteSyncResponse {
+        guard let sessionId = sessionId else {
+            throw WebDriverError.sessionIdisNil
+        }
+        
+        let request = PostExecuteSyncRequest(
+            baseURL: url,
+            sessionId: sessionId,
+            javascriptSnippet: .init(script: script, args: ["test"])
+        )
+        
+        do {
+            let response = try await client.request(request)
+            return response
+        } catch let error {
+            print("\(error)")
+            throw error
+        }
+    }
 }

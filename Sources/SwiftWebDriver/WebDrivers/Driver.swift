@@ -43,4 +43,6 @@ public protocol Driver: FindElementProtocol {
     func getScreenShot() async throws -> String
     
     func waitUntil(_ locatorType: LocatorType, retryCount: Int, durationSeconds: Int) async throws -> Bool
+    
+    func executeJavascriptSync(_ script: String, args: [String]) async throws -> PostExecuteSyncResponse
 }

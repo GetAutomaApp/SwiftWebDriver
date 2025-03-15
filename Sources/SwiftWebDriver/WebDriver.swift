@@ -117,4 +117,11 @@ public class WebDriver<T: Driver> {
     public func waitUntil(_ locatorType: LocatorType, retryCount: Int = 3, durationSeconds: Int = 1) async throws -> Bool {
         return try await driver.waitUntil(locatorType, retryCount: retryCount, durationSeconds: durationSeconds)
     }
+    
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    @discardableResult
+    public func executeJavascriptSync(_ script: String, args: [String]) async throws -> PostExecuteSyncResponse {
+        return try await driver.executeJavascriptSync(script, args: args)
+    }
+
 }
