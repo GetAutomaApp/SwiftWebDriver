@@ -15,6 +15,8 @@ class ChromeDriverStartTests: XCTestCase, WebPageTestable {
     
     let chromeOption = try! ChromeOptions(args: [
         Args(.headless),
+        Args(.noSandbox),
+        Args(.disableDevShmUsage)
     ])
     
     func testStartAndStop() async throws {

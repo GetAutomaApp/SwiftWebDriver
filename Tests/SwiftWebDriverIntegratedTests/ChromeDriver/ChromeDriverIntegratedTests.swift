@@ -16,9 +16,9 @@ protocol WebPageTestable {
     var testPageURLString: String { get }
 }
 extension WebPageTestable {
-    var webDriverURL: String { "http://selenium:4444" }
+    var webDriverURL: String { "http://localhost:4444" }
     var testPageBaseURL: URL {
-        URL(string: "http://httpd")!
+        URL(string: "https://example.com")!
     }
     var testPageURL: URL {
         return testPageBaseURL.appendingPathComponent(pageEndPoint)

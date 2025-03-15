@@ -28,7 +28,7 @@ public extension Args {
         case headless
         case noSandbox
         case disableGPU
-        case windowSize(size: CGSize)
+        case windowSize(width: CGFloat, height: CGFloat)
         case startMaximized
         case disableDevShmUsage
         case useFakeUIForMediaStream
@@ -37,6 +37,7 @@ public extension Args {
         case useFileForFakeAudioCapture
         case disableExtensions
         case proxyServer(proxyURL: String)
+        case userDataDir(dir: String)
         
         public var description: String {
             switch self {
@@ -46,8 +47,8 @@ public extension Args {
                 return "--no-sandbox"
             case .disableGPU:
                 return "--disable-gpu"
-            case .windowSize(let size):
-                return "--window-size=\(size.width),\(size.height)"
+            case .windowSize(let width, let height):
+                return "--window-size=\(width),\(height)"
             case .startMaximized:
                 return "--start-maximized"
             case .disableDevShmUsage:
@@ -64,6 +65,8 @@ public extension Args {
                 return "--disable-extensions"
             case .proxyServer(let proxyURL):
                 return "--proxy-server=\(proxyURL)"
+            case .userDataDir(let dir):
+                return "--user-data-dir=\(dir)"
             }
         }
     }

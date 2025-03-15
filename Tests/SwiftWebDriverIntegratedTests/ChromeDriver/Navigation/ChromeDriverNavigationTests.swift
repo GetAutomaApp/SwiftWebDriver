@@ -14,7 +14,8 @@ class ChromeDriverNavigationTests: XCTestCase, WebPageTestable {
     var pageEndPoint: String = "awaitTestPage.html"
 
     let chromeOption = try! ChromeOptions(args: [
-        Args(.headless),
+        Args(.noSandbox),
+        Args(.disableDevShmUsage)
     ])
 
     func testGetNavigationTitle() async throws {
