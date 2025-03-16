@@ -1,4 +1,4 @@
-// swift-tools-version:5.6
+// swift-tools-version:6.0.0
 
 import PackageDescription
 
@@ -28,11 +28,14 @@ let package = Package(
                 .product(name: "NIOFoundationCompat", package: "swift-nio"),
                 .product(name: "AnyCodable", package: "swift-any-codable")
             ]),
+//        .testTarget(
+//            name: "SwiftWebDriverTests",
+//            dependencies: ["SwiftWebDriver"]),
+//        .testTarget(
+//            name: "SwiftWebDriverIntegratedTests",
+//            dependencies: ["SwiftWebDriver"]),
         .testTarget(
-            name: "SwiftWebDriverTests",
-            dependencies: ["SwiftWebDriver"]),
-        .testTarget(
-            name: "SwiftWebDriverIntegratedTests",
+            name: "SwiftWebDriverIntegrationTests",
             dependencies: ["SwiftWebDriver"])
     ]
 )

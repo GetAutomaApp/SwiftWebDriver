@@ -7,7 +7,7 @@
 
 import Foundation
 import AsyncHTTPClient
-import NIOHTTP1
+@preconcurrency import NIOHTTP1
 import NIOFoundationCompat
 import NIO
 
@@ -25,7 +25,7 @@ internal struct APIClient {
     
     private let httpClient = HTTPClient(eventLoopGroupProvider: .createNew)
     
-    public static let shared = APIClient()
+    nonisolated(unsafe) public static let shared = APIClient()
     
     private init() {}
 

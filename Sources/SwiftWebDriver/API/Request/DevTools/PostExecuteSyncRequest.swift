@@ -9,15 +9,15 @@ import AsyncHTTPClient
 import NIOHTTP1
 import NIO
 
-struct PostExecuteSyncRequest: RequestType {
-    typealias Response = PostExecuteSyncResponse
+struct PostExecuteASyncRequest: RequestType {
+    typealias Response = PostExecuteResponse
 
     var baseURL: URL
     
     var sessionId: String
     
     var path: String {
-        "session/\(sessionId)/execute/sync"
+        "session/\(sessionId)/execute/async"
     }
     
     let javascriptSnippet: RequestBody
@@ -41,9 +41,13 @@ struct PostExecuteSyncRequest: RequestType {
 }
 
 
-extension PostExecuteSyncRequest {
+extension PostExecuteASyncRequest {
     struct RequestBody: Codable {
         let script: String
         let args: [String]
     }
+}
+
+public enum ExecutionTypes {
+    case sync, async
 }

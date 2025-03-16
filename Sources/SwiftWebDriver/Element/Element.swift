@@ -24,7 +24,7 @@ public protocol ElementCommandProtocol: FindElementProtocol {
     func screenshot() async throws -> String
 }
 
-public struct Element: ElementCommandProtocol {
+public struct Element: ElementCommandProtocol, Sendable {
     
     
     let baseURL: URL

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<head>
+    <title>expect title</title>
+    <script>
+        function startTimer() {
+            window.setTimeout(function(){
+                let element = document.getElementById("willAppendChild")
+                let newElement = document.createElement('p')
+                newElement.textContent = 'async add element'
+                newElement.id = "asyncAddElement"
+                element.appendChild(newElement)
+            }, 2000)
+        }
+    </script>
+</head>
+<body>
+    <div id="willAppendChild" />
+    <button id="startButton" onclick="startTimer()">start</button>
+</body>
+</html>

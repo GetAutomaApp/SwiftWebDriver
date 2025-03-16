@@ -120,8 +120,8 @@ public class WebDriver<T: Driver> {
     
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
-    public func executeJavascriptSync(_ script: String, args: [String]) async throws -> PostExecuteSyncResponse {
-        return try await driver.executeJavascriptSync(script, args: args)
+    public func execute(_ script: String, args: [String], type: ExecutionTypes = .sync) async throws -> PostExecuteResponse {
+        return try await driver.execute(script, args: args, type: type)
     }
 
 }

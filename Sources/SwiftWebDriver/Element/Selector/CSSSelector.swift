@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum CSSSelector {
+public enum CSSSelector: Sendable {
     case id(_ value: String)
     case `class`(_ value: String)
     case name(_ value: String)

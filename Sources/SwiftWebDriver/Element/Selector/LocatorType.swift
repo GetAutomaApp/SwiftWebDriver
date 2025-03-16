@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum LocatorType {
+public enum LocatorType: Sendable {
     case css(_ cssSelector: CSSSelector)
     case xpath(_ path: String)
     case linkText(_ linkText: String)

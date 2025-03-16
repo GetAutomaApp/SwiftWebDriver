@@ -230,9 +230,7 @@ public class ChromeDriver: Driver {
         }
     }
     
-    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    @discardableResult
-    public func executeJavascriptSync(_ script: String, args: [String]) async throws -> PostExecuteSyncResponse {
+    private func executeJavascriptSync(_ script: String, args: [String]) async throws -> PostExecuteResponse {
         guard let sessionId = sessionId else {
             throw WebDriverError.sessionIdisNil
         }
@@ -240,15 +238,53 @@ public class ChromeDriver: Driver {
         let request = PostExecuteSyncRequest(
             baseURL: url,
             sessionId: sessionId,
-            javascriptSnippet: .init(script: script, args: ["test"])
+            javascriptSnippet: .init(script: script, args: args)
         )
         
-        do {
             let response = try await client.request(request)
             return response
-        } catch let error {
-            print("\(error)")
-            throw error
+ 
+    }
+    
+    private func executeJavascriptASync(_ script: String, args: [String]) async throws -> PostExecuteResponse {
+        guard let sessionId = sessionId else {
+            throw WebDriverError.sessionIdisNil
         }
+        
+        let request = PostExecuteASyncRequest(
+            baseURL: url,
+            sessionId: sessionId,
+            javascriptSnippet: .init(script: script, args: args)
+        )
+        
+            let response = try await client.request(request)
+            return response
+    }
+    
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    @discardableResult
+    public func execute(_ script: String, args: [String], type: ExecutionTypes) async throws -> PostExecuteResponse {
+    do {
+        let response = try await type == .sync ?
+            executeJavascriptSync(script, args: args) :
+            executeJavascriptASync(
+                script,
+                args: args
+            )
+        return response
+    } catch let error {
+        if let seleniumError = error as? SeleniumError, isErrorJavascriptError(error: seleniumError) {
+            throw JavascriptError()
+        }
+        throw error
+    }
+    }
+    
+    private func isErrorJavascriptError(error: SeleniumError) -> Bool {
+        if error.value.error == "javascript error" {
+            return true
+        }
+        
+        return false
     }
 }

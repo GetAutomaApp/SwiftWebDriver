@@ -1,36 +1,49 @@
-ARG swift_version=5.6
-ARG ubuntu_version=bionic
+# Define build arguments with updated values
+ARG swift_version=6.0.0
+ARG ubuntu_version=jammy
 ARG base_image=swift:$swift_version-$ubuntu_version
+
+# Use the defined base image
 FROM $base_image
-# needed to do again after FROM due to docker limitation
-ARG swift_version
-ARG ubuntu_version
 
-# set as UTF-8
-RUN apt-get update && apt-get install -y locales locales-all
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
+# Set environment variables for locale
+ENV LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
 
-# dependencies
-RUN apt-get update && apt-get install -y wget
-RUN apt-get update && apt-get install -y lsof dnsutils netcat-openbsd net-tools curl jq # used by integration tests
+# Install dependencies in one layer to reduce image size
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    locales locales-all \
+    wget \
+    lsof \
+    dnsutils \
+    netcat-openbsd \
+    net-tools \
+    curl \
+    jq \
+    ruby \
+    ruby-dev \
+    libsqlite3-dev \
+    build-essential && \
+    rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
-# ruby and jazzy for docs generation
-RUN apt-get update && apt-get install -y ruby ruby-dev libsqlite3-dev build-essential
-# jazzy no longer works on xenial as ruby is too old.
-RUN if [ "${ubuntu_version}" = "focal" ] ; then echo "gem: --no-document" > ~/.gemrc ; fi
-RUN if [ "${ubuntu_version}" = "focal" ] ; then gem install jazzy ; fi
+# Install jazzy for docs generation if using Ubuntu jammy
+RUN if [ "$ubuntu_version" = "jammy" ]; then \
+    echo "gem: --no-document" > ~/.gemrc && \
+    gem install jazzy; \
+    fi
 
-# tools
-RUN mkdir -p $HOME/.tools
-RUN echo 'export PATH="$HOME/.tools:$PATH"' >> $HOME/.profile
+# Create tools directory and update PATH
+RUN mkdir -p $HOME/.tools && \
+    echo 'export PATH="$HOME/.tools:$PATH"' >> $HOME/.profile
 
-# swiftformat (until part of the toolchain)
-
+# Install SwiftFormat
 ARG swiftformat_version=0.40.12
-RUN git clone --branch $swiftformat_version --depth 1 https://github.com/nicklockwood/SwiftFormat $HOME/.tools/swift-format
-RUN cd $HOME/.tools/swift-format && swift build -c release
-RUN ln -s $HOME/.tools/swift-format/.build/release/swiftformat $HOME/.tools/swiftformat
+RUN git clone --branch $swiftformat_version --depth 1 https://github.com/nicklockwood/SwiftFormat $HOME/.tools/swift-format && \
+    cd $HOME/.tools/swift-format && \
+    swift build -c release && \
+    ln -s $HOME/.tools/swift-format/.build/release/swiftformat $HOME/.tools/swiftformat
 
+# Expose the necessary port
 EXPOSE 3000

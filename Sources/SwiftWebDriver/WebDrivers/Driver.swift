@@ -12,6 +12,7 @@ import AsyncHTTPClient
 
 protocol StatableOpject: Codable {}
 
+
 public protocol Driver: FindElementProtocol {
     
     associatedtype BrowserOption
@@ -44,5 +45,9 @@ public protocol Driver: FindElementProtocol {
     
     func waitUntil(_ locatorType: LocatorType, retryCount: Int, durationSeconds: Int) async throws -> Bool
     
-    func executeJavascriptSync(_ script: String, args: [String]) async throws -> PostExecuteSyncResponse
+    func execute(
+        _ script: String,
+        args: [String],
+        type: ExecutionTypes
+    ) async throws -> PostExecuteResponse
 }

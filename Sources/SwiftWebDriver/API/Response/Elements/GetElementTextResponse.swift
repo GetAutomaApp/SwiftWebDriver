@@ -7,6 +7,6 @@
 
 import Foundation
 
-public struct GetElementTextResponse: Codable {
+public struct GetElementTextResponse: ResponseType {
     let value: String
 }

@@ -7,6 +7,6 @@
 import Foundation
 import AnyCodable
 
-public struct PostExecuteSyncResponse: Codable {
-    let value: AnyCodableValue
+public struct PostExecuteResponse: Codable {
+    let value: AnyCodableValue?
 }
