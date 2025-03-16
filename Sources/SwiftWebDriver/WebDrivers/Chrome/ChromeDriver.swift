@@ -287,4 +287,24 @@ public class ChromeDriver: Driver {
         
         return false
     }
+    
+    deinit {
+        let url = url
+        let sessionId = sessionId
+        Task.init {
+            guard let sessionId else { return }
+            print("deinit for \(sessionId)")
+            try await stopDriverExternal(url: url, sessionId: sessionId)
+        }
+    }
 }
+
+// NOTE: Due to swift 6 race-condition prevention we can't call the ChromeDriver.stop method1
+// This function just acts as a middleman to ensure the de initialisation automatically closes the session
+fileprivate func stopDriverExternal(url: URL, sessionId: String) async throws {
+    let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
+    let _ = try await APIClient.shared.request(request).map{ response in
+        return response.value
+    }.get()
+}
+

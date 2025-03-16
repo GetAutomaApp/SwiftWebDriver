@@ -5,7 +5,7 @@ services:
       networks: 
         - net1
       volumes:
-          - ./testhtdocs:/usr/local/apache2/htdocs/
+          - ./TestAssets:/usr/local/apache2/htdocs/
       ports:
           - "80:80"
           
