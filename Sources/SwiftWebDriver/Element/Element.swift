@@ -92,6 +92,19 @@ public struct Element: ElementCommandProtocol, Sendable {
         return response.value
     }
     
+    @discardableResult
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func send(value: SpecialKey) async throws -> String? {
+        let request = PostElementSendValueRequest(
+            baseURL: baseURL,
+            sessionId: sessionId,
+            elementId: elementId,
+            text: value.unicode
+        )
+        let response = try await APIClient.shared.request(request)
+        return response.value
+    }
+    
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func screenshot() async throws -> String {
         let request = GetElementScreenShotRequest(baseURL: baseURL, sessionId: sessionId, elementId: elementId)

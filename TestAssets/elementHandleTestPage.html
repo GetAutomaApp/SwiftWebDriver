@@ -16,15 +16,21 @@
                 element.appendChild(newElement)
             }, 2000)
         }
+        
+        window.setTimeout(function(){
+            let element = document.getElementById("willDelete")
+            element.remove()
+        }, 2000)
     </script>
 </head>
 <body>
     <button id="button" onclick="onClick()"></button>
     <input type="text" id="attribute" value="expect attribute">
     <input type="text" id="clearInputValue" value="clearInputValue">
-    <input id="sendValue" type="text" value="">
-
-    <div id="willAppendChild" />
-    <button id="startButton" onclick="startTimer()">start</button>
+        <input id="sendValue" type="text" value="">
+            
+            <div id="willAppendChild" />
+            <button id="startButton" onclick="startTimer()">start</button>
+            <button id="willDelete" >Deleting</button>
 </body>
 </html>
