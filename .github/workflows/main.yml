@@ -2,18 +2,33 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "develop" ,"master" ]
+    branches: [ "develop", "master" ]
   pull_request:
-    branches: [ "develop" ,"master" ]
+    branches: [ "develop", "master" ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v3
+
+    - name: Set up Docker
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker.io
+        sudo systemctl start docker
+        sudo systemctl enable docker
+        sudo apt-get install -y curl
+        curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        docker --version
+        docker-compose --version
+
     - name: Build And Run Docker image
       run: |
         docker-compose build
         docker-compose up -d
+
     - name: Run Test
       run: docker-compose run test
