@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "swift-any-codable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/GetAutomaApp/swift-any-codable.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "7905b4c8bf6aaee39ba6bed715deee6a99839d1a"
+      }
+    },
+    {
       "identity" : "swift-log",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",

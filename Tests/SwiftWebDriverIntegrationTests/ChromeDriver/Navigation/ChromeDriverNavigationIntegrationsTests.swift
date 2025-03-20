@@ -8,7 +8,7 @@
 import Testing
 @testable import SwiftWebDriver
 
-@Suite("Chrome Driver Navigation Tests")
+@Suite("Chrome Driver Navigation Tests", .serialized)
 class ChromeDriverNavigationTests: ChromeDriverTest {
     @Test("Get Navigation Title") func getNavigationTitle() async throws {
         page = "awaitTestPage.html"
@@ -22,7 +22,7 @@ class ChromeDriverNavigationTests: ChromeDriverTest {
     @Test("Wait Until Element Exists") func waitUntilElements() async throws {
         page = "awaitTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
-        
+
         try await driver
             .findElement(.css(.id("startButton")))
             .click()

@@ -8,7 +8,7 @@
 import Testing
 @testable import SwiftWebDriver
 
-@Suite("Chrome Driver Elements Tests", .serialized)
+@Suite("Chrome Driver Element Tests", .serialized)
 class ChromeDriverElementTests: ChromeDriverTest {
     @Test("Get Element By CSS Selector") func getElementCSSElement() async throws {
         page = "index.html"
@@ -36,7 +36,7 @@ class ChromeDriverElementTests: ChromeDriverTest {
     @Test("Get Element By Link Text") func getElementByLinkText() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
-        
+
         let text = try await driver
             .findElement(.linkText("go to next page"))
             .text()
@@ -46,18 +46,18 @@ class ChromeDriverElementTests: ChromeDriverTest {
     @Test("Get Element By Partial Link") func getElementByParticalLink() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
-        
+
         let text = try await driver
             .findElement(.partialLinkText("go"))
             .text()
-        
+
         #expect(text == "go to next page")
     }
 
     @Test("Get Element By TagName") func getElementByTagName() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
-        
+
         let text = try await driver
             .findElement(.tagName("h1"))
             .text()
