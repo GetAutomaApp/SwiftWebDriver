@@ -1,17 +1,16 @@
 //
-//  File.swift
+//  ChromeDriver.swift
 //
 //
 //  Created by ashizawa on 2022/06/04.
 //
 
+import AsyncHTTPClient
 import Foundation
 import NIO
 import NIOHTTP1
-import AsyncHTTPClient
 
 public class ChromeDriver: Driver {
-
     public typealias BrowserOption = ChromeOptions
 
     public var browserObject: ChromeOptions
@@ -27,7 +26,7 @@ public class ChromeDriver: Driver {
         self.browserObject = browserObject
     }
 
-    public convenience init(driverURLString urlString: String = "http://localhost:4444", browserObject: ChromeOptions) throws{
+    public convenience init(driverURLString urlString: String = "http://localhost:4444", browserObject: ChromeOptions) throws {
         guard let url = URL(string: urlString) else {
             throw HTTPClientError.invalidURL
         }
@@ -49,8 +48,8 @@ public class ChromeDriver: Driver {
             throw WebDriverError.sessionIdisNil
         }
         let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
-        return try await client.request(request).map{ response in
-            return response.value
+        return try await client.request(request).map { response in
+            response.value
         }.get()
     }
 
@@ -203,7 +202,6 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
     public func waitUntil(_ locatorType: LocatorType, retryCount: Int = 3, durationSeconds: Int = 1) async throws -> Bool {
-
         guard let sessionId = sessionId else {
             throw WebDriverError.sessionIdisNil
         }
@@ -212,11 +210,11 @@ public class ChromeDriver: Driver {
         do {
             let _ = try await client.request(request)
             return true
-        } catch let error  {
+        } catch {
             guard
                 retryCount > 0,
                 let error = error as? SeleniumError
-                else { return false }
+            else { return false }
 
             guard error.value.error == "no such element" else {
                 return false
@@ -241,9 +239,8 @@ public class ChromeDriver: Driver {
             javascriptSnippet: .init(script: script, args: args)
         )
 
-            let response = try await client.request(request)
-            return response
-
+        let response = try await client.request(request)
+        return response
     }
 
     private func executeJavascriptASync(_ script: String, args: [String]) async throws -> PostExecuteResponse {
@@ -257,27 +254,27 @@ public class ChromeDriver: Driver {
             javascriptSnippet: .init(script: script, args: args)
         )
 
-            let response = try await client.request(request)
-            return response
+        let response = try await client.request(request)
+        return response
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
     public func execute(_ script: String, args: [String], type: ExecutionTypes) async throws -> PostExecuteResponse {
-    do {
-        let response = try await type == .sync ?
-            executeJavascriptSync(script, args: args) :
-            executeJavascriptASync(
-                script,
-                args: args
-            )
-        return response
-    } catch let error {
-        if let seleniumError = error as? SeleniumError, isErrorJavascriptError(error: seleniumError) {
-            throw JavascriptError()
+        do {
+            let response = try await type == .sync ?
+                executeJavascriptSync(script, args: args) :
+                executeJavascriptASync(
+                    script,
+                    args: args
+                )
+            return response
+        } catch {
+            if let seleniumError = error as? SeleniumError, isErrorJavascriptError(error: seleniumError) {
+                throw JavascriptError()
+            }
+            throw error
         }
-        throw error
-    }
     }
 
     private func isErrorJavascriptError(error: SeleniumError) -> Bool {
@@ -305,7 +302,6 @@ public class ChromeDriver: Driver {
         let sessionId = sessionId
         Task.init {
             guard let sessionId else { return }
-            print("deinit for \(sessionId)")
             try await stopDriverExternal(url: url, sessionId: sessionId)
         }
     }
@@ -313,10 +309,9 @@ public class ChromeDriver: Driver {
 
 // NOTE: Due to swift 6 race-condition prevention we can't call the ChromeDriver.stop method1
 // This function just acts as a middleman to ensure the de initialisation automatically closes the session
-fileprivate func stopDriverExternal(url: URL, sessionId: String) async throws {
+private func stopDriverExternal(url: URL, sessionId: String) async throws {
     let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
-    let _ = try await APIClient.shared.request(request).map{ response in
-        return response.value
+    _ = try await APIClient.shared.request(request).map { response in
+        response.value
     }.get()
 }
-
