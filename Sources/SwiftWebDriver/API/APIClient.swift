@@ -1,10 +1,3 @@
-//
-//  APIClient.swift
-//  
-//
-//  Created by ashizawa on 2022/06/01.
-//
-
 import Foundation
 import AsyncHTTPClient
 @preconcurrency import NIOHTTP1
@@ -22,11 +15,11 @@ enum APIError: Error {
 }
 
 internal struct APIClient {
-    
+
     private let httpClient = HTTPClient(eventLoopGroupProvider: .createNew)
-    
+
     nonisolated(unsafe) public static let shared = APIClient()
-    
+
     private init() {}
 
     /// Request send To API and Perse Codable Models
@@ -38,7 +31,7 @@ internal struct APIClient {
         httpClient.execute(request: request).whenComplete { result in
             switch result{
             case .success(let response):
-                
+
                 guard response.status == .ok else {
                     if let buffer = response.body,
                     let error = try? JSONDecoder().decode(SeleniumError.self, from: buffer)
@@ -46,7 +39,7 @@ internal struct APIClient {
                         completion(.failure(error))
                         return
                     }
-                    
+
                     completion(.failure(APIError.responseStatsFailed(statusCode: response.status)))
                     return
                 }
@@ -67,8 +60,8 @@ internal struct APIClient {
             }
         }
     }
-    
-    
+
+
     /// Request send To API and Perse Codable Models
     /// - Parameter request: RequestType
     /// - Returns: EventLoopFuture<RequestType.Response>
@@ -83,14 +76,14 @@ internal struct APIClient {
                         print(error.localizedDescription)
                         return .failure(error)
                     }
-                
+
                 return .failure(APIError.responseStatsFailed(statusCode: response.status))
             }
-            
+
             guard let buffer = response.body else {
                 return .failure(APIError.responseBodyIsNil)
             }
-            
+
             do {
                 let response = try JSONDecoder().decode(R.Response.self, from: buffer)
                 return .success(response)
@@ -99,7 +92,7 @@ internal struct APIClient {
             }
         }
     }
-    
+
     /// Request send To API and Perse Codable Models
     /// - Parameter request: RequestType
     /// - Returns: EventLoopFuture<RequestType.Response>

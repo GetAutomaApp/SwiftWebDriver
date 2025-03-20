@@ -28,12 +28,6 @@ let package = Package(
                 .product(name: "NIOFoundationCompat", package: "swift-nio"),
                 .product(name: "AnyCodable", package: "swift-any-codable")
             ]),
-//        .testTarget(
-//            name: "SwiftWebDriverTests",
-//            dependencies: ["SwiftWebDriver"]),
-//        .testTarget(
-//            name: "SwiftWebDriverIntegratedTests",
-//            dependencies: ["SwiftWebDriver"]),
         .testTarget(
             name: "SwiftWebDriverIntegrationTests",
             dependencies: ["SwiftWebDriver"])

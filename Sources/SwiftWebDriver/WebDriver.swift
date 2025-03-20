@@ -1,10 +1,3 @@
-//
-//  File.swift
-//
-//
-//  Created by ashizawa on 2022/06/03.
-//
-
 import Foundation
 import NIOCore
 
@@ -80,14 +73,14 @@ public class WebDriver<T: Driver> {
     /// - Returns: PostNavigationForwardResponse<PostNavigationForwardResponse>
     @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    public func navigatonForward() async throws -> PostNavigationForwardResponse {
+    public func navigationForward() async throws -> PostNavigationForwardResponse {
         return try await driver.postNavigationForward()
     }
 
 
     @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    public func navigatonRefresh() async throws -> PostNavigationRefreshResponse {
+    public func navigationRefresh() async throws -> PostNavigationRefreshResponse {
         return try await driver.postNavigationRefresh()
     }
 

@@ -1,18 +1,11 @@
-//
-//  NewSessionResponse.swift
-//  
-//
-//  Created by ashizawa on 2022/06/02.
-//
-
 import Foundation
 
-internal struct NewSessioinResponse: Codable {
-    
+internal struct NewSessionResponse: Codable {
+
     struct Value: Codable {
         let sessionId: String
         let capabilities: Capabilities
-//
+
         struct Capabilities: Codable {
 //            let browserName: String
 //            let browserVersion: String
@@ -111,40 +104,6 @@ internal struct NewSessioinResponse: Codable {
 //            }
         }
     }
-    
-    let value: NewSessioinResponse.Value
-}
 
-//public struct NewSessioinResponse: Codable {
-//
-//    struct Capabilities: Codable {
-//
-//        struct AlwaysMatch: Codable {
-//            var user: String?
-//            var password: String?
-//            var platformName: String
-//        }
-//
-//        struct FirstMatch: Codable {
-//            var browserName: String
-//        }
-//
-//        var alwaysMatch: AlwaysMatch
-//        var firstMatch: [FirstMatch]
-//
-//        enum CodingKeys: String, CodingKey {
-//            case alwaysMatch = "alwaysMatch"
-//            case firstMatch = "firstMatch"
-//        }
-//    }
-//
-//    internal let user: String?
-//    internal let password: String?
-//    let capabilities: NewSessioinResponse.Capabilities
-//
-//    enum CodingKeys: String, CodingKey {
-//        case user
-//        case password
-//        case capabilities = "capabilities"
-//    }
-//}
+    let value: NewSessionResponse.Value
+}

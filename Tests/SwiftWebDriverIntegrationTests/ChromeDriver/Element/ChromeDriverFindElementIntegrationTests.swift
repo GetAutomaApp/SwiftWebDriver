@@ -1,10 +1,3 @@
-//
-//  ChromeDriverFindElementTests.swift
-//
-//
-//  Created by ashizawa on 2022/06/10.
-//
-
 import Testing
 @testable import SwiftWebDriver
 
@@ -43,7 +36,7 @@ class ChromeDriverElementTests: ChromeDriverTest {
         #expect(text == "go to next page")
     }
 
-    @Test("Get Element By Partial Link") func getElementByParticalLink() async throws {
+    @Test("Get Element By Partial Link") func getElementByPartialLink() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 

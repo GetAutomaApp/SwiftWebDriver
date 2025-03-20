@@ -1,10 +1,3 @@
-//
-//  ChromeDriver.swift
-//
-//
-//  Created by ashizawa on 2022/06/04.
-//
-
 import AsyncHTTPClient
 import Foundation
 import NIO
@@ -45,7 +38,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func stop() async throws -> String? {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
         return try await client.request(request).map { response in
@@ -62,7 +55,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func getNavigation() async throws -> GetNavigationResponse {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = GetNavigationRequest(baseURL: url, sessionId: sessionId)
         return try await client.request(request).get()
@@ -71,7 +64,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func postNavigation(requestURL: String) async throws -> PostNavigationResponse {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = PostNavigationRequest(baseURL: url, sessionId: sessionId, requestURL: requestURL)
         return try await client.request(request).get()
@@ -80,7 +73,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func postNavigationBack() async throws -> PostNavigationBackResponse {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = PostNavigationBackRequest(baseURL: url, sessionId: sessionId)
         return try await client.request(request).get()
@@ -89,7 +82,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func postNavigationForward() async throws -> PostNavigationForwardResponse {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = PostNavigationForwardRequest(baseURL: url, sessionId: sessionId)
         return try await client.request(request).get()
@@ -98,7 +91,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func postNavigationRefresh() async throws -> PostNavigationRefreshResponse {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = PostNavigationRefreshRequest(baseURL: url, sessionId: sessionId)
         return try await client.request(request).get()
@@ -107,7 +100,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func getNavigationTitle() async throws -> GetNavigationTitleResponse {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = GetNavigationTitleRequest(baseURL: url, sessionId: sessionId)
         return try await client.request(request).get()
@@ -116,7 +109,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func postElement(locatorSelector: LocatorSelector) async throws -> PostElementResponse {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = PostElementRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorSelector)
         return try await client.request(request).get()
@@ -125,7 +118,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func postElements(locatorSelector: LocatorSelector) async throws -> PostElementsResponse {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = PostElementsRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorSelector)
         return try await client.request(request).get()
@@ -134,7 +127,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func postElementByElementId(locatorSelector: LocatorSelector, elementId: String) async throws -> PostElementByIdResponse {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = PostElementByIdRequest(baseURL: url, sessionId: sessionId, elementId: elementId, cssSelector: locatorSelector)
         return try await client.request(request).get()
@@ -143,7 +136,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     func postElementsByElementId(locatorSelector: LocatorSelector, elementId: String) async throws -> PostElementsByIdResponse {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = PostElementsByIdRequest(baseURL: url, sessionId: sessionId, elementId: elementId, cssSelector: locatorSelector)
         return try await client.request(request).get()
@@ -152,7 +145,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     func getElementText(elementId: String) async throws -> GetElementTextResponse {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = GetElementTextRequest(baseURL: url, sessionId: sessionId, elementId: elementId)
         return try await client.request(request).get()
@@ -161,7 +154,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     func getElementName(elementId: String) async throws -> GetElementNameResponse {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = GetElementNameRequest(baseURL: url, sessionId: sessionId, elementId: elementId)
         return try await client.request(request).get()
@@ -170,7 +163,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func findElement(_ locatorType: LocatorType) async throws -> Element {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = PostElementRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorType.create())
         let response = try await client.request(request)
@@ -180,7 +173,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func findElements(_ locatorType: LocatorType) async throws -> Elements {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = PostElementsRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorType.create())
         let response = try await client.request(request)
@@ -192,7 +185,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func getScreenShot() async throws -> String {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = GetSceenShotRequest(baseURL: url, sessionId: sessionId)
         let response = try await client.request(request)
@@ -203,7 +196,7 @@ public class ChromeDriver: Driver {
     @discardableResult
     public func waitUntil(_ locatorType: LocatorType, retryCount: Int = 3, durationSeconds: Int = 1) async throws -> Bool {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
         let request = PostElementRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorType.create())
 
@@ -230,7 +223,7 @@ public class ChromeDriver: Driver {
 
     private func executeJavascriptSync(_ script: String, args: [String]) async throws -> PostExecuteResponse {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
 
         let request = PostExecuteSyncRequest(
@@ -243,12 +236,12 @@ public class ChromeDriver: Driver {
         return response
     }
 
-    private func executeJavascriptASync(_ script: String, args: [String]) async throws -> PostExecuteResponse {
+    private func executeJavascriptAsync(_ script: String, args: [String]) async throws -> PostExecuteResponse {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
 
-        let request = PostExecuteASyncRequest(
+        let request = PostExecuteAsyncRequest(
             baseURL: url,
             sessionId: sessionId,
             javascriptSnippet: .init(script: script, args: args)
@@ -261,33 +254,18 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
     public func execute(_ script: String, args: [String], type: ExecutionTypes) async throws -> PostExecuteResponse {
-        do {
-            let response = try await type == .sync ?
-                executeJavascriptSync(script, args: args) :
-                executeJavascriptASync(
-                    script,
-                    args: args
-                )
-            return response
-        } catch {
-            if let seleniumError = error as? SeleniumError, isErrorJavascriptError(error: seleniumError) {
-                throw JavascriptError()
-            }
-            throw error
-        }
-    }
-
-    private func isErrorJavascriptError(error: SeleniumError) -> Bool {
-        if error.value.error == "javascript error" {
-            return true
-        }
-
-        return false
+        let response = try await type == .sync ?
+            executeJavascriptSync(script, args: args) :
+            executeJavascriptAsync(
+                script,
+                args: args
+            )
+        return response
     }
 
     public func getActiveElement() async throws -> Element {
         guard let sessionId = sessionId else {
-            throw WebDriverError.sessionIdisNil
+            throw WebDriverError.sessionIdIsNil
         }
 
         let request = GetSessionActiveElementRequest(baseURL: url, sessionId: sessionId)
@@ -307,8 +285,8 @@ public class ChromeDriver: Driver {
     }
 }
 
-// NOTE: Due to swift 6 race-condition prevention we can't call the ChromeDriver.stop method1
-// This function just acts as a middleman to ensure the de initialisation automatically closes the session
+// NOTE: Due to swift 6 race-condition prevention we can't call the ChromeDriver.stop method
+// This function just acts as a middleman to ensure the de initialization automatically closes the session
 private func stopDriverExternal(url: URL, sessionId: String) async throws {
     let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
     _ = try await APIClient.shared.request(request).map { response in

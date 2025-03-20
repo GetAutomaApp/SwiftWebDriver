@@ -1,10 +1,3 @@
-//
-//  File.swift
-//
-//
-//  Created by ashizawa on 2022/06/03.
-//
-
 import Foundation
 import NIO
 import NIOHTTP1

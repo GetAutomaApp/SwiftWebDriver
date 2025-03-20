@@ -1,9 +1,3 @@
-//
-//  ChromeDriverFindElementsTests.swift
-//  swift-webdriver
-//
-//  Created by Simon Ferns on 3/18/25.
-//
 @testable import SwiftWebDriver
 import Testing
 

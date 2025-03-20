@@ -1,10 +1,3 @@
-//
-//  PostElementSendValueRequest.swift
-//
-//
-//  Created by ashizawa on 2022/06/10.
-//
-
 import AsyncHTTPClient
 import Foundation
 import NIO

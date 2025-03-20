@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by ashizawa on 2022/06/05.
-//
-
 import Foundation
 
 struct SeleniumError: Codable, LocalizedError {

@@ -14,7 +14,7 @@ Adding the dependency
 Add the following entry in your Package.swift to start using SwiftWebDriver:
 
 ```swift
-.package(url: "https://github.com/ashi-psn/SwiftWebDriver.git", from: "0.1.1")
+.package(url: "https://github.com/GetAutomaApp/SwiftWebDriver.git", branch: "master)
 ```
 
 and add dependency to your target:
@@ -85,10 +85,10 @@ let element = try await driver.findElement(.xpath("//*[@id=\"inParentSingleEleme
 let element = try await driver.findElement(.linkText("go to next page"))
 ```
 
-#### Use ParticalLink
+#### Use PartialLink
 
 ```Swift
-let element = try await driver.findElement(.particalLinkText("go"))
+let element = try await driver.findElement(.partialLinkText("go"))
 ```
 
 #### Use Find Elements Method

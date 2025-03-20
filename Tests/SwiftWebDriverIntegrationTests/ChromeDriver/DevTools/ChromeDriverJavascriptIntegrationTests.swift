@@ -1,10 +1,3 @@
-//
-//  Untitled.swift
-//  swift-webdriver
-//
-//  Created by Simon Ferns on 3/16/25.
-//
-
 import Foundation
 import Testing
 @testable import SwiftWebDriver
@@ -29,10 +22,10 @@ class ChromeDriverJavascriptIntegrationTests: ChromeDriverTest  {
             let output = try await driver.execute(input.0, args: [])
             #expect(output.value?.stringValue == input.1)
         } catch {}
-        
+
         try await driver.stop()
     }
-    
+
     @Test("Test async Javascript Execution", arguments: [
         ("var callback = arguments[arguments.length - 1]; setTimeout(function() { callback('Hello from async JavaScript'); }, 2000);", "Hello from async JavaScript")
     ])  func executeAsyncJavascript(input: (String, String)) async throws {
@@ -45,10 +38,10 @@ class ChromeDriverJavascriptIntegrationTests: ChromeDriverTest  {
             )
             #expect(output.value?.stringValue == input.1)
         } catch {}
-        
+
         try await driver.stop()
     }
-    
+
     @Test("Throws `javascript error` if JS fails") func throwSeleniumError() async throws {
         do {
             try await driver.navigateTo(url: self.testPageURL)
@@ -60,7 +53,7 @@ class ChromeDriverJavascriptIntegrationTests: ChromeDriverTest  {
                 return
             }
         }
-        
+
         try await driver.stop()
     }
 }

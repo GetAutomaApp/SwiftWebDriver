@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by ashizawa on 2022/06/06.
-//
-
 import Foundation
 
 public enum LocatorType: Sendable {
@@ -13,7 +6,7 @@ public enum LocatorType: Sendable {
     case linkText(_ linkText: String)
     case partialLinkText(_ particlalLinText: String)
     case tagName(_ tagName: String)
-    
+
     internal func create() -> LocatorSelector {
         switch self {
         case .css(let cssSelectorType):
