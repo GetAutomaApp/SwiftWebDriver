@@ -14,17 +14,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-      - name: Set up Docker
-        run: |
+    - uses: KengoTODA/actions-setup-docker-compose@v1
+      with:
+        version: '2.14.2'
 
-      - uses: KengoTODA/actions-setup-docker-compose@v1
+    - name: Build And Run Docker image
+      run: |
+        docker-compose build
+        docker-compose up -d
 
-      - name: Build And Run Docker image
-        run: |
-          docker-compose build
-          docker-compose up -d
-
-      - name: Run Test
-        run: docker-compose run test
+    - name: Run Test
+      run: docker-compose run test
