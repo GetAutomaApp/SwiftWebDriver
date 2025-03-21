@@ -4,7 +4,7 @@ import AsyncHTTPClient
 
 internal struct NewSessionRequest: RequestType {
 
-    typealias Response = NewSessioinResponse
+    typealias Response = NewSessionResponse
 
     var baseURL: URL
 
