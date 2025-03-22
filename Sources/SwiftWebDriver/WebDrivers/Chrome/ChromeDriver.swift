@@ -28,7 +28,7 @@ public class ChromeDriver: Driver {
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func start() async throws -> String {
-        let id = try await startDriverExternal(url: url, browserObject: browserObject, client: client)
+        let id = try await ChromeDriver.startDriverExternal(url: url, browserObject: browserObject, client: client)
         sessionId = id
         return id
     }
@@ -278,24 +278,23 @@ public class ChromeDriver: Driver {
         let sessionId = sessionId
         Task.init {
             guard let sessionId else { return }
-            try await stopDriverExternal(url: url, sessionId: sessionId)
+            try await ChromeDriver.stopDriverExternal(url: url, sessionId: sessionId)
         }
     }
-}
 
-// NOTE: Due to swift 6 race-condition prevention we can't call the ChromeDriver.stop method
-// This function just acts as a middleman to ensure the de initialization automatically closes the session
-private func stopDriverExternal(url: URL, sessionId: String) async throws {
-    let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
-    _ = try await APIClient.shared.request(request).map { response in
-        response.value
-    }.get()
-}
+    // NOTE: Due to swift 6 race-condition prevention we can't call the ChromeDriver.stop method
+    // This function just acts as a middleman to ensure the de initialization automatically closes the session
+    private static func stopDriverExternal(url: URL, sessionId: String) async throws {
+        let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
+        _ = try await APIClient.shared.request(request).map { response in
+            response.value
+        }.get()
+    }
 
-private func startDriverExternal(url: URL, browserObject: ChromeOptions, client: APIClient) async throws -> String {
-    let request = NewSessionRequest(baseURL: url, chromeOptions: browserObject)
-    return try await client.request(request).map { response in
-        response.value.sessionId
-    }.get()
+    private static func startDriverExternal(url: URL, browserObject: ChromeOptions, client: APIClient) async throws -> String {
+        let request = NewSessionRequest(baseURL: url, chromeOptions: browserObject)
+        return try await client.request(request).map { response in
+            response.value.sessionId
+        }.get()
+    }
 }
-
