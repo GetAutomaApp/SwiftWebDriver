@@ -1,7 +1,5 @@
 # Define build arguments with updated values
-ARG swift_version=6.0.0
-ARG ubuntu_version=jammy
-ARG base_image=swift:$swift_version-$ubuntu_version
+ARG base_image=swift:6.0.0-jammpy
 
 # Use the defined base image
 FROM $base_image
@@ -29,10 +27,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
 # Install jazzy for docs generation if using Ubuntu jammy
-RUN if [ "$ubuntu_version" = "jammy" ]; then \
-    echo "gem: --no-document" > ~/.gemrc && \
-    gem install jazzy; \
-    fi
+RUN echo "gem: --no-document" > ~/.gemrc && gem install jazzy;
 
 # Create tools directory and update PATH
 RUN mkdir -p $HOME/.tools && \
