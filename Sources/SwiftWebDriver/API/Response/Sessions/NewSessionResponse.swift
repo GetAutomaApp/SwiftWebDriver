@@ -2,7 +2,7 @@ import Foundation
 
 internal struct NewSessionResponse: ResponseType {
 
-    struct Value: Codable {
+    struct Value: ResponseType {
         let sessionId: String
         let capabilities: Capabilities
 
