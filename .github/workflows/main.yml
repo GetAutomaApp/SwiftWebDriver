@@ -16,12 +16,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - uses: KengoTODA/actions-setup-docker-compose@v1
-      with:
-        version: '2.14.2'
+    - name: Set up Docker Compose
+      run: |
+        DOCKER_COMPOSE_VERSION="2.14.2"
+        curl -L https://github.com/docker/compose/releases/download/v${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+        chmod +x /usr/local/bin/docker-compose
+        docker-compose --version
 
     - name: Build And Run Docker image
       run: |
-        docker-compose build
+        docker-compose build --no-cache
         docker-compose up selenium -d
         docker-compose run test

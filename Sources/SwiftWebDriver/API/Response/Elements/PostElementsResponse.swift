@@ -1,6 +1,6 @@
 import Foundation
 
-public struct PostElementsResponse: Codable {
+public struct PostElementsResponse: ResponseType {
 
     var value : [String]
 

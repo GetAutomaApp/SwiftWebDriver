@@ -1,5 +1,5 @@
 import Foundation
 
-internal struct DeleteSessionResponse: Codable {
+internal struct DeleteSessionResponse: ResponseType {
     let value: String?
 }

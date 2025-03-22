@@ -1,6 +1,6 @@
-import Foundation
 import AnyCodable
+import Foundation
 
-public struct PostExecuteResponse: Codable {
+public struct PostExecuteResponse: ResponseType {
     let value: AnyCodableValue?
 }

@@ -1,5 +1,5 @@
 import Foundation
 
-struct GetScreenShotResponse: Codable {
+struct GetScreenShotResponse: ResponseType {
     let value: String
 }

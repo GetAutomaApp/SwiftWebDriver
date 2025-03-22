@@ -1,5 +1,5 @@
 import Foundation
 
-public struct PostNavigationBackResponse: Codable {
+public struct PostNavigationBackResponse: ResponseType {
     let value: String?
 }

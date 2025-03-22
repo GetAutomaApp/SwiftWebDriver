@@ -28,11 +28,9 @@ public class ChromeDriver: Driver {
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func start() async throws -> String {
-        let request = NewSessionRequest(baseURL: url, chromeOptions: browserObject)
-        return try await client.request(request).map { response in
-            self.sessionId = response.value.sessionId
-            return response.value.sessionId
-        }.get()
+        let id = try await startDriverExternal(url: url, browserObject: browserObject, client: client)
+        self.sessionId = id
+        return id
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
@@ -291,5 +289,13 @@ private func stopDriverExternal(url: URL, sessionId: String) async throws {
     let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
     _ = try await APIClient.shared.request(request).map { response in
         response.value
+    }.get()
+}
+
+
+private func startDriverExternal(url: URL, browserObject: ChromeOptions, client: APIClient) async throws -> String {
+    let request = NewSessionRequest(baseURL: url, chromeOptions: browserObject)
+    return try await client.request(request).map { response in
+        return response.value.sessionId
     }.get()
 }

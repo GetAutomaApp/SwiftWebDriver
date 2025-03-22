@@ -1,5 +1,5 @@
 import Foundation
 
-public struct GetElementPropertyNameResponse: Codable {
+public struct GetElementPropertyNameResponse: ResponseType {
     let value: String
 }

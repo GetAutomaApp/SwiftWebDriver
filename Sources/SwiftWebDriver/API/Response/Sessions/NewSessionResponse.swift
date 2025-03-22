@@ -1,6 +1,6 @@
 import Foundation
 
-internal struct NewSessionResponse: Codable {
+internal struct NewSessionResponse: ResponseType {
 
     struct Value: Codable {
         let sessionId: String

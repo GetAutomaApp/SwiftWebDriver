@@ -1,6 +1,6 @@
 
 import Foundation
 
-public struct GetNavigationResponse: Codable {
+public struct GetNavigationResponse: ResponseType {
     let value: String?
 }

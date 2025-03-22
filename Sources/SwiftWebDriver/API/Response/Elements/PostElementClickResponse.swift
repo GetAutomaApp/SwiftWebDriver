@@ -1,5 +1,5 @@
 import Foundation
 
-public struct PostElementClickResponse: Codable {
+public struct PostElementClickResponse: ResponseType {
     let value: String?
 }

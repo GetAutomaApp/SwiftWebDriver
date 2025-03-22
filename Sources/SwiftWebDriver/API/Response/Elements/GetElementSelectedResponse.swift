@@ -1,5 +1,5 @@
 import Foundation
 
-public struct GetElementSelectedResponse: Codable {
+public struct GetElementSelectedResponse: ResponseType {
     let value: Bool
 }

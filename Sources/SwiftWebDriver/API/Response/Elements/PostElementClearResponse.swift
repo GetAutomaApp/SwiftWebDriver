@@ -1,5 +1,5 @@
 import Foundation
 
-struct PostElementClearResponse: Codable {
+struct PostElementClearResponse: ResponseType {
     let value: String?
 }

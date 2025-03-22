@@ -1,6 +1,6 @@
 import Foundation
 
-public struct PostElementResponse: Codable {
+public struct PostElementResponse: ResponseType {
 
     let elementId : String
 

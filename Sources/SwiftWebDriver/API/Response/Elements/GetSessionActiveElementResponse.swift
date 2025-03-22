@@ -1,6 +1,6 @@
 import Foundation
 
-public struct GetSessionActiveElementResponse: Codable {
+public struct GetSessionActiveElementResponse: ResponseType {
 
     let elementId : String
 
