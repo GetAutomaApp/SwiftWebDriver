@@ -1,9 +1,10 @@
-import Testing
 @testable import SwiftWebDriver
+import Testing
 
 @Suite("Chrome Driver Navigation Tests", .serialized)
 class ChromeDriverNavigationTests: ChromeDriverTest {
-    @Test("Get Navigation Title") func getNavigationTitle() async throws {
+    @Test("Get Navigation Title")
+    func getNavigationTitle() async throws {
         page = "awaitTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -12,7 +13,8 @@ class ChromeDriverNavigationTests: ChromeDriverTest {
         #expect(title.value == "expect title")
     }
 
-    @Test("Wait Until Element Exists") func waitUntilElements() async throws {
+    @Test("Wait Until Element Exists")
+    func waitUntilElements() async throws {
         page = "awaitTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 

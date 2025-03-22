@@ -3,7 +3,8 @@ import Testing
 
 @Suite("Chrome Driver Special Keys", .serialized)
 class ChromeDriverSpecialKeysTests: ChromeDriverTest {
-    @Test("Tab Should Cycle Input Elements Focus") func tabCycleInputElementFocus() async throws {
+    @Test("Tab Should Cycle Input Elements Focus")
+    func tabCycleInputElementFocus() async throws {
         page = "testSpecialKeys.html"
 
         try await driver.navigateTo(url: testPageURL)

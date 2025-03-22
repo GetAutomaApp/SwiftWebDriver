@@ -1,9 +1,10 @@
-import Testing
 @testable import SwiftWebDriver
+import Testing
 
 @Suite("Chrome Driver Element Tests", .serialized)
 class ChromeDriverElementTests: ChromeDriverTest {
-    @Test("Get Element By CSS Selector") func getElementCSSElement() async throws {
+    @Test("Get Element By CSS Selector")
+    func getElementCSSElement() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 
@@ -15,10 +16,10 @@ class ChromeDriverElementTests: ChromeDriverTest {
 
         let nameElement = try await driver.findElement(.css(.name("nameElement"))).text()
         #expect(nameElement == "nameElement")
-
     }
 
-    @Test("Get Element By XPath") func getElementByXPath() async throws {
+    @Test("Get Element By XPath")
+    func getElementByXPath() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 
@@ -26,7 +27,8 @@ class ChromeDriverElementTests: ChromeDriverTest {
         #expect(inParentSingleElement == "inParentSingleElement")
     }
 
-    @Test("Get Element By Link Text") func getElementByLinkText() async throws {
+    @Test("Get Element By Link Text")
+    func getElementByLinkText() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 
@@ -36,7 +38,8 @@ class ChromeDriverElementTests: ChromeDriverTest {
         #expect(text == "go to next page")
     }
 
-    @Test("Get Element By Partial Link") func getElementByPartialLink() async throws {
+    @Test("Get Element By Partial Link")
+    func getElementByPartialLink() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 
@@ -47,7 +50,8 @@ class ChromeDriverElementTests: ChromeDriverTest {
         #expect(text == "go to next page")
     }
 
-    @Test("Get Element By TagName") func getElementByTagName() async throws {
+    @Test("Get Element By TagName")
+    func getElementByTagName() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 

@@ -22,6 +22,7 @@ public struct Element: ElementCommandProtocol, Sendable {
     public let sessionId: String
     public let elementId: String
 
+    @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func findElement(_ locatorType: LocatorType) async throws -> Element {
         let request = PostElementByIdRequest(baseURL: baseURL, sessionId: sessionId, elementId: elementId, cssSelector: locatorType.create())

@@ -1,9 +1,10 @@
-import Testing
 @testable import SwiftWebDriver
+import Testing
 
 @Suite("Chrome Driver Elements Tests", .serialized)
 class ChromeDriverElementsTests: ChromeDriverTest {
-    @Test("Get Elements CSS Elements") func getElementsCSSElements() async throws {
+    @Test("Get Elements CSS Elements")
+    func getElementsCSSElements() async throws {
         page = "findElementsTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -26,7 +27,8 @@ class ChromeDriverElementsTests: ChromeDriverTest {
         #expect(nameElement2.count == 2)
     }
 
-    @Test("Get Elements By XPath") func getElementsByXPath() async throws {
+    @Test("Get Elements By XPath")
+    func getElementsByXPath() async throws {
         page = "findElementsTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -36,7 +38,8 @@ class ChromeDriverElementsTests: ChromeDriverTest {
         #expect(xpathElements.count == 9)
     }
 
-    @Test("Get Elements By Link Text") func getElementsByLinkText() async throws {
+    @Test("Get Elements By Link Text")
+    func getElementsByLinkText() async throws {
         page = "findElementsTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -51,7 +54,8 @@ class ChromeDriverElementsTests: ChromeDriverTest {
         #expect(linkElement2.count == 2)
     }
 
-    @Test("Get Elements By Partial Link Text") func getElementsByPartialLink() async throws {
+    @Test("Get Elements By Partial Link Text")
+    func getElementsByPartialLink() async throws {
         page = "findElementsTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -63,10 +67,11 @@ class ChromeDriverElementsTests: ChromeDriverTest {
         let linkElement2 = try await driver
             .findElements(.partialLinkText("2"))
 
-        #expect(linkElement2.count ==  2)
+        #expect(linkElement2.count == 2)
     }
 
-    @Test("Get Elements By Tag Name") func getElementByTagName() async throws {
+    @Test("Get Elements By Tag Name")
+    func getElementByTagName() async throws {
         page = "findElementsTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -79,6 +84,5 @@ class ChromeDriverElementsTests: ChromeDriverTest {
             .findElements(.tagName("b"))
 
         #expect(tagElement2.count == 2)
-
     }
 }
