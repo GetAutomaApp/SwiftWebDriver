@@ -1,22 +1,21 @@
 import Foundation
 
-public typealias Elements = Array<Element>
+public typealias Elements = [Element]
 
-extension Elements {
-
+public extension Elements {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    public func texts() async throws -> [String] {
-
+    func texts() async throws -> [String] {
         var ids: [String] = []
         try await withThrowingTaskGroup(of: GetElementTextResponse.self) { group in
             for element in self {
                 let request = GetElementTextRequest(
                     baseURL: element.baseURL,
                     sessionId: element.sessionId,
-                    elementId: element.elementId)
+                    elementId: element.elementId
+                )
 
                 group.addTask {
-                    return try await APIClient.shared.request(request)
+                    try await APIClient.shared.request(request)
                 }
             }
             for try await element in group {
@@ -28,18 +27,18 @@ extension Elements {
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    public func names() async throws -> [String] {
-
+    func names() async throws -> [String] {
         var names: [String] = []
         try await withThrowingTaskGroup(of: GetElementNameResponse.self) { group in
             for element in self {
                 let request = GetElementNameRequest(
                     baseURL: element.baseURL,
                     sessionId: element.sessionId,
-                    elementId: element.elementId)
+                    elementId: element.elementId
+                )
 
                 group.addTask {
-                    return try await APIClient.shared.request(request)
+                    try await APIClient.shared.request(request)
                 }
             }
             for try await element in group {
@@ -50,14 +49,15 @@ extension Elements {
         return names
     }
 
+    @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    public func findElement(_ locatorType: LocatorType) async throws -> Elements {
+    func findElement(_ locatorType: LocatorType) async throws -> Elements {
         var elements: Elements = []
         try await withThrowingTaskGroup(of: Element.self) { group in
 
             for element in self {
                 group.addTask {
-                    return try await element.findElement(locatorType)
+                    try await element.findElement(locatorType)
                 }
             }
 
@@ -70,12 +70,12 @@ extension Elements {
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    public func findElements(_ locatorType: LocatorType) async throws -> Elements {
-        var elements: Array<Elements> = Array<Elements>()
+    func findElements(_ locatorType: LocatorType) async throws -> Elements {
+        var elements = [Elements]()
         try await withThrowingTaskGroup(of: Elements.self) { group in
             for element in self {
                 group.addTask {
-                    return try await element.findElements(locatorType)
+                    try await element.findElements(locatorType)
                 }
             }
             for try await responseElements in group {
@@ -83,21 +83,20 @@ extension Elements {
             }
         }
 
-        return elements.flatMap{ $0 }
+        return elements.flatMap { $0 }
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
-    public func waitUntil(_ locatorType: LocatorType, retryCount: Int = 3, durationSeconds: Int = 1) async throws -> Bool {
-
+    func waitUntil(_ locatorType: LocatorType, retryCount: Int = 3, durationSeconds: Int = 1) async throws -> Bool {
         do {
-            let _ = try await findElement(locatorType)
+            try await findElement(locatorType)
             return true
-        } catch let error {
+        } catch {
             guard
                 retryCount > 0,
                 let error = error as? SeleniumError
-                else { return false }
+            else { return false }
 
             guard error.value.error == "no such element" else {
                 return false

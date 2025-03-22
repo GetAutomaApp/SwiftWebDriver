@@ -29,7 +29,7 @@ public class ChromeDriver: Driver {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func start() async throws -> String {
         let id = try await startDriverExternal(url: url, browserObject: browserObject, client: client)
-        self.sessionId = id
+        sessionId = id
         return id
     }
 
@@ -199,7 +199,7 @@ public class ChromeDriver: Driver {
         let request = PostElementRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorType.create())
 
         do {
-            let _ = try await client.request(request)
+            try await client.request(request)
             return true
         } catch {
             guard
@@ -292,10 +292,10 @@ private func stopDriverExternal(url: URL, sessionId: String) async throws {
     }.get()
 }
 
-
 private func startDriverExternal(url: URL, browserObject: ChromeOptions, client: APIClient) async throws -> String {
     let request = NewSessionRequest(baseURL: url, chromeOptions: browserObject)
     return try await client.request(request).map { response in
-        return response.value.sessionId
+        response.value.sessionId
     }.get()
 }
+

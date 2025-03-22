@@ -1,8 +1,8 @@
-import Foundation
 import AsyncHTTPClient
-@preconcurrency import NIOHTTP1
-import NIOFoundationCompat
+import Foundation
 import NIO
+import NIOFoundationCompat
+@preconcurrency import NIOHTTP1
 
 enum APIResponseError: Error, Codable {
     case massage
@@ -14,8 +14,7 @@ enum APIError: Error {
     case decodingKeyNotFound
 }
 
-internal struct APIClient {
-
+struct APIClient {
     private let httpClient = HTTPClient(eventLoopGroupProvider: .singleton)
 
     public static let shared = APIClient()
@@ -25,17 +24,17 @@ internal struct APIClient {
     /// Request send To API and Perse Codable Models
     /// - Parameter request: RequestType
     /// - Returns: EventLoopFuture<RequestType.Response>
-    internal func request<R>(_ request: R) -> EventLoopFuture<R.Response>  where R: RequestType{
-        return httpClient.execute(request: request).flatMapResult { response -> Result<R.Response, Error>  in
+    func request<R>(_ request: R) -> EventLoopFuture<R.Response> where R: RequestType {
+        return httpClient.execute(request: request).flatMapResult { response -> Result<R.Response, Error> in
 
             guard response.status == .ok else {
                 if
                     let buffer = response.body,
                     let error = try? JSONDecoder().decode(SeleniumError.self, from: buffer)
-                    {
-                        print(error.localizedDescription)
-                        return .failure(error)
-                    }
+                {
+                    print(error.localizedDescription)
+                    return .failure(error)
+                }
 
                 return .failure(APIError.responseStatsFailed(statusCode: response.status))
             }
@@ -56,7 +55,8 @@ internal struct APIClient {
     /// Request send To API and Perse Codable Models
     /// - Parameter request: RequestType
     /// - Returns: EventLoopFuture<RequestType.Response>
-    internal func request<R>(_ request: R) async throws -> R.Response  where R: RequestType{
+    @discardableResult
+    func request<R>(_ request: R) async throws -> R.Response where R: RequestType {
         return try await self.request(request).get()
     }
 }
