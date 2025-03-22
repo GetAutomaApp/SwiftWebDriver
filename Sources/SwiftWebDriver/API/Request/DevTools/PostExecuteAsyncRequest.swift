@@ -1,9 +1,9 @@
-import AsyncHTTPClient
 import Foundation
-import NIO
+import AsyncHTTPClient
 import NIOHTTP1
+import NIO
 
-struct PostExecuteSyncRequest: RequestType {
+struct PostExecuteAsyncRequest: RequestType {
     typealias Response = PostExecuteResponse
 
     var baseURL: URL
@@ -23,16 +23,19 @@ struct PostExecuteSyncRequest: RequestType {
     var body: HTTPClient.Body? {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
+        let data = try? encoder.encode(javascriptSnippet)
 
-        guard let data = try? encoder.encode(javascriptSnippet) else {
+        guard let data = data else {
             return nil
         }
 
         return .data(data)
     }
+
 }
 
-extension PostExecuteSyncRequest {
+
+extension PostExecuteAsyncRequest {
     struct RequestBody: Codable {
         let script: String
         let args: [String]
