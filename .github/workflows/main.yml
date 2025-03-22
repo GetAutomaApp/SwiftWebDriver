@@ -20,12 +20,6 @@ jobs:
         with:
           version: "2.14.2"
 
-      - name: Cache Docker layers
-        uses: actions/cache@v3
-        with:
-          path: /var/lib/docker
-          key: ${{ runner.os }}-docker-${{ hashFiles('Package.resolved') }}-${{ hashFiles('Dockerfile')}}-${{ hashFiles('docker-compose.yml')}}
-
       - name: Build And Run Docker image
         run: |
           docker-compose build --no-cache
