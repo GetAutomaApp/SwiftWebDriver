@@ -23,7 +23,7 @@ jobs:
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
-          path: ~/.docker
+          path: /var/lib/docker
           key: ${{ runner.os }}-docker-${{ hashFiles('Package.resolved') }}-${{ hashFiles('Dockerfile')}}-${{ hashFiles('docker-compose.yml')}}
 
       - name: Build And Run Docker image
