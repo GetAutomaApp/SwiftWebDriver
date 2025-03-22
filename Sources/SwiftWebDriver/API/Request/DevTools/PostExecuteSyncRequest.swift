@@ -40,6 +40,3 @@ extension PostExecuteSyncRequest {
     }
 }
 
-public enum ExecutionTypes {
-    case sync, async
-}

@@ -251,7 +251,7 @@ public class ChromeDriver: Driver {
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
-    public func execute(_ script: String, args: [String], type: ExecutionTypes) async throws -> PostExecuteResponse {
+    public func execute(_ script: String, args: [String], type: JavascriptExecutionTypes) async throws -> PostExecuteResponse {
         let response = try await type == .sync ?
             executeJavascriptSync(script, args: args) :
             executeJavascriptAsync(

@@ -22,7 +22,6 @@ struct APIClient {
     private init() {}
 
     /// Request send To API and Parse Codable Models
-```try? encoder.encode(javascriptSnippet)
     /// - Parameter request: RequestType
     /// - Returns: EventLoopFuture<RequestType.Response>
     func request<R>(_ request: R) -> EventLoopFuture<R.Response> where R: RequestType {

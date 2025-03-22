@@ -86,7 +86,7 @@ public struct Element: ElementCommandProtocol, Sendable {
 
     @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    public func send(value: SpecialKey) async throws -> String? {
+    public func send(value: SendValueActionKeyTypes) async throws -> String? {
         let request = PostElementSendValueRequest(
             baseURL: baseURL,
             sessionId: sessionId,

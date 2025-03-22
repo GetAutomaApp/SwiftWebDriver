@@ -41,7 +41,7 @@ public protocol Driver: FindElementProtocol {
     func execute(
         _ script: String,
         args: [String],
-        type: ExecutionTypes
+        type: JavascriptExecutionTypes
     ) async throws -> PostExecuteResponse
 
     func getActiveElement() async throws -> Element
