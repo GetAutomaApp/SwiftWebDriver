@@ -1,9 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by ashizawa on 2022/06/06.
-//
 import Foundation
 import AsyncHTTPClient
 import NIOHTTP1
@@ -11,23 +5,23 @@ import NIO
 
 
 internal struct PostNavigationForwardRequest: RequestType {
-    
+
     typealias Response = PostNavigationForwardResponse
-    
+
     var baseURL: URL
-    
+
     var sessionId: String
-    
+
     var path: String {
         "session/\(sessionId)/forward"
     }
-    
+
     var method: HTTPMethod = .POST
-    
+
     var headers: HTTPHeaders = [:]
-    
+
     var body: HTTPClient.Body? {
-        
+
         let requestBody = PostNavigationForwardRequest
             .RequestBody(additionalProp1: nil, additionalProp2: nil, additionalProp3: nil)
 
@@ -41,7 +35,7 @@ internal struct PostNavigationForwardRequest: RequestType {
 
         return .data(data)
     }
-    
+
 }
 
 // MARK: - PostNavigationRequest.RequestBody

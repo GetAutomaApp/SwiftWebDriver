@@ -1,4 +1,4 @@
-// swift-tools-version:5.6
+// swift-tools-version:6.0.0
 
 import PackageDescription
 
@@ -17,7 +17,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.10.0"),
-        .package(url: "https://github.com/apple/swift-nio.git", from: "2.40.0"),
+        .package(url: "https://github.com/apple/swift-nio.git", from: "2.80.0"),
         .package(url: "https://github.com/GetAutomaApp/swift-any-codable.git", branch: "main")
     ],
     targets: [
@@ -29,10 +29,7 @@ let package = Package(
                 .product(name: "AnyCodable", package: "swift-any-codable")
             ]),
         .testTarget(
-            name: "SwiftWebDriverTests",
-            dependencies: ["SwiftWebDriver"]),
-        .testTarget(
-            name: "SwiftWebDriverIntegratedTests",
+            name: "SwiftWebDriverIntegrationTests",
             dependencies: ["SwiftWebDriver"])
     ]
 )
