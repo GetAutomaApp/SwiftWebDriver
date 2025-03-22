@@ -7,7 +7,7 @@ import NIO
 public protocol RequestType {
 
     /// convert response to Codable
-    associatedtype Response: Codable, Sendable
+    associatedtype Response: ResponseType
 
     /// The target's base `URL`.
     var baseURL: URL { get }
