@@ -57,4 +57,5 @@ class ChromeDriverJavascriptIntegrationTests: ChromeDriverTest {
 
         try await driver.stop()
     }
+
 }

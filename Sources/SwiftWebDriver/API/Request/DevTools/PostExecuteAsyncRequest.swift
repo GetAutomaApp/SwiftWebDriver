@@ -11,7 +11,7 @@ struct PostExecuteSyncRequest: RequestType {
     var sessionId: String
 
     var path: String {
-        "session/\(sessionId)/execute/sync"
+        "session/\(sessionId)/execute/async"
     }
 
     let javascriptSnippet: RequestBody
