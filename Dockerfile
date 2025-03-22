@@ -26,7 +26,7 @@ RUN apt-get update && \
     build-essential && \
     rm -rf /var/lib/apt/lists/*  # Clean up to reduce image size
 
-# Install jazzy for docs generation if using Ubuntu jammy
+# Install jazzy for docs generation
 RUN echo "gem: --no-document" > ~/.gemrc && gem install jazzy;
 
 # Create tools directory and update PATH
