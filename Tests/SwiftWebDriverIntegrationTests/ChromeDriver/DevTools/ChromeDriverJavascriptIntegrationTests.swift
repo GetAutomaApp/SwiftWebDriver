@@ -48,7 +48,7 @@ class ChromeDriverJavascriptIntegrationTests: ChromeDriverTest  {
             try await driver.execute("throw new Error('Test Error')", args: [])
             try #require(Bool(false))
         } catch {
-            guard error as? JavascriptError != nil else {
+            guard error as? SeleniumError != nil else {
                 try #require(Bool(false))
                 return
             }
