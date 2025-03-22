@@ -20,8 +20,17 @@ jobs:
       with:
         version: '2.14.2'
 
+    # Caching Docker layers based on package.resolved
+    - name: Cache Docker layers
+      uses: actions/cache@v3
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-docker-${{ hashFiles('package.resolved') }}-${{ hashFiles('Dockerfile')}}-${{ hashFiles('docker-compose.yml')}}
+        restore-keys: |
+          ${{ runner.os }}-docker-
+
     - name: Build And Run Docker image
       run: |
-        docker-compose build
+        docker-compose build --no-cache
         docker-compose up selenium -d
         docker-compose run test
