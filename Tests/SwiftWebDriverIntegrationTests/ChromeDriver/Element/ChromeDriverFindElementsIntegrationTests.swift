@@ -1,7 +1,7 @@
 @testable import SwiftWebDriver
 import Testing
 
-@Suite("Chrome Driver Elements Tests", .serialized)
+@Suite("Chrome Driver Find Elements Tests", .serialized)
 class ChromeDriverElementsTests: ChromeDriverTest {
     @Test("Get Elements CSS Elements")
     func getElementsCSSElements() async throws {
