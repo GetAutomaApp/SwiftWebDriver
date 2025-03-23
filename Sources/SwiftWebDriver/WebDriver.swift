@@ -2,9 +2,7 @@ import Foundation
 import NIOCore
 
 public class WebDriver<T: Driver> {
-
     let driver: T
-
 
     /// init webDriver
     /// - Parameter driver:Driver
@@ -29,8 +27,6 @@ public class WebDriver<T: Driver> {
         return try await driver.stop()
     }
 
-
-
     /// webdriver status
     /// - Returns: StatusResponse
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
@@ -38,12 +34,10 @@ public class WebDriver<T: Driver> {
         return try await driver.status()
     }
 
-
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func getNavigation() async throws -> GetNavigationResponse {
         return try await driver.getNavigation()
     }
-
 
     /// load page
     /// - Parameter url: load page url
@@ -59,7 +53,6 @@ public class WebDriver<T: Driver> {
         return try await navigateTo(urlString: url.absoluteString)
     }
 
-
     /// navigation back
     /// - Returns: PostNavigationBackResponse
     @discardableResult
@@ -67,7 +60,6 @@ public class WebDriver<T: Driver> {
     public func navigationBack() async throws -> PostNavigationBackResponse {
         return try await driver.postNavigationBack()
     }
-
 
     /// navigation forward
     /// - Returns: PostNavigationForwardResponse<PostNavigationForwardResponse>
@@ -77,13 +69,11 @@ public class WebDriver<T: Driver> {
         return try await driver.postNavigationForward()
     }
 
-
     @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func navigationRefresh() async throws -> PostNavigationRefreshResponse {
         return try await driver.postNavigationRefresh()
     }
-
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func navigationTitle() async throws -> GetNavigationTitleResponse {
@@ -113,10 +103,9 @@ public class WebDriver<T: Driver> {
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
-    public func execute(_ script: String, args: [String], type: JavascriptExecutionTypes = .sync) async throws -> PostExecuteResponse {
+    public func execute(_ script: String, args: [String] = [], type: JavascriptExecutionTypes = .sync) async throws -> PostExecuteResponse {
         return try await driver.execute(script, args: args, type: type)
     }
-
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult

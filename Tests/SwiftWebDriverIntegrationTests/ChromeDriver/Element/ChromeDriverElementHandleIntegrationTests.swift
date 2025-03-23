@@ -45,6 +45,8 @@ class ChromeDriverElementHandleTests: ChromeDriverTest {
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
         let element = try await driver.findElement(.css(.id("sendValue")))
         try await element.send(value: "newValue")
+        let text = try await driver.execute("return document.querySelector('#sendValue').value").value?.stringValue
+        #expect(text == "newValue")
     }
 
     @Test("Get Screenshot")
