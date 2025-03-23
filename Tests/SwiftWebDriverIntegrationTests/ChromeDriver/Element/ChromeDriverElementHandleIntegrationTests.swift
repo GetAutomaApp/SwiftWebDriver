@@ -63,7 +63,7 @@ class ChromeDriverElementHandleTests: ChromeDriverTest {
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
         let element = try await driver.findElement(.css(.id("willDelete")))
         try await element.click()
-        try await Task.sleep(nanoseconds: 3_000_000_000)
+        try await Task.sleep(for: .seconds(3))
 
         do {
             try await element.click()

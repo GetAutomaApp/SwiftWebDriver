@@ -1,8 +1,5 @@
 # Define build arguments with updated values
-ARG base_image=swift:6.0.0-jammpy
-
-# Use the defined base image
-FROM $base_image
+FROM swift:6.0.0-jammy
 
 # Set environment variables for locale
 ENV LC_ALL=en_US.UTF-8
