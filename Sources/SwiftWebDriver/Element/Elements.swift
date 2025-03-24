@@ -1,3 +1,11 @@
+// Elements.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+//
+// This package is freely distributable under the MIT license.
+// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
+
 import Foundation
 
 public typealias Elements = [Element]
@@ -83,7 +91,7 @@ public extension Elements {
             }
         }
 
-        return elements.flatMap { $0 }
+        return elements.flatMap(\.self)
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)

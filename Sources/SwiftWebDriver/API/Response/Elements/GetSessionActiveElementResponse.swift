@@ -1,8 +1,15 @@
+// GetSessionActiveElementResponse.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+//
+// This package is freely distributable under the MIT license.
+// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
+
 import Foundation
 
 public struct GetSessionActiveElementResponse: ResponseType {
-
-    let elementId : String
+    let elementId: String
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: RoodCodingKey.self)
@@ -12,7 +19,7 @@ public struct GetSessionActiveElementResponse: ResponseType {
             throw APIError.decodingKeyNotFound
         }
 
-        self.elementId = try valueContainer.decode(String.self, forKey: elementKey)
+        elementId = try valueContainer.decode(String.self, forKey: elementKey)
     }
 
     struct RoodCodingKey: CodingKey {
@@ -24,7 +31,7 @@ public struct GetSessionActiveElementResponse: ResponseType {
         }
 
         init?(intValue: Int) {
-            self.stringValue = "\(intValue)"
+            stringValue = "\(intValue)"
             self.intValue = intValue
         }
 

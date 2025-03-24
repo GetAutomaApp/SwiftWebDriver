@@ -1,10 +1,17 @@
-import Foundation
+// GetElementAttributeRequest.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+//
+// This package is freely distributable under the MIT license.
+// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
+
 import AsyncHTTPClient
-import NIOHTTP1
+import Foundation
 import NIO
+import NIOHTTP1
 
-internal struct GetElementAttributeRequest: RequestType {
-
+struct GetElementAttributeRequest: RequestType {
     typealias Response = GetElementAttributeResponse
 
     var baseURL: URL
@@ -24,5 +31,4 @@ internal struct GetElementAttributeRequest: RequestType {
     var headers: HTTPHeaders = [:]
 
     var body: HTTPClient.Body?
-
 }
