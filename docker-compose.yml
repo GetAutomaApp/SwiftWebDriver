@@ -2,8 +2,7 @@ version: '3'
 services:
   httpd:
       image: httpd
-      networks:
-        - net1
+      network_mode: host
       volumes:
           - ./TestAssets:/usr/local/apache2/htdocs/
       ports:
@@ -11,8 +10,7 @@ services:
 
   selenium:
     image: selenium/standalone-chrome:4.2.1-20220531
-    networks:
-        - net1
+    network_mode: host
     ports:
       - 4444:4444
       - 7900:7900
@@ -25,8 +23,7 @@ services:
     volumes:
       - .:/SwiftWebDriver
     working_dir: /SwiftWebDriver
-    networks:
-        - net1
+    network_mode: host
     environment:
       SELENIUM_URL: http://localhost:4444
     tty: true
@@ -45,6 +42,3 @@ services:
   shell:
     <<: *SwiftWebDriver
     entrypoint: /bin/bash
-
-networks:
-  net1:
