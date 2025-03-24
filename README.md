@@ -41,7 +41,7 @@ docker compose up selenium httpd -d
 
 
 # Example
-### Start snd Stop
+### Start and Stop
 
 ```Swift
 let chromeOption = ChromeOptions(
