@@ -1,10 +1,3 @@
-//
-//  Broser.swift
-//  
-//
-//  Created by ashizawa on 2022/06/01.
-//
-
 import Foundation
 import NIOCore
 
@@ -12,18 +5,18 @@ public typealias Args = String
 
 public struct ChromeOptions: StatableOpject {
     public let args: [Args]?
-    
-    public init (args: [Args]?) throws {
+
+    public init (args: [Args]?) {
         self.args = args
     }
 }
 
 public extension Args {
-    
+
     init(_ args: Arguments) {
         self.init(describing: args)
     }
-    
+
     enum Arguments: CustomStringConvertible, Codable {
         case headless
         case noSandbox
@@ -38,7 +31,7 @@ public extension Args {
         case disableExtensions
         case proxyServer(proxyURL: String)
         case userDataDir(dir: String)
-        
+
         public var description: String {
             switch self {
             case .headless:

@@ -1,3 +1,5 @@
+> [!NOTE] This codebase is a fork made from this [REPO](https://github.com/ashi-psn/SwiftWebDriver). The majority of the code was written by @ashi-psn. This repo just modernizes it & adapts it for our organizations usecases.
+
 # SwiftWebDriver
 [![Docker Image CI](https://github.com/ashi-psn/SwiftWebDriver/actions/workflows/main.yml/badge.svg)](https://github.com/ashi-psn/SwiftWebDriver/actions/workflows/main.yml)
 [![Release](https://img.shields.io/github/v/release/ashi-psn/SwiftWebDriver)](https://github.com/ashi-psn/SwiftWebDriver/releases/latest)
@@ -14,7 +16,7 @@ Adding the dependency
 Add the following entry in your Package.swift to start using SwiftWebDriver:
 
 ```swift
-.package(url: "https://github.com/ashi-psn/SwiftWebDriver.git", from: "0.1.1")
+.package(url: "https://github.com/GetAutomaApp/SwiftWebDriver.git", branch: "master)
 ```
 
 and add dependency to your target:
@@ -85,10 +87,10 @@ let element = try await driver.findElement(.xpath("//*[@id=\"inParentSingleEleme
 let element = try await driver.findElement(.linkText("go to next page"))
 ```
 
-#### Use ParticalLink
+#### Use PartialLink
 
 ```Swift
-let element = try await driver.findElement(.particalLinkText("go"))
+let element = try await driver.findElement(.partialLinkText("go"))
 ```
 
 #### Use Find Elements Method

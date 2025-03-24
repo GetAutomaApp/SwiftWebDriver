@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by ashizawa on 2022/06/08.
-//
-
 import Foundation
 
 import Foundation
@@ -13,21 +6,21 @@ import NIOHTTP1
 import NIO
 
 internal struct GetSessionActiveElementRequest: RequestType {
-    
+
     typealias Response = GetSessionActiveElementResponse
-    
+
     var baseURL: URL
-    
+
     var sessionId: String
-    
+
     var path: String {
         "session/\(sessionId)/element/active"
     }
-    
+
     var method: HTTPMethod = .GET
-    
+
     var headers: HTTPHeaders = [:]
-    
+
     var body: HTTPClient.Body?
-    
+
 }

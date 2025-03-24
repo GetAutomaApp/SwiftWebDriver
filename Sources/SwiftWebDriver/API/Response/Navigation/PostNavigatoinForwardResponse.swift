@@ -1,12 +1,5 @@
-//
-//  File.swift
-//  
-//
-//  Created by ashizawa on 2022/06/06.
-//
-
 import Foundation
 
-public struct PostNavigationForwardResponse: Codable {
+public struct PostNavigationForwardResponse: ResponseType {
     let value: String?
 }
