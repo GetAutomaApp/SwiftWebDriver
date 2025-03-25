@@ -1,8 +1,15 @@
+// PostElementsResponse.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+//
+// This package is freely distributable under the MIT license.
+// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
+
 import Foundation
 
 public struct PostElementsResponse: ResponseType {
-
-    var value : [String]
+    var value: [String]
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CustomCodingKey.self)
@@ -18,7 +25,7 @@ public struct PostElementsResponse: ResponseType {
             _elementIds.append(elementId)
         }
 
-        self.value = _elementIds
+        value = _elementIds
     }
 
     struct CustomCodingKey: CodingKey {
@@ -30,7 +37,7 @@ public struct PostElementsResponse: ResponseType {
         }
 
         init?(intValue: Int) {
-            self.stringValue = "\(intValue)"
+            stringValue = "\(intValue)"
             self.intValue = intValue
         }
 
