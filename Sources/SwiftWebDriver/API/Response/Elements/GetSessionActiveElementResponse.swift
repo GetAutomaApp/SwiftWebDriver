@@ -31,7 +31,7 @@ public struct GetSessionActiveElementResponse: ResponseType {
         }
 
         init?(intValue: Int) {
-            stringValue = "\(intValue)"
+            stringValue = String(intValue)
             self.intValue = intValue
         }
 
