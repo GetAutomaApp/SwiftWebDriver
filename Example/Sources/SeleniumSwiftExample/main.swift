@@ -1,9 +1,17 @@
+// main.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+//
+// This package is freely distributable under the MIT license.
+// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
+
 import SwiftWebDriver
 
 let chromeOption = try ChromeOptions(
-  args: [
-    Args(.headless),
-  ]
+    args: [
+        Args(.headless),
+    ]
 )
 
 let chromeDriver = try ChromeDriver(

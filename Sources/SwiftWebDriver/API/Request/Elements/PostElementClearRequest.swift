@@ -1,10 +1,17 @@
-import Foundation
+// PostElementClearRequest.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+//
+// This package is freely distributable under the MIT license.
+// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
+
 import AsyncHTTPClient
-import NIOHTTP1
+import Foundation
 import NIO
+import NIOHTTP1
 
-internal struct PostElementClearRequest: RequestType {
-
+struct PostElementClearRequest: RequestType {
     typealias Response = PostElementClearResponse
 
     var baseURL: URL
@@ -22,18 +29,18 @@ internal struct PostElementClearRequest: RequestType {
     var headers: HTTPHeaders = [:]
 
     var body: HTTPClient.Body? {
-
         let requestBody = PostElementClearRequest
             .RequestBody(
                 additionalProp1: nil,
                 additionalProp2: nil,
-                additionalProp3: nil)
+                additionalProp3: nil
+            )
 
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         let data = try? encoder.encode(requestBody)
 
-        guard let data = data else {
+        guard let data else {
             return nil
         }
 
@@ -48,7 +55,6 @@ extension PostElementClearRequest {
         let additionalProp3: AdditionalProp?
     }
 }
-
 
 extension PostElementClearRequest.RequestBody {
     struct AdditionalProp: Codable {}

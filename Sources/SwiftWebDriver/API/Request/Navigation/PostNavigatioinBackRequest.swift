@@ -1,10 +1,17 @@
-import Foundation
+// PostNavigatioinBackRequest.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+//
+// This package is freely distributable under the MIT license.
+// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
+
 import AsyncHTTPClient
-import NIOHTTP1
+import Foundation
 import NIO
+import NIOHTTP1
 
-internal struct PostNavigationBackRequest: RequestType {
-
+struct PostNavigationBackRequest: RequestType {
     typealias Response = PostNavigationBackResponse
 
     var baseURL: URL
@@ -20,7 +27,6 @@ internal struct PostNavigationBackRequest: RequestType {
     var headers: HTTPHeaders = [:]
 
     var body: HTTPClient.Body? {
-
         let requestBody = PostNavigationBackRequest
             .RequestBody(additionalProp1: nil, additionalProp2: nil, additionalProp3: nil)
 
@@ -28,16 +34,16 @@ internal struct PostNavigationBackRequest: RequestType {
         encoder.outputFormatting = .prettyPrinted
         let data = try? encoder.encode(requestBody)
 
-        guard let data = data else {
+        guard let data else {
             return nil
         }
 
         return .data(data)
     }
-
 }
 
 // MARK: - PostNavigationRequest.RequestBody
+
 extension PostNavigationBackRequest {
     struct RequestBody: Codable {
         let additionalProp1: AdditionalProp?
@@ -47,6 +53,7 @@ extension PostNavigationBackRequest {
 }
 
 // MARK: - PostNavigationRequest.RequestBody.AdditionalProp
+
 extension PostNavigationBackRequest.RequestBody {
     struct AdditionalProp: Codable {}
 }

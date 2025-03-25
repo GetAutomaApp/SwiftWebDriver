@@ -1,3 +1,11 @@
+// ChromeDriverJavascriptIntegrationTests.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+//
+// This package is freely distributable under the MIT license.
+// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
+
 import Foundation
 @testable import SwiftWebDriver
 import Testing
@@ -27,7 +35,10 @@ class ChromeDriverJavascriptIntegrationTests: ChromeDriverTest {
     }
 
     @Test("Test async Javascript Execution", arguments: [
-        ("var callback = arguments[arguments.length - 1]; setTimeout(function() { callback('Hello from async JavaScript'); }, 2000);", "Hello from async JavaScript"),
+        (
+            "var callback = arguments[arguments.length - 1]; setTimeout(function() { callback('Hello from async JavaScript'); }, 2000);",
+            "Hello from async JavaScript"
+        ),
     ]) func executeAsyncJavascript(input: (String, String)) async throws {
         do {
             try await driver.navigateTo(url: testPageURL)

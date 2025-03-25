@@ -9,16 +9,18 @@ let package = Package(
         .macOS(.v12),
     ],
     dependencies: [
-        .package(name: "SwiftWebDriver", path: "../")
+        .package(name: "SwiftWebDriver", path: "../"),
     ],
     targets: [
         .executableTarget(
             name: "SeleniumSwiftExample",
             dependencies: [
-                .product(name: "SwiftWebDriver", package: "SwiftWebDriver")
-            ]),
+                .product(name: "SwiftWebDriver", package: "SwiftWebDriver"),
+            ]
+        ),
         .testTarget(
             name: "SeleniumSwiftExampleTests",
-            dependencies: ["SeleniumSwiftExample"]),
+            dependencies: ["SeleniumSwiftExample"]
+        ),
     ]
 )

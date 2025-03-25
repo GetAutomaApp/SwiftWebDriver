@@ -1,3 +1,11 @@
+// ChromeDriverIntegrationTestsBase.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+//
+// This package is freely distributable under the MIT license.
+// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
+
 import Foundation
 @testable import SwiftWebDriver
 
@@ -21,17 +29,17 @@ class ChromeDriverTest: ChromeDriverIntegrationTests {
         let driverURL = URL(string: "http://localhost:4444")!
         let chromeOptions = ChromeOptions(args: [
             Args(.disableDevShmUsage),
-            Args(.noSandbox)
+            Args(.noSandbox),
         ])
 
         // Initialize the WebDriver on the main actor
-        self.driver = WebDriver(
+        driver = WebDriver(
             driver: ChromeDriver(
                 driverURL: driverURL,
                 browserObject: chromeOptions
             )
         )
 
-        try await self.driver.start()
+        try await driver.start()
     }
 }

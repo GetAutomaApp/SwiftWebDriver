@@ -1,3 +1,11 @@
+// APIClient.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+//
+// This package is freely distributable under the MIT license.
+// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
+
 import AsyncHTTPClient
 import Foundation
 import NIO
@@ -25,7 +33,7 @@ struct APIClient {
     /// - Parameter request: RequestType
     /// - Returns: EventLoopFuture<RequestType.Response>
     func request<R>(_ request: R) -> EventLoopFuture<R.Response> where R: RequestType {
-        return httpClient.execute(request: request).flatMapResult { response -> Result<R.Response, Error> in
+        httpClient.execute(request: request).flatMapResult { response -> Result<R.Response, Error> in
 
             guard response.status == .ok else {
                 if
@@ -57,6 +65,6 @@ struct APIClient {
     /// - Returns: EventLoopFuture<RequestType.Response>
     @discardableResult
     func request<R>(_ request: R) async throws -> R.Response where R: RequestType {
-        return try await self.request(request).get()
+        try await self.request(request).get()
     }
 }

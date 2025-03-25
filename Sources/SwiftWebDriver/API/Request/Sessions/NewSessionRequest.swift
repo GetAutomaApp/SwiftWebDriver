@@ -1,9 +1,16 @@
+// NewSessionRequest.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+//
+// This package is freely distributable under the MIT license.
+// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
+
+import AsyncHTTPClient
 import Foundation
 import NIOHTTP1
-import AsyncHTTPClient
 
-internal struct NewSessionRequest: RequestType {
-
+struct NewSessionRequest: RequestType {
     typealias Response = NewSessionResponse
 
     var baseURL: URL
@@ -12,9 +19,9 @@ internal struct NewSessionRequest: RequestType {
 
     var method: HTTPMethod = .POST
 
-    var headers: HTTPHeaders = HTTPHeaders(
+    var headers: HTTPHeaders = .init(
         [
-            ("Content-Type", "application/json")
+            ("Content-Type", "application/json"),
         ]
     )
 
@@ -33,7 +40,7 @@ internal struct NewSessionRequest: RequestType {
         encoder.outputFormatting = .prettyPrinted
         let data = try? encoder.encode(requestBody)
 
-        guard let data = data else {
+        guard let data else {
             return nil
         }
 
@@ -42,6 +49,7 @@ internal struct NewSessionRequest: RequestType {
 }
 
 // MARK: - NewSessionRequest.RequestBody
+
 extension NewSessionRequest {
     struct RequestBody: Codable {
         let capabilities: Capabilities
@@ -49,18 +57,18 @@ extension NewSessionRequest {
 }
 
 // MARK: - NewSessionRequest.RequestBody.Capabilities
-extension NewSessionRequest.RequestBody {
 
+extension NewSessionRequest.RequestBody {
     struct Capabilities: Codable {
         let alwaysMatch: AlwaysMatch
         enum CodingKeys: String, CodingKey {
-            case alwaysMatch = "alwaysMatch"
+            case alwaysMatch
         }
     }
 }
 
-
 // MARK: - NewSessionRequest.RequestBody.Capabilities.AlwaysMatch
+
 extension NewSessionRequest.RequestBody.Capabilities {
     struct AlwaysMatch: Codable {
         let chromeOptions: ChromeOptions

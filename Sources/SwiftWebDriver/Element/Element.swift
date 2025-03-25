@@ -1,3 +1,11 @@
+// Element.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+//
+// This package is freely distributable under the MIT license.
+// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
+
 import Foundation
 import NIO
 
@@ -25,14 +33,24 @@ public struct Element: ElementCommandProtocol, Sendable {
     @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func findElement(_ locatorType: LocatorType) async throws -> Element {
-        let request = PostElementByIdRequest(baseURL: baseURL, sessionId: sessionId, elementId: elementId, cssSelector: locatorType.create())
+        let request = PostElementByIdRequest(
+            baseURL: baseURL,
+            sessionId: sessionId,
+            elementId: elementId,
+            cssSelector: locatorType.create()
+        )
         let response = try await APIClient.shared.request(request)
         return Element(baseURL: baseURL, sessionId: sessionId, elementId: response.elementId)
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func findElements(_ locatorType: LocatorType) async throws -> Elements {
-        let request = PostElementsByIdRequest(baseURL: baseURL, sessionId: sessionId, elementId: elementId, cssSelector: locatorType.create())
+        let request = PostElementsByIdRequest(
+            baseURL: baseURL,
+            sessionId: sessionId,
+            elementId: elementId,
+            cssSelector: locatorType.create()
+        )
         let response = try await APIClient.shared.request(request)
         return response.value.map { elementId in
             Element(baseURL: baseURL, sessionId: sessionId, elementId: elementId)
@@ -71,7 +89,12 @@ public struct Element: ElementCommandProtocol, Sendable {
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func attribute(name: String) async throws -> String {
-        let request = GetElementAttributeRequest(baseURL: baseURL, sessionId: sessionId, elementId: elementId, name: name)
+        let request = GetElementAttributeRequest(
+            baseURL: baseURL,
+            sessionId: sessionId,
+            elementId: elementId,
+            name: name
+        )
         let response = try await APIClient.shared.request(request)
         return response.value
     }
@@ -79,7 +102,12 @@ public struct Element: ElementCommandProtocol, Sendable {
     @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func send(value: String) async throws -> String? {
-        let request = PostElementSendValueRequest(baseURL: baseURL, sessionId: sessionId, elementId: elementId, text: value)
+        let request = PostElementSendValueRequest(
+            baseURL: baseURL,
+            sessionId: sessionId,
+            elementId: elementId,
+            text: value
+        )
         let response = try await APIClient.shared.request(request)
         return response.value
     }
@@ -106,7 +134,9 @@ public struct Element: ElementCommandProtocol, Sendable {
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
-    public func waitUntil(_ locatorType: LocatorType, retryCount: Int = 3, durationSeconds: Int = 1) async throws -> Bool {
+    public func waitUntil(_ locatorType: LocatorType, retryCount: Int = 3,
+                          durationSeconds: Int = 1) async throws -> Bool
+    {
         do {
             try await findElement(locatorType)
             return true

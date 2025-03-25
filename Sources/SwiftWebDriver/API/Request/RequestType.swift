@@ -1,11 +1,18 @@
-import Foundation
+// RequestType.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+//
+// This package is freely distributable under the MIT license.
+// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
+
 import AsyncHTTPClient
-import NIOHTTP1
+import Foundation
 import NIO
+import NIOHTTP1
 
 /// APIClient use RequestType
 public protocol RequestType {
-
     /// convert response to Codable
     associatedtype Response: ResponseType
 
@@ -23,25 +30,28 @@ public protocol RequestType {
 
     /// request http body
     var body: HTTPClient.Body? { get }
-
 }
 
 extension RequestType {
-
     /// request full path
     var url: URL {
         baseURL.appendingPathComponent(path)
     }
 }
 
-extension HTTPClient {
-    public func execute<R>(request: R, deadline: NIODeadline? = nil) -> EventLoopFuture<Response>  where R: RequestType {
+public extension HTTPClient {
+    func execute(request: some RequestType, deadline: NIODeadline? = nil) -> EventLoopFuture<Response> {
         do {
-            let request = try HTTPClient.Request(url: request.url, method: request.method, headers: request.headers, body: request.body)
+            let request = try HTTPClient.Request(
+                url: request.url,
+                method: request.method,
+                headers: request.headers,
+                body: request.body
+            )
 
-            return self.execute(request: request, deadline: deadline)
+            return execute(request: request, deadline: deadline)
         } catch {
-            return self.eventLoopGroup.any().makeFailedFuture(error)
+            return eventLoopGroup.any().makeFailedFuture(error)
         }
     }
 }

@@ -1,3 +1,11 @@
+// LocatorType.swift
+// Copyright (c) 2025 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+//
+// This package is freely distributable under the MIT license.
+// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
+
 import Foundation
 
 public enum LocatorType: Sendable {
@@ -7,18 +15,18 @@ public enum LocatorType: Sendable {
     case partialLinkText(_ particlalLinText: String)
     case tagName(_ tagName: String)
 
-    internal func create() -> LocatorSelector {
+    func create() -> LocatorSelector {
         switch self {
-        case .css(let cssSelectorType):
-            return cssSelectorType.create()
-        case .xpath(let value):
-            return LocatorSelector(using: "xpath", value: value)
-        case .linkText(let value):
-            return LocatorSelector(using: "link text", value: value)
-        case .partialLinkText(let value):
-            return LocatorSelector(using: "partial link text", value: value)
-        case .tagName(let value):
-            return LocatorSelector(using: "tag name", value: value)
+        case let .css(cssSelectorType):
+            cssSelectorType.create()
+        case let .xpath(value):
+            LocatorSelector(using: "xpath", value: value)
+        case let .linkText(value):
+            LocatorSelector(using: "link text", value: value)
+        case let .partialLinkText(value):
+            LocatorSelector(using: "partial link text", value: value)
+        case let .tagName(value):
+            LocatorSelector(using: "tag name", value: value)
         }
     }
 }
