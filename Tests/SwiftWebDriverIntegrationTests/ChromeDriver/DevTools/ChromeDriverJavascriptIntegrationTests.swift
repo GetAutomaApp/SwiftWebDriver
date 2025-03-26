@@ -23,7 +23,7 @@ class ChromeDriverJavascriptIntegrationTests: ChromeDriverTest {
         ("sessionStorage.setItem('session', 'active'); return sessionStorage.getItem('session')", "active"),
         ("let arr = [1, 2, 3]; arr.push(4); return arr.join(',')", "1,2,3,4"),
         ("let obj = { name: 'Alice', age: 25 }; obj.age = 26; return `${obj.age}`", "26"),
-        ("document.body.innerHTML = '<p>Hello, World!</p>'; return document.innerHTML", "Hello, World!"),
+        ("document.body.innerHTML = '<p>Hello, World!</p>'; return document.body.innerHTML", "Hello, World!"),
     ]) func executeJavascript(input: (String, String)) async throws {
         do {
             try await driver.navigateTo(url: testPageURL)
