@@ -17,7 +17,7 @@ protocol ChromeDriverIntegrationTests {
 }
 
 class ChromeDriverTest: ChromeDriverIntegrationTests {
-    let baseUrl: String = "http://httpd"
+    let baseUrl: String = "http://localhost"
     var testPageURL: URL {
         .init(string: "\(baseUrl)/\(page)")!
     }
@@ -26,7 +26,7 @@ class ChromeDriverTest: ChromeDriverIntegrationTests {
     var driver: WebDriver<ChromeDriver>
 
     init() async throws {
-        let driverURL = URL(string: "http://selenium:4444")!
+        let driverURL = URL(string: "http://localhost:4444")!
         let chromeOptions = ChromeOptions(args: [
             Args(.disableDevShmUsage),
             Args(.noSandbox),
