@@ -1,0 +1,22 @@
+{
+  "name": "swiftwebdriver",
+  "version": "1.0.0",
+  "description": "> [!NOTE] This codebase is a fork made from this [REPO](https://github.com/ashi-psn/SwiftWebDriver). The majority of the code was written by @ashi-psn. This repo just modernizes it & adapts it for our organizations usecases.",
+  "main": "index.js",
+  "scripts": {
+    "format": "swiftformat .",
+    "install:all": "npm run install:swiftformat",
+    "install:swiftformat": "brew install swiftformat"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GetAutomaApp/SwiftWebDriver.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GetAutomaApp/SwiftWebDriver/issues"
+  },
+  "homepage": "https://github.com/GetAutomaApp/SwiftWebDriver#readme"
+}
