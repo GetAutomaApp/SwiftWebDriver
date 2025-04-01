@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v12),
     ],
     dependencies: [
-        .package(name: "SwiftWebDriver", path: "../"),
+        .package(url: "https://github.com/GetAutomaApp/SwiftWebDriver.git", branch: "master")
     ],
     targets: [
         .executableTarget(
