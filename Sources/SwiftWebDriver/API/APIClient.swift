@@ -10,7 +10,7 @@ import AsyncHTTPClient
 import Foundation
 import NIO
 import NIOFoundationCompat
-@preconcurrency import NIOHTTP1
+import NIOHTTP1
 
 enum APIResponseError: Error, Codable {
     case massage

@@ -16,7 +16,7 @@ Adding the dependency
 Add the following entry in your Package.swift to start using SwiftWebDriver:
 
 ```swift
-.package(url: "https://github.com/GetAutomaApp/SwiftWebDriver.git", branch: "master)
+.package(url: "https://github.com/GetAutomaApp/SwiftWebDriver.git", branch: "master")
 ```
 
 and add dependency to your target:
