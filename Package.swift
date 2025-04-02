@@ -19,7 +19,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/swift-server/async-http-client.git", from: "1.10.0"),
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.80.0"),
-        .package(url: "https://github.com/GetAutomaApp/swift-any-codable.git", branch: "main"),
+        .package(url: "https://github.com/GetAutomaApp/swift-any-codable.git", from: "1.0.2"),
     ],
     targets: [
         .target(
