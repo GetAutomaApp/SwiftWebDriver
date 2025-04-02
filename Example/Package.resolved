@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/GetAutomaApp/swift-any-codable.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "7905b4c8bf6aaee39ba6bed715deee6a99839d1a"
+        "revision" : "10e1be7ea48a0bc3a6eff01a117cc8cafd4dd0e2",
+        "version" : "1.0.2"
       }
     },
     {
@@ -140,8 +140,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/GetAutomaApp/SwiftWebDriver.git",
       "state" : {
-        "branch" : "master",
-        "revision" : "000f8fce2c2383aadc2d85f7d723a1f124b0d00f"
+        "revision" : "bbc35781fe30bfaa1dc8ca57fb3eb7c603bf6583",
+        "version" : "0.2.1"
       }
     }
   ],

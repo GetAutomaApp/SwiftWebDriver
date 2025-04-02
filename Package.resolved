@@ -1,5 +1,5 @@
 {
-  "originHash" : "f6e3329a72ca132d61529b0e892c85e620494b917a584a8e8412b3ea9c02855a",
+  "originHash" : "d4a26a5c94eaff56111cd94951b6d365f68202f4571faf25c762433afc21823c",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/GetAutomaApp/swift-any-codable.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "70b85d4dc84a71370b4ee18140388aff378389d3"
+        "revision" : "10e1be7ea48a0bc3a6eff01a117cc8cafd4dd0e2",
+        "version" : "1.0.2"
       }
     },
     {
