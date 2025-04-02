@@ -16,16 +16,16 @@ public struct PostElementsByIdResponse: ResponseType {
         let key = container.allKeys.first!
         var valueContainer = try container.nestedUnkeyedContainer(forKey: key)
 
-        var _elementIds: [String] = []
+        var elementIds: [String] = []
 
         while !valueContainer.isAtEnd {
             let elementContainer = try valueContainer.nestedContainer(keyedBy: CustomCodingKey.self)
             guard let key = elementContainer.allKeys.first else { continue }
             let elementId = try elementContainer.decode(String.self, forKey: key)
-            _elementIds.append(elementId)
+            elementIds.append(elementId)
         }
 
-        value = _elementIds
+        value = elementIds
     }
 
     struct CustomCodingKey: CodingKey {
