@@ -10,20 +10,20 @@ import AsyncHTTPClient
 import Foundation
 import NIOHTTP1
 
-struct DeleteSessionRequest: RequestType {
-    typealias Response = DeleteSessionResponse
+internal struct DeleteSessionRequest: RequestType {
+    public typealias Response = DeleteSessionResponse
 
-    var baseURL: URL
+    public var baseURL: URL
 
-    var sessionId: String
+    public var sessionId: String
 
-    var path: String {
+    public var path: String {
         "session/\(sessionId)"
     }
 
-    var method: HTTPMethod = .DELETE
+    public var method: HTTPMethod = .DELETE
 
-    var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
 
-    var body: HTTPClient.Body?
+    public var body: HTTPClient.Body?
 }

@@ -11,23 +11,23 @@ import Foundation
 import NIO
 import NIOHTTP1
 
-struct PostNavigationRefreshRequest: RequestType {
-    typealias Response = PostNavigationRefreshResponse
+internal struct PostNavigationRefreshRequest: RequestType {
+    public typealias Response = PostNavigationRefreshResponse
 
-    var baseURL: URL
+    public var baseURL: URL
 
-    var sessionId: String
+    public var sessionId: String
 
-    var path: String {
+    public var path: String {
         "session/\(sessionId)/refresh"
     }
 
-    var method: HTTPMethod = .POST
+    public var method: HTTPMethod = .POST
 
-    var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
 
-    var body: HTTPClient.Body? {
-        let requestBody = PostNavigationRefreshRequest
+    public var body: HTTPClient.Body? {
+        let requestBody = Self
             .RequestBody(additionalProp1: nil, additionalProp2: nil, additionalProp3: nil)
 
         let encoder = JSONEncoder()
@@ -44,16 +44,16 @@ struct PostNavigationRefreshRequest: RequestType {
 
 // MARK: - PostNavigationRequest.RequestBody
 
-extension PostNavigationRefreshRequest {
+internal extension PostNavigationRefreshRequest {
     struct RequestBody: Codable {
-        let additionalProp1: AdditionalProp?
-        let additionalProp2: AdditionalProp?
-        let additionalProp3: AdditionalProp?
+        public let additionalProp1: AdditionalProp?
+        public let additionalProp2: AdditionalProp?
+        public let additionalProp3: AdditionalProp?
     }
 }
 
 // MARK: - PostNavigationRequest.RequestBody.AdditionalProp
 
-extension PostNavigationRefreshRequest.RequestBody {
+internal extension PostNavigationRefreshRequest.RequestBody {
     struct AdditionalProp: Codable {}
 }

@@ -6,6 +6,8 @@
 // This package is freely distributable under the MIT license.
 // This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
 
-public enum JavascriptExecutionTypes {
-    case sync, async
+public struct DevToolTypes {
+    public enum JavascriptExecutionTypes {
+        case sync, async
+    }
 }

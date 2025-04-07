@@ -1,0 +1,10 @@
+# Refactoring Instructions
+
+- The majority of this code should be private, only the ChromeDriver & WebDriver methods will be exposed
+- Run .swiftlint.yml & lint all the files
+- Every time pick all the errors from a single file & try to solve them
+- Rerun .swiftlint.yml & ensure those errors are resolved
+- After you're done please read this file again & use this as context for the upcoming run
+- Don't add any comments to your changes
+- Run SwiftBuild to ensure all the code still works + resolve any issues to fix it!
+- Re-read this file by sending a ✅ & typing this all out on one line (all the text)

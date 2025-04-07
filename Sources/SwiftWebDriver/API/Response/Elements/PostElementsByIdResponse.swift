@@ -9,11 +9,16 @@
 import Foundation
 
 public struct PostElementsByIdResponse: ResponseType {
-    var value: [String]
+    public var value: [String]
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CustomCodingKey.self)
-        let key = container.allKeys.first!
+        let key = container.allKeys.first
+
+        guard let key else {
+            throw Self.Errors.keysAreEmpty
+        }
+
         var valueContainer = try container.nestedUnkeyedContainer(forKey: key)
 
         var elementIds: [String] = []
@@ -28,23 +33,27 @@ public struct PostElementsByIdResponse: ResponseType {
         value = elementIds
     }
 
-    struct CustomCodingKey: CodingKey {
-        var stringValue: String
-        var intValue: Int?
+    public struct CustomCodingKey: CodingKey {
+        public var stringValue: String
+        public var intValue: Int?
 
-        init?(stringValue: String) {
+        public init(stringValue: String) {
             self.stringValue = stringValue
         }
 
-        init?(intValue: Int) {
+        public init(intValue: Int) {
             stringValue = "\(intValue)"
             self.intValue = intValue
         }
 
-        static let value = CustomCodingKey(stringValue: "value")!
+        public static let value = Self(stringValue: "value")
     }
 
-    enum CustomValueKey: String, CodingKey {
+    public enum CustomValueKey: String, CodingKey {
         case wildcard
+    }
+
+    public enum Errors: Error {
+        case keysAreEmpty
     }
 }

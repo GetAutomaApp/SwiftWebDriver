@@ -8,16 +8,16 @@
 
 import Foundation
 
-struct SeleniumError: Codable, LocalizedError {
-    let value: Value
-    var errorDescription: String? {
+public struct SeleniumError: Codable, LocalizedError {
+    public let value: Value
+    public var errorDescription: String? {
         "error : \(value.error), message: \(value.message)"
     }
 }
 
-extension SeleniumError {
-    struct Value: Codable {
-        let message: String
-        let error: String
+public extension SeleniumError {
+    struct Value: Codable, Sendable {
+        public let message: String
+        public let error: String
     }
 }

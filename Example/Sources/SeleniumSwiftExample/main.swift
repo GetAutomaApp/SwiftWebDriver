@@ -8,7 +8,7 @@
 
 import SwiftWebDriver
 
-let chromeOption = try ChromeOptions(
+let chromeOption = ChromeOptions(
     args: [
         Args(.headless),
     ]

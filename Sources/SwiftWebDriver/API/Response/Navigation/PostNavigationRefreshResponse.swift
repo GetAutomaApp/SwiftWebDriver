@@ -9,5 +9,5 @@
 import Foundation
 
 public struct PostNavigationRefreshResponse: ResponseType {
-    let value: String?
+    public let value: String?
 }

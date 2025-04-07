@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct NewSessionResponse: ResponseType {
-    struct Value: ResponseType {
-        let sessionId: String
-        let capabilities: Capabilities
+internal struct NewSessionResponse: ResponseType {
+    public struct Value: ResponseType {
+        public let sessionId: String
+        public let capabilities: Capabilities
 
-        struct Capabilities: Codable {
+        public struct Capabilities: Codable {
 //            let browserName: String
 //            let browserVersion: String
 //            let platformName: String
@@ -112,5 +112,5 @@ struct NewSessionResponse: ResponseType {
         }
     }
 
-    let value: NewSessionResponse.Value
+    public let value: Self.Value
 }

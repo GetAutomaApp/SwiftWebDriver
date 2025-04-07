@@ -10,9 +10,9 @@
 import Testing
 
 @Suite("Chrome Driver Find Element Tests", .serialized)
-class ChromeDriverElementTests: ChromeDriverTest {
+internal class ChromeDriverFindElementIntegrationTests: ChromeDriverTest {
     @Test("Get Element By CSS Selector")
-    func getElementCSSElement() async throws {
+    public func getElementCSSElement() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 
@@ -27,7 +27,7 @@ class ChromeDriverElementTests: ChromeDriverTest {
     }
 
     @Test("Get Element By XPath")
-    func getElementByXPath() async throws {
+    public func getElementByXPath() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 
@@ -36,7 +36,7 @@ class ChromeDriverElementTests: ChromeDriverTest {
     }
 
     @Test("Get Element By Link Text")
-    func getElementByLinkText() async throws {
+    public func getElementByLinkText() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 
@@ -47,7 +47,7 @@ class ChromeDriverElementTests: ChromeDriverTest {
     }
 
     @Test("Get Element By Partial Link")
-    func getElementByPartialLink() async throws {
+    public func getElementByPartialLink() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 
@@ -59,7 +59,7 @@ class ChromeDriverElementTests: ChromeDriverTest {
     }
 
     @Test("Get Element By TagName")
-    func getElementByTagName() async throws {
+    public func getElementByTagName() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 

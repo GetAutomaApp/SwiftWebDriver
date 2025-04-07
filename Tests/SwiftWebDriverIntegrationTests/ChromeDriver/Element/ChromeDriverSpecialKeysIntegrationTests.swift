@@ -10,9 +10,9 @@
 import Testing
 
 @Suite("Chrome Driver Special Keys", .serialized)
-class ChromeDriverSpecialKeysTests: ChromeDriverTest {
+internal class ChromeDriverSpecialKeysIntegrationTests: ChromeDriverTest {
     @Test("Tab Should Cycle Input Elements Focus")
-    func tabCycleInputElementFocus() async throws {
+    public func tabCycleInputElementFocus() async throws {
         page = "testSpecialKeys.html"
 
         try await driver.navigateTo(url: testPageURL)
@@ -21,5 +21,9 @@ class ChromeDriverSpecialKeysTests: ChromeDriverTest {
         try await Task.sleep(for: .seconds(1))
         let activeElement = try await driver.getActiveElement()
         #expect(try await activeElement.attribute(name: "id") == "input2")
+    }
+
+    deinit {
+        // Add deinit logic here
     }
 }

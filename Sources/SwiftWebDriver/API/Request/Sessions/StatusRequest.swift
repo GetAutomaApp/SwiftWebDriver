@@ -10,16 +10,16 @@ import AsyncHTTPClient
 import Foundation
 import NIOHTTP1
 
-struct StatusRequest: RequestType {
-    typealias Response = StatusResponse
+internal struct StatusRequest: RequestType {
+    public typealias Response = StatusResponse
 
-    var baseURL: URL
+    public var baseURL: URL
 
-    var path: String = "status"
+    public var path: String = "status"
 
-    var method: HTTPMethod = .GET
+    public var method: HTTPMethod = .GET
 
-    var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
 
-    var body: HTTPClient.Body?
+    public var body: HTTPClient.Body?
 }

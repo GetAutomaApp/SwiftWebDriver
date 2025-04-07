@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct GetElementScreenShotResponse: ResponseType {
-    let value: String
+public struct GetElementScreenShotResponse: ResponseType {
+    public let value: String
 }

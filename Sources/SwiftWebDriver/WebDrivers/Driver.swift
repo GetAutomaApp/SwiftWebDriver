@@ -11,8 +11,6 @@ import Foundation
 import NIO
 import NIOHTTP1
 
-protocol StatableOpject: Codable {}
-
 public protocol Driver: FindElementProtocol {
     associatedtype BrowserOption
 
@@ -47,7 +45,7 @@ public protocol Driver: FindElementProtocol {
     func execute(
         _ script: String,
         args: [String],
-        type: JavascriptExecutionTypes
+        type: DevToolTypes.JavascriptExecutionTypes
     ) async throws -> PostExecuteResponse
 
     func getActiveElement() async throws -> Element

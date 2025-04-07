@@ -11,25 +11,25 @@ import Foundation
 import NIO
 import NIOHTTP1
 
-struct PostElementClearRequest: RequestType {
-    typealias Response = PostElementClearResponse
+internal struct PostElementClearRequest: RequestType {
+    public typealias Response = PostElementClearResponse
 
-    var baseURL: URL
+    public var baseURL: URL
 
-    var sessionId: String
+    public var sessionId: String
 
-    var elementId: String
+    public var elementId: String
 
-    var path: String {
+    public var path: String {
         "session/\(sessionId)/element/\(elementId)/clear"
     }
 
-    var method: HTTPMethod = .POST
+    public var method: HTTPMethod = .POST
 
-    var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
 
-    var body: HTTPClient.Body? {
-        let requestBody = PostElementClearRequest
+    public var body: HTTPClient.Body? {
+        let requestBody = Self
             .RequestBody(
                 additionalProp1: nil,
                 additionalProp2: nil,
@@ -48,14 +48,14 @@ struct PostElementClearRequest: RequestType {
     }
 }
 
-extension PostElementClearRequest {
+internal extension PostElementClearRequest {
     struct RequestBody: Codable {
-        let additionalProp1: AdditionalProp?
-        let additionalProp2: AdditionalProp?
-        let additionalProp3: AdditionalProp?
+        public let additionalProp1: AdditionalProp?
+        public let additionalProp2: AdditionalProp?
+        public let additionalProp3: AdditionalProp?
     }
 }
 
-extension PostElementClearRequest.RequestBody {
+internal extension PostElementClearRequest.RequestBody {
     struct AdditionalProp: Codable {}
 }

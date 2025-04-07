@@ -11,24 +11,24 @@ import Foundation
 import NIO
 import NIOHTTP1
 
-struct GetElementNamePropertyRequest: RequestType {
-    typealias Response = GetElementNamePropertyResponse
+internal struct GetElementNamePropertyRequest: RequestType {
+    public typealias Response = GetElementNamePropertyResponse
 
-    var baseURL: URL
+    public var baseURL: URL
 
-    var sessionId: String
+    public var sessionId: String
 
-    var elementId: String
+    public var elementId: String
 
-    var name: String
+    public var name: String
 
-    var path: String {
+    public var path: String {
         "session/\(sessionId)/element/\(elementId)/prorety/\(name)"
     }
 
-    var method: HTTPMethod = .GET
+    public var method: HTTPMethod = .GET
 
-    var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
 
-    var body: HTTPClient.Body?
+    public var body: HTTPClient.Body?
 }

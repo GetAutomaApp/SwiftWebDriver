@@ -8,9 +8,9 @@
 
 import Foundation
 
-enum WebDriverError: LocalizedError {
+internal enum WebDriverError: LocalizedError {
     case sessionIdIsNil
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .sessionIdIsNil:
             "session id must not be nil"

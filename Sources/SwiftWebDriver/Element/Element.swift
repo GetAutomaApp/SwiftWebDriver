@@ -26,13 +26,13 @@ public protocol ElementCommandProtocol: FindElementProtocol {
 }
 
 public struct Element: ElementCommandProtocol, Sendable {
-    let baseURL: URL
+    public let baseURL: URL
     public let sessionId: String
     public let elementId: String
 
     @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    public func findElement(_ locatorType: LocatorType) async throws -> Element {
+    public func findElement(_ locatorType: LocatorType) async throws -> Self {
         let request = PostElementByIdRequest(
             baseURL: baseURL,
             sessionId: sessionId,
@@ -40,7 +40,7 @@ public struct Element: ElementCommandProtocol, Sendable {
             cssSelector: locatorType.create()
         )
         let response = try await APIClient.shared.request(request)
-        return Element(baseURL: baseURL, sessionId: sessionId, elementId: response.elementId)
+        return Self(baseURL: baseURL, sessionId: sessionId, elementId: response.elementId)
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
@@ -53,7 +53,7 @@ public struct Element: ElementCommandProtocol, Sendable {
         )
         let response = try await APIClient.shared.request(request)
         return response.value.map { elementId in
-            Element(baseURL: baseURL, sessionId: sessionId, elementId: elementId)
+            Self(baseURL: baseURL, sessionId: sessionId, elementId: elementId)
         }
     }
 
@@ -114,7 +114,7 @@ public struct Element: ElementCommandProtocol, Sendable {
 
     @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    public func send(value: SendValueActionKeyTypes) async throws -> String? {
+    public func send(value: ElementsTypes.SendValueActionKeyTypes) async throws -> String? {
         let request = PostElementSendValueRequest(
             baseURL: baseURL,
             sessionId: sessionId,
@@ -134,9 +134,11 @@ public struct Element: ElementCommandProtocol, Sendable {
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
-    public func waitUntil(_ locatorType: LocatorType, retryCount: Int = 3,
-                          durationSeconds: Int = 1) async throws -> Bool
-    {
+    public func waitUntil(
+        _ locatorType: LocatorType,
+        retryCount: Int = 3,
+        durationSeconds: Int = 1
+    ) async throws -> Bool {
         do {
             try await findElement(locatorType)
             return true

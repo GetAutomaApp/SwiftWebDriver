@@ -11,24 +11,24 @@ import Foundation
 import NIO
 import NIOHTTP1
 
-struct PostElementClickRequest: RequestType {
-    typealias Response = PostElementClickResponse
+internal struct PostElementClickRequest: RequestType {
+    public typealias Response = PostElementClickResponse
 
-    var baseURL: URL
+    public var baseURL: URL
 
-    var sessionId: String
+    public var sessionId: String
 
-    var elementId: String
+    public var elementId: String
 
-    var path: String {
+    public var path: String {
         "session/\(sessionId)/element/\(elementId)/click"
     }
 
-    var method: HTTPMethod = .POST
+    public var method: HTTPMethod = .POST
 
-    var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
 
-    var body: HTTPClient.Body? {
+    public var body: HTTPClient.Body? {
         let requestBody = PostElementRequest
             .RequestBody(
                 additionalProp1: nil,
@@ -48,14 +48,14 @@ struct PostElementClickRequest: RequestType {
     }
 }
 
-extension PostElementRequest {
+internal extension PostElementRequest {
     struct RequestBody: Codable {
-        let additionalProp1: AdditionalProp?
-        let additionalProp2: AdditionalProp?
-        let additionalProp3: AdditionalProp?
+        public let additionalProp1: AdditionalProp?
+        public let additionalProp2: AdditionalProp?
+        public let additionalProp3: AdditionalProp?
     }
 }
 
-extension PostElementRequest.RequestBody {
+internal extension PostElementRequest.RequestBody {
     struct AdditionalProp: Codable {}
 }

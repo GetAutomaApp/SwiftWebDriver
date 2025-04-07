@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct DeleteSessionResponse: ResponseType {
-    let value: String?
+internal struct DeleteSessionResponse: ResponseType {
+    public let value: String?
 }

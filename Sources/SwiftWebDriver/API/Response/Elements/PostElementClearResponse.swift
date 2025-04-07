@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct PostElementClearResponse: ResponseType {
-    let value: String?
+public struct PostElementClearResponse: ResponseType {
+    public let value: String?
 }

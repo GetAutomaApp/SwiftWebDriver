@@ -32,14 +32,14 @@ public protocol RequestType {
     var body: HTTPClient.Body? { get }
 }
 
-extension RequestType {
+internal extension RequestType {
     /// request full path
     var url: URL {
         baseURL.appendingPathComponent(path)
     }
 }
 
-public extension HTTPClient {
+internal extension HTTPClient {
     func execute(request: some RequestType, deadline: NIODeadline? = nil) -> EventLoopFuture<Response> {
         do {
             let request = try HTTPClient.Request(

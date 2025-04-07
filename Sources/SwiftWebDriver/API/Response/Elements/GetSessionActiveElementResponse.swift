@@ -8,8 +8,8 @@
 
 import Foundation
 
-public struct GetSessionActiveElementResponse: ResponseType {
-    let elementId: String
+internal struct GetSessionActiveElementResponse: ResponseType {
+    public let elementId: String
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: RoodCodingKey.self)
@@ -22,19 +22,19 @@ public struct GetSessionActiveElementResponse: ResponseType {
         elementId = try valueContainer.decode(String.self, forKey: elementKey)
     }
 
-    struct RoodCodingKey: CodingKey {
-        var stringValue: String
-        var intValue: Int?
+    public struct RoodCodingKey: CodingKey {
+        public var stringValue: String
+        public var intValue: Int?
 
-        init?(stringValue: String) {
+        public init(stringValue: String) {
             self.stringValue = stringValue
         }
 
-        init?(intValue: Int) {
+        public init(intValue: Int) {
             stringValue = String(intValue)
             self.intValue = intValue
         }
 
-        static let value = RoodCodingKey(stringValue: "value")!
+        public static let value = Self(stringValue: "value")
     }
 }
