@@ -68,4 +68,8 @@ internal class ChromeDriverFindElementIntegrationTests: ChromeDriverTest {
             .text()
         #expect(text == "this is h1")
     }
+
+    deinit {
+        // no-op
+    }
 }

@@ -284,7 +284,7 @@ public class ChromeDriver: Driver {
         args: [String],
         type: DevToolTypes.JavascriptExecutionTypes
     ) async throws -> PostExecuteResponse {
-        return try await type == .sync ?
+        try await type == .sync ?
             executeJavascriptSync(script, args: args) :
             executeJavascriptAsync(
                 script,

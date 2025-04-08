@@ -36,7 +36,8 @@ internal struct APIClient {
             guard response.status == .ok else {
                 if
                     let buffer = response.body,
-                    let error = try? JSONDecoder().decode(SeleniumError.self, from: buffer) {
+                    let error = try? JSONDecoder().decode(SeleniumError.self, from: buffer)
+                {
                     print(error.localizedDescription)
                     return .failure(error)
                 }

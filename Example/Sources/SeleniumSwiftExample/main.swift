@@ -8,29 +8,33 @@
 
 import SwiftWebDriver
 
-let chromeOption = ChromeOptions(
-    args: [
-        Args(.headless),
-    ]
-)
+internal struct Main {
+    public static func main() async throws {
+        let chromeOption = ChromeOptions(
+            args: [
+                Args(.headless),
+            ]
+        )
 
-let chromeDriver = try ChromeDriver(
-    driverURLString: "http://localhost:9515",
-    browserObject: chromeOption
-)
+        let chromeDriver = try ChromeDriver(
+            driverURLString: "http://localhost:4444",
+            browserObject: chromeOption
+        )
 
-let driver = WebDriver(
-    driver: chromeDriver
-)
+        let driver = WebDriver(
+            driver: chromeDriver
+        )
 
-Task.detached {
-    do {
-        let status = try await driver.status()
-        print(status)
-        let sessionId = try await driver.start()
-        print(sessionId)
-        try await driver.stop()
-    } catch {
-        print(error)
+        do {
+            let status = try await driver.status()
+            print(status)
+            let sessionId = try await driver.start()
+            print(sessionId)
+            try await driver.stop()
+        } catch {
+            print(error)
+        }
     }
 }
+
+try await Main.main()

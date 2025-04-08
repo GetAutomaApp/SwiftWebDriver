@@ -10,7 +10,7 @@
 import Testing
 
 @Suite("Chrome Driver Element Handles", .serialized)
-internal class ChromeDriverElementHandleTests: ChromeDriverTest {
+internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     @Test("Click Button")
     public func clickButton() async throws {
         page = "elementHandleTestPage.html"
@@ -80,7 +80,9 @@ internal class ChromeDriverElementHandleTests: ChromeDriverTest {
         do {
             try await element.click()
             #expect(Bool(false))
-        } catch {}
+        } catch {
+            #expect(Bool(true))
+        }
     }
 
     deinit {
