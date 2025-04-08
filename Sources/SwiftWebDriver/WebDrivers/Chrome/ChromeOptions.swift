@@ -9,9 +9,11 @@
 import Foundation
 import NIOCore
 
+protocol StatableObject: Codable {}
+
 public typealias Args = String
 
-public struct ChromeOptions: StatableOpject {
+public struct ChromeOptions: StatableObject {
     public let args: [Args]?
 
     public init(args: [Args]?) {
