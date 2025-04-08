@@ -35,6 +35,6 @@ public struct PostElementResponse: ResponseType {
             self.intValue = intValue
         }
 
-        public static let value = RoodCodingKey(stringValue: "value")
+        public static let value = Self(stringValue: "value")
     }
 }

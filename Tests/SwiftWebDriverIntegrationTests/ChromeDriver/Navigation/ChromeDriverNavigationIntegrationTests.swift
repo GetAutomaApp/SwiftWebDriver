@@ -1,4 +1,3 @@
-
 @testable import SwiftWebDriver
 import Testing
 
@@ -28,5 +27,9 @@ internal class ChromeDriverNavigationIntegrationTests: ChromeDriverTest {
             .waitUntil(.css(.id("asyncAddElement")), retryCount: retries, durationSeconds: sleepDuration)
 
         #expect(result)
+    }
+
+    deinit {
+        // Add deinit logic here
     }
 }

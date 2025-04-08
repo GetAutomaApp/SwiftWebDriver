@@ -69,15 +69,21 @@ internal class ChromeDriverElementHandleTests: ChromeDriverTest {
 
     @Test("Fail any operation if element becomes stale")
     public func throwStaleError() async throws {
+        let sleepTotal = 3
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
         let element = try await driver.findElement(.css(.id("willDelete")))
         try await element.click()
-        try await Task.sleep(for: .seconds(3))
+
+        try await Task.sleep(for: .seconds(sleepTotal))
 
         do {
             try await element.click()
             #expect(Bool(false))
         } catch {}
+    }
+
+    deinit {
+        // Add deinit logic here
     }
 }

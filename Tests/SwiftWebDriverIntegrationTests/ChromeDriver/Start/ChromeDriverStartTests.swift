@@ -18,4 +18,8 @@ internal class ChromeDriverStartTests: ChromeDriverTest {
         let sessionId = try await driver.start()
         #expect(sessionId != "")
     }
+
+    deinit {
+        // Add deinit logic here
+    }
 }
