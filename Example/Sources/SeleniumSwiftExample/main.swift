@@ -8,7 +8,7 @@
 
 import SwiftWebDriver
 
-internal struct Main {
+internal enum Main {
     public static func main() async throws {
         let chromeOption = ChromeOptions(
             args: [
