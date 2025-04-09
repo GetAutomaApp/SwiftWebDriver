@@ -11,24 +11,24 @@ import Foundation
 import NIO
 import NIOHTTP1
 
-struct PostExecuteAsyncRequest: RequestType {
-    typealias Response = PostExecuteResponse
+internal struct PostExecuteAsyncRequest: RequestType {
+    public typealias Response = PostExecuteResponse
 
-    var baseURL: URL
+    public var baseURL: URL
 
-    var sessionId: String
+    public var sessionId: String
 
-    var path: String {
+    public var path: String {
         "session/\(sessionId)/execute/async"
     }
 
-    let javascriptSnippet: RequestBody
+    public let javascriptSnippet: RequestBody
 
-    var method: HTTPMethod = .POST
+    public var method: HTTPMethod = .POST
 
-    var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
 
-    var body: HTTPClient.Body? {
+    public var body: HTTPClient.Body? {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         let data = try? encoder.encode(javascriptSnippet)
@@ -41,9 +41,9 @@ struct PostExecuteAsyncRequest: RequestType {
     }
 }
 
-extension PostExecuteAsyncRequest {
+internal extension PostExecuteAsyncRequest {
     struct RequestBody: Codable {
-        let script: String
-        let args: [String]
+        public let script: String
+        public let args: [String]
     }
 }

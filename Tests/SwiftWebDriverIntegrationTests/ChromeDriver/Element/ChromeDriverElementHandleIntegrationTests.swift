@@ -10,9 +10,9 @@
 import Testing
 
 @Suite("Chrome Driver Element Handles", .serialized)
-class ChromeDriverElementHandleTests: ChromeDriverTest {
+internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     @Test("Click Button")
-    func clickButton() async throws {
+    public func clickButton() async throws {
         page = "elementHandleTestPage.html"
 
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
@@ -23,7 +23,7 @@ class ChromeDriverElementHandleTests: ChromeDriverTest {
     }
 
     @Test("Get Element Attributes")
-    func getAttribute() async throws {
+    public func getAttribute() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -34,7 +34,7 @@ class ChromeDriverElementHandleTests: ChromeDriverTest {
     }
 
     @Test("Clear Element")
-    func clearElement() async throws {
+    public func clearElement() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -48,7 +48,7 @@ class ChromeDriverElementHandleTests: ChromeDriverTest {
     }
 
     @Test("Send Key")
-    func sendKey() async throws {
+    public func sendKey() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
         let element = try await driver.findElement(.css(.id("sendValue")))
@@ -58,7 +58,7 @@ class ChromeDriverElementHandleTests: ChromeDriverTest {
     }
 
     @Test("Get Screenshot")
-    func getScreenshot() async throws {
+    public func getScreenshot() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
         let element = try await driver.findElement(.css(.id("sendValue")))
@@ -68,16 +68,24 @@ class ChromeDriverElementHandleTests: ChromeDriverTest {
     }
 
     @Test("Fail any operation if element becomes stale")
-    func throwStaleError() async throws {
+    public func throwStaleError() async throws {
+        let sleepTotal = 3
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
         let element = try await driver.findElement(.css(.id("willDelete")))
         try await element.click()
-        try await Task.sleep(for: .seconds(3))
+
+        try await Task.sleep(for: .seconds(sleepTotal))
 
         do {
             try await element.click()
             #expect(Bool(false))
-        } catch {}
+        } catch {
+            #expect(Bool(true))
+        }
+    }
+
+    deinit {
+        // Add deinit logic here
     }
 }

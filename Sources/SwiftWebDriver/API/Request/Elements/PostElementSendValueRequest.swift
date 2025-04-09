@@ -11,27 +11,27 @@ import Foundation
 import NIO
 import NIOHTTP1
 
-struct PostElementSendValueRequest: RequestType {
-    typealias Response = PostElementSendValueResponse
+internal struct PostElementSendValueRequest: RequestType {
+    public typealias Response = PostElementSendValueResponse
 
-    var baseURL: URL
+    public var baseURL: URL
 
-    var sessionId: String
+    public var sessionId: String
 
-    var elementId: String
+    public var elementId: String
 
-    var path: String {
+    public var path: String {
         "session/\(sessionId)/element/\(elementId)/value"
     }
 
-    let method: HTTPMethod = .POST
+    public let method: HTTPMethod = .POST
 
-    var text: String
+    public var text: String
 
-    var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
 
-    var body: HTTPClient.Body? {
-        let reqeustBody = PostElementSendValueRequest
+    public var body: HTTPClient.Body? {
+        let reqeustBody = Self
             .RequestBody(text: text)
 
         let encoder = JSONEncoder()
@@ -46,8 +46,8 @@ struct PostElementSendValueRequest: RequestType {
     }
 }
 
-extension PostElementSendValueRequest {
+internal extension PostElementSendValueRequest {
     struct RequestBody: Codable {
-        let text: String
+        public let text: String
     }
 }

@@ -9,8 +9,8 @@
 import class Foundation.Bundle
 import XCTest
 
-final class SeleniumSwiftExampleTests: XCTestCase {
-    func testExample() throws {
+public final class SeleniumSwiftExampleTests: XCTestCase {
+    public func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
@@ -42,7 +42,7 @@ final class SeleniumSwiftExampleTests: XCTestCase {
     }
 
     /// Returns path to the built products directory.
-    var productsDirectory: URL {
+    public var productsDirectory: URL {
         #if os(macOS)
             for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
                 return bundle.bundleURL.deletingLastPathComponent()
@@ -51,5 +51,9 @@ final class SeleniumSwiftExampleTests: XCTestCase {
         #else
             return Bundle.main.bundleURL
         #endif
+    }
+
+    deinit {
+        // Cleanup any resources if needed
     }
 }

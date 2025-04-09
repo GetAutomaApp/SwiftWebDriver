@@ -10,25 +10,25 @@ import AsyncHTTPClient
 import Foundation
 import NIOHTTP1
 
-struct NewSessionRequest: RequestType {
-    typealias Response = NewSessionResponse
+internal struct NewSessionRequest: RequestType {
+    public typealias Response = NewSessionResponse
 
-    var baseURL: URL
+    public var baseURL: URL
 
-    var path: String = "session"
+    public var path: String = "session"
 
-    var method: HTTPMethod = .POST
+    public var method: HTTPMethod = .POST
 
-    var headers: HTTPHeaders = .init(
+    public var headers: HTTPHeaders = .init(
         [
             ("Content-Type", "application/json"),
         ]
     )
 
-    let chromeOptions: ChromeOptions
+    public let chromeOptions: ChromeOptions
 
-    var body: HTTPClient.Body? {
-        let requestBody = NewSessionRequest
+    public var body: HTTPClient.Body? {
+        let requestBody = Self
             .RequestBody(
                 capabilities: RequestBody.Capabilities(
                     alwaysMatch: RequestBody.Capabilities.AlwaysMatch(
@@ -50,18 +50,18 @@ struct NewSessionRequest: RequestType {
 
 // MARK: - NewSessionRequest.RequestBody
 
-extension NewSessionRequest {
+internal extension NewSessionRequest {
     struct RequestBody: Codable {
-        let capabilities: Capabilities
+        public let capabilities: Capabilities
     }
 }
 
 // MARK: - NewSessionRequest.RequestBody.Capabilities
 
-extension NewSessionRequest.RequestBody {
+internal extension NewSessionRequest.RequestBody {
     struct Capabilities: Codable {
-        let alwaysMatch: AlwaysMatch
-        enum CodingKeys: String, CodingKey {
+        public let alwaysMatch: AlwaysMatch
+        public enum CodingKeys: String, CodingKey {
             case alwaysMatch
         }
     }
@@ -69,11 +69,11 @@ extension NewSessionRequest.RequestBody {
 
 // MARK: - NewSessionRequest.RequestBody.Capabilities.AlwaysMatch
 
-extension NewSessionRequest.RequestBody.Capabilities {
+internal extension NewSessionRequest.RequestBody.Capabilities {
     struct AlwaysMatch: Codable {
-        let chromeOptions: ChromeOptions
+        public let chromeOptions: ChromeOptions
 
-        enum CodingKeys: String, CodingKey {
+        public enum CodingKeys: String, CodingKey {
             case chromeOptions = "goog:chromeOptions"
         }
     }

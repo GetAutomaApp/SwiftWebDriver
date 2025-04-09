@@ -11,22 +11,22 @@ import Foundation
 import NIO
 import NIOHTTP1
 
-struct GetElementScreenShotRequest: RequestType {
-    typealias Response = GetElementScreenShotResponse
+internal struct GetElementScreenShotRequest: RequestType {
+    public typealias Response = GetElementScreenShotResponse
 
-    var baseURL: URL
+    public var baseURL: URL
 
-    var sessionId: String
+    public var sessionId: String
 
-    var elementId: String
+    public var elementId: String
 
-    var path: String {
+    public var path: String {
         "session/\(sessionId)/element/\(elementId)/screenshot"
     }
 
-    var method: HTTPMethod = .GET
+    public var method: HTTPMethod = .GET
 
-    var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
 
-    var body: HTTPClient.Body?
+    public var body: HTTPClient.Body?
 }

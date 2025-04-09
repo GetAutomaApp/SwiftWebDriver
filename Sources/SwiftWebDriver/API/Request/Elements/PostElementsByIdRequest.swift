@@ -11,26 +11,26 @@ import Foundation
 import NIO
 import NIOHTTP1
 
-struct PostElementsByIdRequest: RequestType {
-    typealias Response = PostElementsByIdResponse
+internal struct PostElementsByIdRequest: RequestType {
+    public typealias Response = PostElementsByIdResponse
 
-    var baseURL: URL
+    public var baseURL: URL
 
-    var sessionId: String
+    public var sessionId: String
 
-    var elementId: String
+    public var elementId: String
 
-    var path: String {
+    public var path: String {
         "session/\(sessionId)/element/\(elementId)/elements"
     }
 
-    var method: HTTPMethod = .POST
+    public var method: HTTPMethod = .POST
 
-    var cssSelector: LocatorSelector
+    public var cssSelector: LocatorSelector
 
-    var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
 
-    var body: HTTPClient.Body? {
+    public var body: HTTPClient.Body? {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         let data = try? encoder.encode(cssSelector)

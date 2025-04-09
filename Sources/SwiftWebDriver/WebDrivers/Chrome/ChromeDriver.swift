@@ -18,7 +18,7 @@ public class ChromeDriver: Driver {
 
     public var url: URL
 
-    let client = APIClient.shared
+    private let client = APIClient.shared
 
     public var sessionId: String?
 
@@ -39,6 +39,7 @@ public class ChromeDriver: Driver {
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func start() async throws -> String {
+        // swiftlint:disable:next prefer_self_in_static_references
         let id = try await ChromeDriver.startDriverExternal(url: url, browserObject: browserObject, client: client)
         sessionId = id
         return id
@@ -50,9 +51,7 @@ public class ChromeDriver: Driver {
             throw WebDriverError.sessionIdIsNil
         }
         let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
-        return try await client.request(request).map { response in
-            response.value
-        }.get()
+        return try await client.request(request).map(\.value).get()
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
@@ -134,9 +133,10 @@ public class ChromeDriver: Driver {
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    public func postElementByElementId(locatorSelector: LocatorSelector,
-                                       elementId: String) async throws -> PostElementByIdResponse
-    {
+    public func postElementByElementId(
+        locatorSelector: LocatorSelector,
+        elementId: String
+    ) async throws -> PostElementByIdResponse {
         guard let sessionId else {
             throw WebDriverError.sessionIdIsNil
         }
@@ -150,9 +150,10 @@ public class ChromeDriver: Driver {
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    func postElementsByElementId(locatorSelector: LocatorSelector,
-                                 elementId: String) async throws -> PostElementsByIdResponse
-    {
+    public func postElementsByElementId(
+        locatorSelector: LocatorSelector,
+        elementId: String
+    ) async throws -> PostElementsByIdResponse {
         guard let sessionId else {
             throw WebDriverError.sessionIdIsNil
         }
@@ -166,7 +167,7 @@ public class ChromeDriver: Driver {
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    func getElementText(elementId: String) async throws -> GetElementTextResponse {
+    public func getElementText(elementId: String) async throws -> GetElementTextResponse {
         guard let sessionId else {
             throw WebDriverError.sessionIdIsNil
         }
@@ -175,7 +176,7 @@ public class ChromeDriver: Driver {
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    func getElementName(elementId: String) async throws -> GetElementNameResponse {
+    public func getElementName(elementId: String) async throws -> GetElementNameResponse {
         guard let sessionId else {
             throw WebDriverError.sessionIdIsNil
         }
@@ -210,16 +211,18 @@ public class ChromeDriver: Driver {
         guard let sessionId else {
             throw WebDriverError.sessionIdIsNil
         }
-        let request = GetSceenShotRequest(baseURL: url, sessionId: sessionId)
+        let request = GetScreenShotRequest(baseURL: url, sessionId: sessionId)
         let response = try await client.request(request)
         return response.value
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
-    public func waitUntil(_ locatorType: LocatorType, retryCount: Int = 3,
-                          durationSeconds: Int = 1) async throws -> Bool
-    {
+    public func waitUntil(
+        _ locatorType: LocatorType,
+        retryCount: Int = 3,
+        durationSeconds: Int = 1
+    ) async throws -> Bool {
         guard let sessionId else {
             throw WebDriverError.sessionIdIsNil
         }
@@ -257,8 +260,7 @@ public class ChromeDriver: Driver {
             javascriptSnippet: .init(script: script, args: args)
         )
 
-        let response = try await client.request(request)
-        return response
+        return try await client.request(request)
     }
 
     private func executeJavascriptAsync(_ script: String, args: [String]) async throws -> PostExecuteResponse {
@@ -272,22 +274,22 @@ public class ChromeDriver: Driver {
             javascriptSnippet: .init(script: script, args: args)
         )
 
-        let response = try await client.request(request)
-        return response
+        return try await client.request(request)
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
-    public func execute(_ script: String, args: [String],
-                        type: JavascriptExecutionTypes) async throws -> PostExecuteResponse
-    {
-        let response = try await type == .sync ?
+    public func execute(
+        _ script: String,
+        args: [String],
+        type: DevToolTypes.JavascriptExecutionTypes
+    ) async throws -> PostExecuteResponse {
+        try await type == .sync ?
             executeJavascriptSync(script, args: args) :
             executeJavascriptAsync(
                 script,
                 args: args
             )
-        return response
     }
 
     public func getActiveElement() async throws -> Element {
@@ -298,15 +300,15 @@ public class ChromeDriver: Driver {
         let request = GetSessionActiveElementRequest(baseURL: url, sessionId: sessionId)
 
         let response = try await client.request(request)
-        let element = Element(baseURL: url, sessionId: sessionId, elementId: response.elementId)
-        return element
+        return Element(baseURL: url, sessionId: sessionId, elementId: response.elementId)
     }
 
     deinit {
         let url = url
         let sessionId = sessionId
-        Task.init {
+        Task {
             guard let sessionId else { return }
+            // swiftlint:disable:next prefer_self_in_static_references
             try await ChromeDriver.stopDriverExternal(url: url, sessionId: sessionId)
         }
     }
@@ -315,17 +317,15 @@ public class ChromeDriver: Driver {
     // This function just acts as a middleman to ensure the de initialization automatically closes the session
     private static func stopDriverExternal(url: URL, sessionId: String) async throws {
         let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
-        _ = try await APIClient.shared.request(request).map { response in
-            response.value
-        }.get()
+        _ = try await APIClient.shared.request(request).map(\.value).get()
     }
 
-    private static func startDriverExternal(url: URL, browserObject: ChromeOptions,
-                                            client: APIClient) async throws -> String
-    {
+    private static func startDriverExternal(
+        url: URL,
+        browserObject: ChromeOptions,
+        client: APIClient
+    ) async throws -> String {
         let request = NewSessionRequest(baseURL: url, chromeOptions: browserObject)
-        return try await client.request(request).map { response in
-            response.value.sessionId
-        }.get()
+        return try await client.request(request).map(\.value.sessionId).get()
     }
 }

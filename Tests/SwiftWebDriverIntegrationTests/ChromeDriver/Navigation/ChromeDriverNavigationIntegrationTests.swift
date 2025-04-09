@@ -1,4 +1,4 @@
-// ChromeDriverNavigationIntegrationsTests.swift
+// ChromeDriverNavigationIntegrationTests.swift
 // Copyright (c) 2025 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
@@ -10,9 +10,9 @@
 import Testing
 
 @Suite("Chrome Driver Navigation Tests", .serialized)
-class ChromeDriverNavigationTests: ChromeDriverTest {
+internal class ChromeDriverNavigationIntegrationTests: ChromeDriverTest {
     @Test("Get Navigation Title")
-    func getNavigationTitle() async throws {
+    public func getNavigationTitle() async throws {
         page = "awaitTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -22,7 +22,7 @@ class ChromeDriverNavigationTests: ChromeDriverTest {
     }
 
     @Test("Wait Until Element Exists")
-    func waitUntilElements() async throws {
+    public func waitUntilElements() async throws {
         page = "awaitTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -30,9 +30,14 @@ class ChromeDriverNavigationTests: ChromeDriverTest {
             .findElement(.css(.id("startButton")))
             .click()
 
+        let retries = 5, sleepDuration = 1
         let result = try await driver
-            .waitUntil(.css(.id("asyncAddElement")), retryCount: 5, durationSeconds: 1)
+            .waitUntil(.css(.id("asyncAddElement")), retryCount: retries, durationSeconds: sleepDuration)
 
         #expect(result)
+    }
+
+    deinit {
+        // Add deinit logic here
     }
 }

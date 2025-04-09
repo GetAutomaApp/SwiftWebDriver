@@ -10,12 +10,12 @@ import Foundation
 
 public enum LocatorType: Sendable {
     case css(_ cssSelector: CSSSelector)
-    case xpath(_ path: String)
     case linkText(_ linkText: String)
     case partialLinkText(_ particlalLinText: String)
     case tagName(_ tagName: String)
+    case xpath(_ path: String)
 
-    func create() -> LocatorSelector {
+    public func create() -> LocatorSelector {
         switch self {
         case let .css(cssSelectorType):
             cssSelectorType.create()

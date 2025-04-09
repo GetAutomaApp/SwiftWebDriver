@@ -11,25 +11,25 @@ import Foundation
 import NIO
 import NIOHTTP1
 
-struct PostNavigationRequest: RequestType {
-    typealias Response = PostNavigationResponse
+internal struct PostNavigationRequest: RequestType {
+    public typealias Response = PostNavigationResponse
 
-    var baseURL: URL
+    public var baseURL: URL
 
-    var sessionId: String
+    public var sessionId: String
 
-    let requestURL: String
+    public let requestURL: String
 
-    var path: String {
+    public var path: String {
         "session/\(sessionId)/url"
     }
 
-    var method: HTTPMethod = .POST
+    public var method: HTTPMethod = .POST
 
-    var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
 
-    var body: HTTPClient.Body? {
-        let requestBody = PostNavigationRequest
+    public var body: HTTPClient.Body? {
+        let requestBody = Self
             .RequestBody(url: requestURL)
 
         let encoder = JSONEncoder()
@@ -46,8 +46,8 @@ struct PostNavigationRequest: RequestType {
 
 // MARK: - PostNavigationRequest.RequestBody
 
-extension PostNavigationRequest {
+internal extension PostNavigationRequest {
     struct RequestBody: Codable {
-        let url: String
+        public let url: String
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 import NIOCore
 
 public class WebDriver<T: Driver> {
-    let driver: T
+    private let driver: T
 
     /// init webDriver
     /// - Parameter driver:Driver
@@ -18,13 +18,16 @@ public class WebDriver<T: Driver> {
         self.driver = driver
     }
 
+    deinit {
+        // Clean up resources if needed
+    }
+
     /// webdriver start method
     /// - Returns: session id
     @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func start() async throws -> String {
-        let result = try await driver.start()
-        return result
+        try await driver.start()
     }
 
     /// webdriver stop method
@@ -105,17 +108,21 @@ public class WebDriver<T: Driver> {
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
-    public func waitUntil(_ locatorType: LocatorType, retryCount: Int = 3,
-                          durationSeconds: Int = 1) async throws -> Bool
-    {
+    public func waitUntil(
+        _ locatorType: LocatorType,
+        retryCount: Int = 3,
+        durationSeconds: Int = 1
+    ) async throws -> Bool {
         try await driver.waitUntil(locatorType, retryCount: retryCount, durationSeconds: durationSeconds)
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
-    public func execute(_ script: String, args: [String] = [],
-                        type: JavascriptExecutionTypes = .sync) async throws -> PostExecuteResponse
-    {
+    public func execute(
+        _ script: String,
+        args: [String] = [],
+        type: DevToolTypes.JavascriptExecutionTypes = .sync
+    ) async throws -> PostExecuteResponse {
         try await driver.execute(script, args: args, type: type)
     }
 

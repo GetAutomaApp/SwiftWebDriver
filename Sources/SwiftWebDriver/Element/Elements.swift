@@ -12,7 +12,7 @@ public typealias Elements = [Element]
 
 public extension Elements {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    func texts() async throws -> [String] {
+    private func texts() async throws -> [String] {
         var ids: [String] = []
         try await withThrowingTaskGroup(of: GetElementTextResponse.self) { group in
             for element in self {
@@ -35,7 +35,7 @@ public extension Elements {
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    func names() async throws -> [String] {
+    private func names() async throws -> [String] {
         var names: [String] = []
         try await withThrowingTaskGroup(of: GetElementNameResponse.self) { group in
             for element in self {
@@ -59,7 +59,7 @@ public extension Elements {
 
     @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    func findElement(_ locatorType: LocatorType) async throws -> Elements {
+    private func findElement(_ locatorType: LocatorType) async throws -> Elements {
         var elements: Elements = []
         try await withThrowingTaskGroup(of: Element.self) { group in
 
@@ -78,7 +78,7 @@ public extension Elements {
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    func findElements(_ locatorType: LocatorType) async throws -> Elements {
+    private func findElements(_ locatorType: LocatorType) async throws -> Elements {
         var elements = [Elements]()
         try await withThrowingTaskGroup(of: Elements.self) { group in
             for element in self {
@@ -96,7 +96,11 @@ public extension Elements {
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
-    func waitUntil(_ locatorType: LocatorType, retryCount: Int = 3, durationSeconds: Int = 1) async throws -> Bool {
+    private func waitUntil(
+        _ locatorType: LocatorType,
+        retryCount: Int = 3,
+        durationSeconds: Int = 1
+    ) async throws -> Bool {
         do {
             try await findElement(locatorType)
             return true

@@ -9,6 +9,6 @@
 import Foundation
 
 public struct LocatorSelector: Codable {
-    let using: String
-    let value: String
+    public let using: String
+    public let value: String
 }

@@ -11,20 +11,20 @@ import Foundation
 import NIO
 import NIOHTTP1
 
-struct GetNavigationRequest: RequestType {
-    typealias Response = GetNavigationResponse
+internal struct GetNavigationRequest: RequestType {
+    public typealias Response = GetNavigationResponse
 
-    var baseURL: URL
+    public var baseURL: URL
 
-    var sessionId: String
+    public var sessionId: String
 
-    var path: String {
+    public var path: String {
         "session/\(sessionId)/url"
     }
 
-    var method: HTTPMethod = .GET
+    public var method: HTTPMethod = .GET
 
-    var headers: HTTPHeaders = [:]
+    public var headers: HTTPHeaders = [:]
 
-    var body: HTTPClient.Body?
+    public var body: HTTPClient.Body?
 }

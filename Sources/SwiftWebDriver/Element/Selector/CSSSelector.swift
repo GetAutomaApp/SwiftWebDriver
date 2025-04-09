@@ -9,11 +9,11 @@
 import Foundation
 
 public enum CSSSelector: Sendable {
-    case id(_ value: String)
     case `class`(_ value: String)
+    case id(_ value: String)
     case name(_ value: String)
 
-    func create() -> LocatorSelector {
+    internal func create() -> LocatorSelector {
         switch self {
         case let .id(value):
             LocatorSelector(using: "css selector", value: "#\(value)")
