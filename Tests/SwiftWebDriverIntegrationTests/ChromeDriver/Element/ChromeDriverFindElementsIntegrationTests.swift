@@ -56,7 +56,7 @@ internal class ChromeDriverFindElementsIntegrationTests: ChromeDriverTest {
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
         let linkElements1Count = 1
-        let linkElements2Count = 1
+        let linkElements2Count = 2
 
         let linkElement1 = try await driver
             .findElements(.linkText("1linkElement"))
