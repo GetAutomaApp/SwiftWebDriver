@@ -9,7 +9,7 @@
 import Foundation
 import NIOCore
 
-protocol StatableObject: Codable {}
+public protocol StatableObject: Codable {}
 
 public typealias Args = String
 
