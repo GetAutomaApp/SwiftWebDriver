@@ -1,5 +1,5 @@
 # Define build arguments with updated values
-FROM swift:6.0.0-jammy
+FROM swift:6.1.0-jammy
 
 # Set environment variables for locale
 ENV LC_ALL=en_US.UTF-8
