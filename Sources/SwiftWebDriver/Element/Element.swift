@@ -145,7 +145,7 @@ public struct Element: ElementCommandProtocol, Sendable {
         } catch {
             guard
                 retryCount > 0,
-                let error = error.asSeleniumError(ofType: .noSuchElement)
+                error.isSeleniumError(ofType: .noSuchElement)
             else { return false }
 
             let retryCount = retryCount - 1
