@@ -61,7 +61,7 @@ internal class ChromeDriverJavascriptIntegrationTests: ChromeDriverTest {
             try await driver.execute("throw new Error('Test Error')", args: [])
             try #require(Bool(false))
         } catch {
-            guard error is SeleniumError else {
+            guard error.isSeleniumError(ofType: .javascriptError) else {
                 try #require(Bool(false))
                 return
             }
