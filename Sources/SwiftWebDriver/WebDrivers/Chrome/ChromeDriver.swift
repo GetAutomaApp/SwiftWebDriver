@@ -234,12 +234,8 @@ public class ChromeDriver: Driver {
         } catch {
             guard
                 retryCount > 0,
-                let error = error as? SeleniumError
+                let error = error.asSeleniumError(ofType: .noSuchElement)
             else { return false }
-
-            guard error.value.error == "no such element" else {
-                return false
-            }
 
             let retryCount = retryCount - 1
 
