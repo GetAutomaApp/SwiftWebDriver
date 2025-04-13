@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "format": "swiftformat .",
+    "lint": "swiftlint .",
     "install:all": "npx npm-run-all install:swiftformat install:swiftlint config",
     "install:swiftformat": "brew install swiftformat",
     "install:swiftlint": "brew install swiftlint",
