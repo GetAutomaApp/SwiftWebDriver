@@ -145,10 +145,8 @@ public struct Element: ElementCommandProtocol, Sendable {
         } catch {
             guard
                 retryCount > 0,
-                let error = error as? SeleniumError
-            else { return false }
-
-            guard error.value.error == "no such element" else {
+                error.isSeleniumError(ofType: .noSuchElement)
+            else {
                 return false
             }
 
