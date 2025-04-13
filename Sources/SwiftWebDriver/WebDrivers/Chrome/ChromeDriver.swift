@@ -235,7 +235,9 @@ public class ChromeDriver: Driver {
             guard
                 retryCount > 0,
                 error.isSeleniumError(ofType: .noSuchElement)
-            else { return false }
+            else {
+                return false
+            }
 
             let retryCount = retryCount - 1
 
