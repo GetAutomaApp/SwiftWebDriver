@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "format": "swiftformat .",
-    "install:all": "npm run install:swiftformat",
-    "install:swiftformat": "brew install swiftformat"
+    "install:all": "npx npm-run-all install:swiftformat install:swiftlint config",
+    "install:swiftformat": "brew install swiftformat",
+    "install:swiftlint": "brew install swiftlint",
+    "config": "./.dotfiles/config.sh"
   },
   "repository": {
     "type": "git",
