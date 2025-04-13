@@ -27,7 +27,7 @@ public enum SeleniumErrorType: String, Codable {
     case scriptTimeout = "script timeout"
     case sessionNotCreated = "session not created"
     case staleElementReference = "stale element reference"
-    case timeout = "timeout"
+    case timeout
     case unableToSetCookie = "unable to set cookie"
     case unexpectedAlertOpen = "unexpected alert open"
     case unknownCommand = "unknown command"
@@ -56,12 +56,12 @@ public struct SeleniumError: Codable, LocalizedError {
 }
 
 public extension Error {
-    public func isSeleniumError(ofType type: SeleniumErrorType) -> Bool {
+    func isSeleniumError(ofType type: SeleniumErrorType) -> Bool {
         guard let seleniumError = self as? SeleniumError else { return false }
         return seleniumError.errorType == type
     }
 
-    public func asSeleniumError(ofType type: SeleniumErrorType) -> SeleniumError? {
+    func asSeleniumError(ofType type: SeleniumErrorType) -> SeleniumError? {
         guard let seleniumError = self as? SeleniumError,
               seleniumError.errorType == type else { return nil }
         return seleniumError
