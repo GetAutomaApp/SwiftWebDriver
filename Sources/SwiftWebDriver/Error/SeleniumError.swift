@@ -27,7 +27,7 @@ public enum SeleniumErrorType: String, Codable {
     case scriptTimeout = "script timeout"
     case sessionNotCreated = "session not created"
     case staleElementReference = "stale element reference"
-    case timeout
+    case timeout = "timeout"
     case unableToSetCookie = "unable to set cookie"
     case unexpectedAlertOpen = "unexpected alert open"
     case unknownCommand = "unknown command"
