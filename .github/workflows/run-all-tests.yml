@@ -1,4 +1,4 @@
-name: Run Tests
+name: Run All Tests
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ jobs:
         with:
            swift-version: "6.1"
 
-      - name: Run Unit Tests
+      - name: Run All Tests
         uses: GetAutomaApp/opensource-actions/swifttesting@main
         with:
           compose: "true"
