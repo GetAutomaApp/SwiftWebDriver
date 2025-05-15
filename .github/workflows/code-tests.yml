@@ -1,0 +1,23 @@
+name: Run Tests
+
+on:
+  pull_request:
+    paths:
+      - '**.swift'
+
+jobs:
+  all-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: swift-actions/setup-swift@v2
+        with:
+           swift-version: "6.1"
+
+      - name: Run Unit Tests
+        uses: GetAutomaApp/opensource-actions/swifttesting@main
+        with:
+          compose: "false"
+    # env:
+    #   FLY_METRICS_TOKEN: ${{ secrets.FLY_METRICS_TOKEN }}
