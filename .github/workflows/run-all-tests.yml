@@ -19,5 +19,5 @@ jobs:
         uses: GetAutomaApp/opensource-actions/swifttesting@main
         with:
           compose: "true"
-    # env:
-    #   FLY_METRICS_TOKEN: ${{ secrets.FLY_METRICS_TOKEN }}
+    env:
+      PATH: "/usr/local/bin:/usr/bin:/bin"
