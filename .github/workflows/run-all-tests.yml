@@ -15,15 +15,16 @@ jobs:
         with:
           swift-version: "6.1"
 
-      - name: Create .build Directory
-        run: mkdir -p .build
-
       - name: Restore Build Cache
         id: cache-build
         uses: actions/cache@v4
         with:
             key: tests-build-cache-${{ hashFiles('Package.resolved') }}-${{ github.ref_name }}
             path: .build
+
+      - name: Build For Testing
+        run: |
+          swift build --build-tests -Xswiftc -DSWIFT_PM_SUPPORTS_SWIFT_TESTING
 
       - name: Run All Tests
         uses: GetAutomaApp/opensource-actions/swifttesting@main
