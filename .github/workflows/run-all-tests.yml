@@ -17,7 +17,7 @@ jobs:
 
       - name: Restore Build Cache
         id: cache-build
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         with:
             key: tests-build-cache-${{ hashFiles('Package.resolved') }}-${{ github.ref_name }}
             path: .build
