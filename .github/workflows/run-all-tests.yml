@@ -22,17 +22,6 @@ jobs:
           key: tests-build-cache-${{ hashFiles('Package.resolved') }}
           path: .build
 
-      - name: Build
-        run: swift build
-
-      - name: Save Build Cache
-        if: always()
-        id: cache-build-save-0
-        uses: actions/cache/save@v4
-        with:
-          path: .build
-          key: tests-build-cache-${{ hashFiles('Package.resolved') }}
-
       - name: Run All Tests
         uses: GetAutomaApp/opensource-actions/swifttesting@main
         with:
@@ -42,6 +31,7 @@ jobs:
           compose_file: docker-compose.ci.yml
 
       - name: Save Build Cache
+        if: always()
         id: cache-build-save
         uses: actions/cache/save@v4
         with:
