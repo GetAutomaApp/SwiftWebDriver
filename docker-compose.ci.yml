@@ -1,0 +1,29 @@
+services:
+  httpd:
+      network_mode: host
+      build:
+        context: .
+        dockerfile: ./infra/HTTPDDockerfile
+      volumes:
+          - ./TestAssets:/usr/local/apache2/htdocs/
+      ports:
+          - "80:80"
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost"]
+        interval: 30s
+        timeout: 10s
+        retries: 3
+
+  selenium:
+    image: selenium/standalone-chrome:4.2.1-20220531
+    network_mode: host
+    ports:
+      - 4444:4444
+      - 7900:7900
+    environment:
+      - SE_NODE_MAX_SESSIONS=4
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
