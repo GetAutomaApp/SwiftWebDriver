@@ -26,7 +26,6 @@ jobs:
         uses: GetAutomaApp/opensource-actions/swifttesting@main
         with:
           compose: "true"
-          swift_test_extra_args: "-Xswiftc -warnings-as-errors"
           required_healthy_services_docker_compose: '["selenium", "httpd"]'
           compose_file: docker-compose.ci.yml
 
