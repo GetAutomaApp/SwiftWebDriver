@@ -15,9 +15,24 @@ jobs:
         with:
            swift-version: "6.1"
 
+      - name: Restore Build Cache
+        id: cache-build-restore
+        uses: actions/cache/restore@v4
+        with:
+          key: tests-build-cache-${{ hashFiles('Package.resolved') }}
+          path: .build
+
       - name: Run All Tests
         uses: GetAutomaApp/opensource-actions/swifttesting@main
         with:
           compose: "true"
+
+      - name: Save Build Cache
+        id: cache-build-save
+        uses: actions/cache/save@v4
+        with:
+          path: .build
+          key: ${{ steps.cache-build-restore.outputs.cache-primary-key }}
+
     env:
       PATH: "/usr/local/bin:/usr/bin:/bin"
