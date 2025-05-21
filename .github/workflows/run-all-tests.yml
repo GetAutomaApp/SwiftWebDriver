@@ -13,11 +13,11 @@ jobs:
 
       - uses: swift-actions/setup-swift@v2
         with:
-           swift-version: "6.1"
+          swift-version: "6.1"
 
       - name: Restore Build Cache
         id: cache-build-restore
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           key: tests-build-cache-${{ hashFiles('Package.resolved') }}
           path: .build
@@ -28,6 +28,12 @@ jobs:
           compose: "true"
           required_healthy_services_docker_compose: '["selenium", "httpd"]'
           compose_file: docker-compose.ci.yml
+
+      - name: Save Build Cache
+        uses: actions/cache/save@v4
+        with:
+          key: ${{ steps.cache-build-restore.outputs.cache-primary-key }}
+          path: .build
 
     env:
       PATH: "/usr/local/bin:/usr/bin:/bin"
