@@ -19,11 +19,11 @@ jobs:
         run: mkdir -p .build
 
       - name: Restore Build Cache
-        id: cache-build-restore
-        uses: actions/cache/restore@v4
+        id: cache-build
+        uses: actions/cache@v4
         with:
-          key: tests-build-cache-${{ hashFiles('Package.resolved') }}
-          path: .build
+            key: tests-build-cache-${{ hashFiles('Package.resolved') }}-${{ github.ref_name }}
+            path: .build
 
       - name: Run All Tests
         uses: GetAutomaApp/opensource-actions/swifttesting@main
@@ -31,12 +31,6 @@ jobs:
           compose: "true"
           required_healthy_services_docker_compose: '["selenium", "httpd"]'
           compose_file: docker-compose.ci.yml
-
-      - name: Save Build Cache
-        uses: actions/cache/save@v4
-        with:
-          key: ${{ steps.cache-build-restore.outputs.cache-primary-key }}
-          path: .build
 
     env:
       PATH: "/usr/local/bin:/usr/bin:/bin"
