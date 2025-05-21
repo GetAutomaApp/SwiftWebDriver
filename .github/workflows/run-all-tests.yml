@@ -23,7 +23,7 @@ jobs:
             path: ./.build
 
       - name: Run All Tests
-        uses: GetAutomaApp/opensource-actions/swifttesting@simon/testing-building
+        uses: GetAutomaApp/opensource-actions/swifttesting@main
         with:
           compose: "true"
           required_healthy_services_docker_compose: '["selenium", "httpd"]'
