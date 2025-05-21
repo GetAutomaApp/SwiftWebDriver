@@ -20,7 +20,7 @@ jobs:
         uses: actions/cache@v3
         with:
             key: tests-build-cache-${{ hashFiles('Package.resolved') }}-${{ github.ref_name }}
-            path: .build
+            path: ./.build
 
       - name: Run All Tests
         uses: GetAutomaApp/opensource-actions/swifttesting@main
