@@ -26,6 +26,9 @@ jobs:
         uses: GetAutomaApp/opensource-actions/swifttesting@main
         with:
           compose: "true"
+          docker_compose_extra_args: "--scale swift_web_driver=0 --scale build=0 --scale shell=0"
+          swift_test_extra_args: "-Xswiftc -warnings-as-errors"
+          required_healthy_services_docker_compose: '["selenium", "httpd"]'
 
       - name: Save Build Cache
         id: cache-build-save
