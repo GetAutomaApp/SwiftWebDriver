@@ -28,6 +28,3 @@ jobs:
           compose: "true"
           required_healthy_services_docker_compose: '["selenium", "httpd"]'
           compose_file: docker-compose.ci.yml
-
-    env:
-      PATH: "/usr/local/bin:/usr/bin:/bin"
