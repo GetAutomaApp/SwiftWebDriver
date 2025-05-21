@@ -22,10 +22,6 @@ jobs:
             key: tests-build-cache-${{ hashFiles('Package.resolved') }}-${{ github.ref_name }}
             path: .build
 
-      - name: Build For Testing
-        run: |
-          swift build --build-tests -Xswiftc -DSWIFT_PM_SUPPORTS_SWIFT_TESTING
-
       - name: Run All Tests
         uses: GetAutomaApp/opensource-actions/swifttesting@main
         with:
