@@ -9,11 +9,22 @@ jobs:
   all-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repo
+        uses: actions/checkout@v4
 
-      - uses: swift-actions/setup-swift@v2
+      - name: Set Up Swift
+        uses: swift-actions/setup-swift@v2
         with:
           swift-version: "6.1"
+
+      - name: Show Initial Working Directory
+        run: |
+          echo "🔍 Working Directory:"
+          pwd
+          echo "🔍 Directory Contents Before Cache Restore:"
+          ls -alh
+          echo "🔍 Disk Usage:"
+          du -sh . || true
 
       - name: Restore Build Cache
         id: cache-build-restore
@@ -22,12 +33,35 @@ jobs:
           key: tests-build-cache-${{ hashFiles('Package.resolved') }}
           path: .build
 
+      - name: Post-Restore Cache Debug Info
+        run: |
+          echo "🔁 Restored cache key: ${{ steps.cache-build-restore.outputs.cache-primary-key }}"
+          echo "✅ Cache Hit: ${{ steps.cache-build-restore.outputs.cache-hit }}"
+          echo "📂 .build Directory After Cache Restore:"
+          ls -alR .build || echo ".build not restored"
+          echo "📦 .build Size:"
+          du -sh .build || echo ".build not found"
+
+      - name: Show Swift Environment
+        run: |
+          swift --version
+          env | sort
+
       - name: Run All Tests
         uses: GetAutomaApp/opensource-actions/swifttesting@main
         with:
           compose: "true"
           required_healthy_services_docker_compose: '["selenium", "httpd"]'
           compose_file: docker-compose.ci.yml
+
+      - name: Post-Test .build Debug
+        run: |
+          echo "📂 .build Contents After Tests:"
+          ls -alR .build || echo "no .build"
+          echo "📦 .build Disk Usage:"
+          du -sh .build || echo "no .build"
+          echo "📄 .build/debug contents:"
+          ls -alR .build/debug || echo "no debug folder"
 
       - name: Save Build Cache
         uses: actions/cache/save@v4
