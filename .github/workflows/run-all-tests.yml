@@ -15,9 +15,27 @@ jobs:
         with:
            swift-version: "6.1"
 
+      - name: Restore Build Cache
+        id: cache-build-restore
+        uses: actions/cache/restore@v4
+        with:
+          key: tests-build-cache-${{ hashFiles('Package.resolved') }}
+          path: .build
+
       - name: Run All Tests
         uses: GetAutomaApp/opensource-actions/swifttesting@main
         with:
           compose: "true"
+          docker_compose_extra_args: "--scale swift_web_driver=0 --scale build=0 --scale test=0 --scale shell=0"
+          required_healthy_services_docker_compose: '["httpd", "selenium"]'
+          swift_test_extra_args: "-Xswiftc -warnings-as-errors"
+
+      - name: Save Build Cache
+        id: cache-build-save
+        uses: actions/cache/save@v4
+        with:
+          path: .build
+          key: ${{ steps.cache-build-restore.outputs.cache-primary-key }}
+
     env:
       PATH: "/usr/local/bin:/usr/bin:/bin"
