@@ -1,7 +1,9 @@
 services:
   httpd:
-      image: httpd
       network_mode: host
+      build:
+        context: .
+        dockerfile: ./infra/HTTPDDockerfile
       volumes:
           - ./TestAssets:/usr/local/apache2/htdocs/
       ports:
@@ -28,7 +30,9 @@ services:
 
   swift_web_driver:
     &SwiftWebDriver
-    build: .
+    build:
+      context: .
+      dockerfile: ./infra/Dockerfile
     volumes:
       - .:/SwiftWebDriver
     working_dir: /SwiftWebDriver
