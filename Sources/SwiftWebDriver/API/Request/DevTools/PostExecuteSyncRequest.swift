@@ -41,8 +41,8 @@ internal struct PostExecuteSyncRequest: RequestType {
 }
 
 internal extension PostExecuteSyncRequest {
-    struct RequestBody: Codable {
-        public let script: String
-        public let args: [String]
+    struct RequestBody: Encodable {
+        let script: String
+        let args: [AnyEncodable]
     }
 }
