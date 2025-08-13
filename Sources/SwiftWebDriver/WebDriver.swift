@@ -120,7 +120,7 @@ public class WebDriver<T: Driver> {
     @discardableResult
     public func execute(
         _ script: String,
-        args: [String] = [],
+        args: [AnyEncodable] = [],
         type: DevToolTypes.JavascriptExecutionTypes = .sync
     ) async throws -> PostExecuteResponse {
         try await driver.execute(script, args: args, type: type)
@@ -130,5 +130,10 @@ public class WebDriver<T: Driver> {
     @discardableResult
     public func getActiveElement() async throws -> Element {
         try await driver.getActiveElement()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    func setAttribute(element: Element, attributeName: String, newValue: String) async throws {
+        try await driver.setAttribute(element: element, attributeName: attributeName, newValue: newValue)
     }
 }

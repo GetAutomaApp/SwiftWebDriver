@@ -247,7 +247,7 @@ public class ChromeDriver: Driver {
         }
     }
 
-    private func executeJavascriptSync(_ script: String, args: [String]) async throws -> PostExecuteResponse {
+    private func executeJavascriptSync(_ script: String, args: [AnyEncodable]) async throws -> PostExecuteResponse {
         guard let sessionId else {
             throw WebDriverError.sessionIdIsNil
         }
@@ -261,7 +261,7 @@ public class ChromeDriver: Driver {
         return try await client.request(request)
     }
 
-    private func executeJavascriptAsync(_ script: String, args: [String]) async throws -> PostExecuteResponse {
+    private func executeJavascriptAsync(_ script: String, args: [AnyEncodable]) async throws -> PostExecuteResponse {
         guard let sessionId else {
             throw WebDriverError.sessionIdIsNil
         }
@@ -279,7 +279,7 @@ public class ChromeDriver: Driver {
     @discardableResult
     public func execute(
         _ script: String,
-        args: [String],
+        args: [AnyEncodable],
         type: DevToolTypes.JavascriptExecutionTypes
     ) async throws -> PostExecuteResponse {
         try await type == .sync ?
@@ -299,6 +299,17 @@ public class ChromeDriver: Driver {
 
         let response = try await client.request(request)
         return Element(baseURL: url, sessionId: sessionId, elementId: response.elementId)
+    }
+
+    public func setAttribute(element: Element, attributeName: String, newValue: String) async throws {
+        let script = "arguments[0].setAttribute(arguments[1], arguments[2]);"
+
+        let args: [AnyEncodable] = [
+            AnyEncodable(["element-6066-11e4-a52e-4f735466cecf": element.elementId]),
+            AnyEncodable(attributeName),
+            AnyEncodable(newValue)
+        ]
+        try await execute(script, args: args, type: .sync)
     }
 
     deinit {

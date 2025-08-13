@@ -44,9 +44,11 @@ public protocol Driver: FindElementProtocol {
 
     func execute(
         _ script: String,
-        args: [String],
+        args: [AnyEncodable],
         type: DevToolTypes.JavascriptExecutionTypes
     ) async throws -> PostExecuteResponse
 
     func getActiveElement() async throws -> Element
+
+    func setAttribute(element: Element, attributeName: String, newValue: String) async throws
 }
