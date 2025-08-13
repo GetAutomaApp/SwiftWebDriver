@@ -2,9 +2,6 @@
 // Copyright (c) 2025 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
-//
-// This package is freely distributable under the MIT license.
-// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
 
 import Foundation
 import NIOCore
@@ -133,7 +130,11 @@ public class WebDriver<T: Driver> {
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    func setAttribute(element: Element, attributeName: String, newValue: String) async throws {
+    public func setAttribute(element: Element, attributeName: String, newValue: String) async throws {
         try await driver.setAttribute(element: element, attributeName: attributeName, newValue: newValue)
+    }
+
+    public func getProperty(element: Element, property: String) async throws -> PostExecuteResponse {
+        try await driver.getProperty(element: element, property: property)
     }
 }

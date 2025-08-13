@@ -2,9 +2,6 @@
 // Copyright (c) 2025 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
-//
-// This package is freely distributable under the MIT license.
-// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
 
 import AsyncHTTPClient
 import Foundation
@@ -310,6 +307,16 @@ public class ChromeDriver: Driver {
             AnyEncodable(newValue)
         ]
         try await execute(script, args: args, type: .sync)
+    }
+
+    public func getProperty(element: Element, property: String) async throws -> PostExecuteResponse {
+        let script = "return arguments[0][arguments[1]];"
+
+        let args: [AnyEncodable] = [
+            AnyEncodable(["element-6066-11e4-a52e-4f735466cecf": element.elementId]),
+            AnyEncodable(property)
+        ]
+        return try await execute(script, args: args, type: .sync)
     }
 
     deinit {
