@@ -134,7 +134,13 @@ public class WebDriver<T: Driver> {
         try await driver.setAttribute(element: element, attributeName: attributeName, newValue: newValue)
     }
 
-    public func getProperty(element: Element, property: String) async throws -> PostExecuteResponse {
-        try await driver.getProperty(element: element, property: property)
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func getProperty(element: Element, propertyName: String) async throws -> PostExecuteResponse {
+        try await driver.getProperty(element: element, propertyName: propertyName)
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func setProperty(element: Element, propertyName: String, newValue: String) async throws {
+        try await driver.setProperty(element: element, propertyName: propertyName, newValue: newValue)
     }
 }

@@ -309,14 +309,27 @@ public class ChromeDriver: Driver {
         try await execute(script, args: args, type: .sync)
     }
 
-    public func getProperty(element: Element, property: String) async throws -> PostExecuteResponse {
+    public func getProperty(element: Element, propertyName: String) async throws -> PostExecuteResponse {
         let script = "return arguments[0][arguments[1]];"
 
         let args: [AnyEncodable] = [
             AnyEncodable(["element-6066-11e4-a52e-4f735466cecf": element.elementId]),
-            AnyEncodable(property)
+            AnyEncodable(propertyName)
         ]
         return try await execute(script, args: args, type: .sync)
+    }
+
+    public func setProperty(element: Element, propertyName: String,
+                            newValue: String) async throws
+    {
+        let script = "arguments[0][arguments[1]] = arguments[2];"
+        let args: [AnyEncodable] = [
+            AnyEncodable(["element-6066-11e4-a52e-4f735466cecf": element.elementId]),
+            AnyEncodable(propertyName),
+            AnyEncodable(newValue)
+        ]
+
+        try await execute(script, args: args, type: .sync)
     }
 
     deinit {

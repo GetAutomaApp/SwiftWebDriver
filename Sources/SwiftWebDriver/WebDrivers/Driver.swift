@@ -49,5 +49,7 @@ public protocol Driver: FindElementProtocol {
 
     func setAttribute(element: Element, attributeName: String, newValue: String) async throws
 
-    func getProperty(element: Element, property: String) async throws -> PostExecuteResponse
+    func getProperty(element: Element, propertyName: String) async throws -> PostExecuteResponse
+
+    func setProperty(element: Element, propertyName: String, newValue: String) async throws
 }
