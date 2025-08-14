@@ -2,17 +2,16 @@
 // Copyright (c) 2025 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
-//
-// This package is freely distributable under the MIT license.
-// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
 
 import Foundation
 
+/// Elements, an alias for [Element]
 public typealias Elements = [Element]
 
+/// Useful methods to call on [Element]
 public extension Elements {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    private func texts() async throws -> [String] {
+    func texts() async throws -> [String] {
         var ids: [String] = []
         try await withThrowingTaskGroup(of: GetElementTextResponse.self) { group in
             for element in self {
@@ -35,7 +34,7 @@ public extension Elements {
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    private func names() async throws -> [String] {
+    func names() async throws -> [String] {
         var names: [String] = []
         try await withThrowingTaskGroup(of: GetElementNameResponse.self) { group in
             for element in self {
@@ -59,10 +58,9 @@ public extension Elements {
 
     @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    private func findElement(_ locatorType: LocatorType) async throws -> Elements {
+    func findElement(_ locatorType: LocatorType) async throws -> Elements {
         var elements: Elements = []
         try await withThrowingTaskGroup(of: Element.self) { group in
-
             for element in self {
                 group.addTask {
                     try await element.findElement(locatorType)
@@ -78,7 +76,7 @@ public extension Elements {
     }
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    private func findElements(_ locatorType: LocatorType) async throws -> Elements {
+    func findElements(_ locatorType: LocatorType) async throws -> Elements {
         var elements = [Elements]()
         try await withThrowingTaskGroup(of: Elements.self) { group in
             for element in self {
@@ -96,7 +94,7 @@ public extension Elements {
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
-    private func waitUntil(
+    func waitUntil(
         _ locatorType: LocatorType,
         retryCount: Int = 3,
         durationSeconds: Int = 1

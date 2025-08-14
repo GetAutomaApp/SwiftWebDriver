@@ -8,8 +8,9 @@ import Testing
 
 @Suite("Chrome Driver Property Integration Tests", .serialized)
 internal class ChromeDriverPropertyIntegrationTests: ChromeDriverTest {
+    /// Test `getProperty()` method, a method to get a specific property value from an element.
     @Test("Get Property")
-    func getProperty() async throws {
+    public func getProperty() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
         let updatedElementValue = "NewElementValue"
@@ -28,8 +29,9 @@ internal class ChromeDriverPropertyIntegrationTests: ChromeDriverTest {
         #expect(elementValue == updatedElementValue)
     }
 
+    /// Test `setProperty()` method, a method to set a specific property value from an element.
     @Test("Set Property")
-    func setProperty() async throws {
+    public func setProperty() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
         let element = try await driver.findElement(.css(.id("setproperty")))

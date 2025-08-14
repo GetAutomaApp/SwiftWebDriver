@@ -1,14 +1,12 @@
-// main.swift
+// Main.swift
 // Copyright (c) 2025 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
-//
-// This package is freely distributable under the MIT license.
-// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
 
 import SwiftWebDriver
 
 internal enum Main {
+    /// Executable main procedure for this example package
     public static func main() async throws {
         let chromeOption = ChromeOptions(
             args: [
