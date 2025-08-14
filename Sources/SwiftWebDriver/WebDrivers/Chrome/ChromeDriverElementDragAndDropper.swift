@@ -58,7 +58,11 @@ internal struct ChromeDriverElementDragAndDropper {
     }
 
     private func isHTML5Draggable() async throws -> Bool {
-        let draggableValue = try await source.attribute(name: "draggable")
+        guard
+            let draggableValue = try? await source.attribute(name: "draggable")
+        else {
+            return false
+        }
         return draggableValue.lowercased() == "true"
     }
 }

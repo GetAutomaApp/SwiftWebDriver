@@ -8,9 +8,19 @@ import Testing
 
 @Suite("Chrome Driver Drag and Drop Integration Tests", .serialized)
 internal class ChromeDriverDragAndDropIntegrationTests: ChromeDriverTest {
-    @Test("Drag Element To Another")
-    func dragAndDropElementToAnother() async throws {
+    @Test("Drag Element To Another (JavaScript)")
+    func dragAndDropElementToAnotherWithDraggableElement() async throws {
         page = "dragTarget.html"
+        try await dragAndDrop()
+    }
+
+    @Test("Drag Element To Another (WebDriver Actions API)")
+    func dragAndDropElementToAnother() async throws {
+        page = "dragBox.html"
+        try await dragAndDrop()
+    }
+
+    private func dragAndDrop() async throws {
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
         let sourceElement = try await driver.findElement(.css(.id("source")))
@@ -22,25 +32,6 @@ internal class ChromeDriverDragAndDropIntegrationTests: ChromeDriverTest {
             .stringValue
 
         #expect(targetElementText == "DROPPED!")
-    }
-
-    @Test("Set Property")
-    func setProperty() async throws {
-        page = "elementHandleTestPage.html"
-        try await driver.navigateTo(urlString: testPageURL.absoluteString)
-        let element = try await driver.findElement(.css(.id("setproperty")))
-        let newPropertyValue = "element new inner text"
-
-        try await driver.setProperty(element: element, propertyName: "innerText", newValue: newPropertyValue)
-        guard
-            let elementInnerTextValue = try await driver.getProperty(element: element, propertyName: "innerText").value?
-            .stringValue
-        else {
-            #expect(Bool(false), "Could not convert element innerText value to string value")
-            return
-        }
-
-        #expect(newPropertyValue == elementInnerTextValue)
     }
 
     deinit {}
