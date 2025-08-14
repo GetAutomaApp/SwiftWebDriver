@@ -1,4 +1,4 @@
-// PostElementDoubleClickRequest.swift
+// PostElementDragToAnotherRequest.swift
 // Copyright (c) 2025 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
@@ -9,7 +9,7 @@ import Foundation
 import NIO
 import NIOHTTP1
 
-internal struct PostElementDoubleClickRequest: RequestType {
+internal struct PostElementDragToAnotherRequest: RequestType {
     typealias Response = PostElementClickResponse
 
     var baseURL: URL
@@ -17,6 +17,8 @@ internal struct PostElementDoubleClickRequest: RequestType {
     var sessionId: String
 
     var elementId: String
+
+    var toElementId: String
 
     var path: String {
         "session/\(sessionId)/actions"
@@ -28,13 +30,13 @@ internal struct PostElementDoubleClickRequest: RequestType {
 
     var body: HTTPClient.Body? {
         let origin = WebDriverElementOrigin(element: elementId)
+        let dragToOrigin = WebDriverElementOrigin(element: toElementId)
 
         let pointerActions = [
             PointerAction(type: "pointerMove", origin: origin, x: 0, y: 0),
             PointerAction(type: "pointerDown", button: 0),
-            PointerAction(type: "pointerUp", button: 0),
-            PointerAction(type: "pause", duration: 50),
-            PointerAction(type: "pointerDown", button: 0),
+            PointerAction(type: "pause", duration: 100),
+            PointerAction(type: "pointerMove", origin: dragToOrigin, x: 0, y: 0),
             PointerAction(type: "pointerUp", button: 0)
         ]
 

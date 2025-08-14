@@ -17,6 +17,7 @@ public protocol ElementCommandProtocol: FindElementProtocol {
     func name() async throws -> String
     func click() async throws -> String?
     func doubleClick() async throws -> String?
+    func drag(to: Element) async throws -> String?
     func clear() async throws -> String?
     func attribute(name: String) async throws -> String
     func send(value: String) async throws -> String?
@@ -81,6 +82,19 @@ public struct Element: ElementCommandProtocol, Sendable {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func doubleClick() async throws -> String? {
         let request = PostElementDoubleClickRequest(baseURL: baseURL, sessionId: sessionId, elementId: elementId)
+        let response = try await APIClient.shared.request(request)
+        return response.value
+    }
+
+    @discardableResult
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func drag(to: Element) async throws -> String? {
+        let request = PostElementDragToAnotherRequest(
+            baseURL: baseURL,
+            sessionId: sessionId,
+            elementId: elementId,
+            toElementId: to.elementId
+        )
         let response = try await APIClient.shared.request(request)
         return response.value
     }
