@@ -17,10 +17,12 @@ public protocol ElementCommandProtocol: FindElementProtocol {
     func name() async throws -> String
     func click() async throws -> String?
     func doubleClick() async throws -> String?
+    func dragAndDrop(to: Element) async throws -> String?
     func clear() async throws -> String?
     func attribute(name: String) async throws -> String
     func send(value: String) async throws -> String?
     func screenshot() async throws -> String
+    func rect() async throws -> ElementRect
 }
 
 public struct Element: ElementCommandProtocol, Sendable {
@@ -81,6 +83,32 @@ public struct Element: ElementCommandProtocol, Sendable {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func doubleClick() async throws -> String? {
         let request = PostElementDoubleClickRequest(baseURL: baseURL, sessionId: sessionId, elementId: elementId)
+        let response = try await APIClient.shared.request(request)
+        return response.value
+    }
+
+    @discardableResult
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func dragAndDrop(to: Element) async throws -> String? {
+        let request = try await PostElementDragAndDropRequest(
+            baseURL: baseURL,
+            sessionId: sessionId,
+            elementId: elementId,
+            toElementId: to.elementId,
+            elementRect: rect(),
+            targetElementRect: to.rect()
+        )
+        let response = try await APIClient.shared.request(request)
+        return response.value
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func rect() async throws -> ElementRect {
+        let request = GetElementRectRequest(
+            baseURL: baseURL,
+            sessionId: sessionId,
+            elementId: elementId
+        )
         let response = try await APIClient.shared.request(request)
         return response.value
     }

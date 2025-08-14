@@ -52,4 +52,6 @@ public protocol Driver: FindElementProtocol {
     func getProperty(element: Element, propertyName: String) async throws -> PostExecuteResponse
 
     func setProperty(element: Element, propertyName: String, newValue: String) async throws
+
+    func dragAndDrop(from source: Element, to target: Element) async throws
 }

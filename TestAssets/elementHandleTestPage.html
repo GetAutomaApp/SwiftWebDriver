@@ -28,10 +28,17 @@
             element.remove()
         }, 2000)
     </script>
+    <style>
+        #rect {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
 </head>
 
 <body>
     <button id="button" onclick="onClick()"></button>
+    <div id="rect"></div>
     <button id="doubleclick" onclick="doubleClick()"></button>
     <input type="text" id="attribute" value="expect attribute">
     <div id="setproperty"></div>

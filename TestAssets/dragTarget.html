@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Drag and Drop Test</title>
+    <style>
+        #source,
+        #target {
+            width: 150px;
+            height: 150px;
+            border: 2px solid #333;
+            display: inline-block;
+            margin: 20px;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 150px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        #source {
+            background-color: lightblue;
+        }
+
+        #target {
+            background-color: lightgreen;
+        }
+
+        #target.dropped {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="source" draggable="true">SOURCE</div>
+    <div id="target">TARGET</div>
+
+    <script>
+        const source = document.getElementById("source");
+        const target = document.getElementById("target");
+
+        source.addEventListener("dragstart", (e) => {
+            e.dataTransfer.setData("text/plain", "dragged");
+        });
+
+        target.addEventListener("dragover", (e) => {
+            e.preventDefault();
+        });
+
+        target.addEventListener("drop", (e) => {
+            e.preventDefault();
+            target.textContent = "DROPPED!";
+            target.classList.add("dropped");
+        });
+    </script>
+</body>
+
+</html>

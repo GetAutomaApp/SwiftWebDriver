@@ -143,4 +143,9 @@ public class WebDriver<T: Driver> {
     public func setProperty(element: Element, propertyName: String, newValue: String) async throws {
         try await driver.setProperty(element: element, propertyName: propertyName, newValue: newValue)
     }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func dragAndDrop(from source: Element, to target: Element) async throws {
+        try await driver.dragAndDrop(from: source, to: target)
+    }
 }

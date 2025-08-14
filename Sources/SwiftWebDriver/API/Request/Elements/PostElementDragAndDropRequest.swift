@@ -1,4 +1,4 @@
-// PostElementDoubleClickRequest.swift
+// PostElementDragAndDropRequest.swift
 // Copyright (c) 2025 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
@@ -9,7 +9,7 @@ import Foundation
 import NIO
 import NIOHTTP1
 
-internal struct PostElementDoubleClickRequest: RequestType {
+internal struct PostElementDragAndDropRequest: RequestType {
     typealias Response = PostElementClickResponse
 
     var baseURL: URL
@@ -17,6 +17,12 @@ internal struct PostElementDoubleClickRequest: RequestType {
     var sessionId: String
 
     var elementId: String
+
+    var toElementId: String
+
+    var elementRect: ElementRect
+
+    var targetElementRect: ElementRect
 
     var path: String {
         "session/\(sessionId)/actions"
@@ -28,13 +34,20 @@ internal struct PostElementDoubleClickRequest: RequestType {
 
     var body: HTTPClient.Body? {
         let origin = WebDriverElementOrigin(element: elementId)
+        let dragToOrigin = WebDriverElementOrigin(element: toElementId)
+
+        // let sourceCenterX = Int(elementRect.width / 2)
+        // let sourceCenterY = Int(elementRect.height / 2)
+        //
+        let targetCenterX = Int(targetElementRect.width / 2)
+        let targetCenterY = Int(targetElementRect.height / 2)
 
         let pointerActions = [
+            // PointerAction(type: "pointerMove", origin: origin, x: sourceCenterX, y: sourceCenterY),
             PointerAction(type: "pointerMove", origin: origin, x: 0, y: 0),
             PointerAction(type: "pointerDown", button: 0),
-            PointerAction(type: "pointerUp", button: 0),
-            PointerAction(type: "pause", duration: 50),
-            PointerAction(type: "pointerDown", button: 0),
+            PointerAction(type: "pause", duration: 100),
+            PointerAction(type: "pointerMove", origin: dragToOrigin, x: targetCenterX, y: targetCenterY),
             PointerAction(type: "pointerUp", button: 0)
         ]
 
