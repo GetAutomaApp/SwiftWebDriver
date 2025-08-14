@@ -55,6 +55,22 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
         #expect(attribute == "expect attribute")
     }
 
+    @Test("Get Element Rect")
+    func getRect() async throws {
+        page = "elementHandleTestPage.html"
+        try await driver.navigateTo(urlString: testPageURL.absoluteString)
+
+        let element = try await driver
+            .findElement(.css(.id("rect")))
+
+        let rect = try await element.rect()
+
+        #expect(rect.height == 100)
+        #expect(rect.x > 5)
+        #expect(rect.y > 5)
+        #expect(rect.width == 100)
+    }
+
     @Test("Clear Element")
     func clearElement() async throws {
         page = "elementHandleTestPage.html"
