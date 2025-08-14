@@ -8,6 +8,11 @@
             element.innerHTML = "clicked!"
         }
 
+        function doubleClick() {
+            let element = document.getElementById("doubleclick")
+            element.innerHTML += "i"
+        }
+
         function startTimer() {
             window.setTimeout(function () {
                 let element = document.getElementById("willAppendChild")
@@ -27,6 +32,7 @@
 
 <body>
     <button id="button" onclick="onClick()"></button>
+    <button id="doubleclick" onclick="doubleClick()"></button>
     <input type="text" id="attribute" value="expect attribute">
     <div id="setproperty"></div>
     <input type="text" id="clearInputValue" value="clearInputValue">

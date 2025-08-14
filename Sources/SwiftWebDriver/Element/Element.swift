@@ -2,9 +2,6 @@
 // Copyright (c) 2025 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
-//
-// This package is freely distributable under the MIT license.
-// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
 
 import Foundation
 import NIO
@@ -19,6 +16,7 @@ public protocol ElementCommandProtocol: FindElementProtocol {
     func text() async throws -> String
     func name() async throws -> String
     func click() async throws -> String?
+    func doubleClick() async throws -> String?
     func clear() async throws -> String?
     func attribute(name: String) async throws -> String
     func send(value: String) async throws -> String?
@@ -75,6 +73,14 @@ public struct Element: ElementCommandProtocol, Sendable {
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func click() async throws -> String? {
         let request = PostElementClickRequest(baseURL: baseURL, sessionId: sessionId, elementId: elementId)
+        let response = try await APIClient.shared.request(request)
+        return response.value
+    }
+
+    @discardableResult
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func doubleClick() async throws -> String? {
+        let request = PostElementDoubleClickRequest(baseURL: baseURL, sessionId: sessionId, elementId: elementId)
         let response = try await APIClient.shared.request(request)
         return response.value
     }

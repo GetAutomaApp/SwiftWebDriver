@@ -2,9 +2,6 @@
 // Copyright (c) 2025 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
-//
-// This package is freely distributable under the MIT license.
-// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
 
 @testable import SwiftWebDriver
 import Testing
@@ -12,7 +9,7 @@ import Testing
 @Suite("Chrome Driver Element Handles", .serialized)
 internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     @Test("Click Button")
-    public func clickButton() async throws {
+    func clickButton() async throws {
         page = "elementHandleTestPage.html"
 
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
@@ -22,8 +19,19 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
         #expect(test == "clicked!")
     }
 
+    @Test("Double Click Button")
+    func doubleClickButton() async throws {
+        page = "elementHandleTestPage.html"
+
+        try await driver.navigateTo(urlString: testPageURL.absoluteString)
+        let button = try await driver.findElement(.css(.id("doubleclick")))
+        try await button.doubleClick()
+        let test = try await button.text()
+        #expect(test == "ii")
+    }
+
     @Test("Get Element Attributes")
-    public func getAttribute() async throws {
+    func getAttribute() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -34,7 +42,7 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     }
 
     @Test("Clear Element")
-    public func clearElement() async throws {
+    func clearElement() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -48,7 +56,7 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     }
 
     @Test("Send Key")
-    public func sendKey() async throws {
+    func sendKey() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
         let element = try await driver.findElement(.css(.id("sendValue")))
@@ -58,7 +66,7 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     }
 
     @Test("Get Screenshot")
-    public func getScreenshot() async throws {
+    func getScreenshot() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
         let element = try await driver.findElement(.css(.id("sendValue")))
@@ -68,7 +76,7 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     }
 
     @Test("Fail any operation if element becomes stale")
-    public func throwStaleError() async throws {
+    func throwStaleError() async throws {
         let sleepTotal = 3
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
