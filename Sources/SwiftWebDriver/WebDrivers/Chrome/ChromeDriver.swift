@@ -332,6 +332,10 @@ public class ChromeDriver: Driver {
         try await execute(script, args: args, type: .sync)
     }
 
+    public func dragAndDrop(from source: Element, to target: Element) async throws {
+        try await ChromeDriverElementDragAndDropper(driver: self, from: source, to: target).dragAndDrop()
+    }
+
     deinit {
         let url = url
         let sessionId = sessionId

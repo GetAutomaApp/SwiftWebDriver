@@ -30,6 +30,20 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
         #expect(test == "ii")
     }
 
+    @Test("Drag Element To Another")
+    func dragElementToAnother() async throws {
+        page = "dragBox.html"
+        try await driver.navigateTo(urlString: testPageURL.absoluteString)
+
+        let source = try await driver.findElement(.css(.id("source")))
+        let target = try await driver.findElement(.css(.id("target")))
+
+        try await source.dragAndDrop(to: target)
+
+        let targetText = try await driver.getProperty(element: target, propertyName: "innerText").value?.stringValue
+        #expect(targetText == "DROPPED!", "Target text should be 'DROPPED!' after pointer drag")
+    }
+
     @Test("Get Element Attributes")
     func getAttribute() async throws {
         page = "elementHandleTestPage.html"

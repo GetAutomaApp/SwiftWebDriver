@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pointer Drag Test</title>
+    <style>
+        #source,
+        #target {
+            width: 150px;
+            height: 150px;
+            border: 2px solid #333;
+            display: inline-block;
+            margin: 20px;
+            text-align: center;
+            line-height: 150px;
+            font-weight: bold;
+            user-select: none;
+        }
+
+        #source {
+            background-color: lightblue;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        #target {
+            background-color: lightgreen;
+            position: absolute;
+            top: 200px;
+            left: 200px;
+        }
+
+        #target.dropped {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="source">SOURCE</div>
+    <div id="target">TARGET</div>
+
+    <script>
+        const source = document.getElementById("source");
+        const target = document.getElementById("target");
+
+        let offsetX, offsetY;
+
+        source.addEventListener("mousedown", (e) => {
+            offsetX = e.clientX - source.offsetLeft;
+            offsetY = e.clientY - source.offsetTop;
+
+            function onMouseMove(e) {
+                source.style.left = `${e.clientX - offsetX}px`;
+                source.style.top = `${e.clientY - offsetY}px`;
+            }
+
+            function onMouseUp(e) {
+                document.removeEventListener("mousemove", onMouseMove);
+                document.removeEventListener("mouseup", onMouseUp);
+
+                // Check if source is over target
+                const sRect = source.getBoundingClientRect();
+                const tRect = target.getBoundingClientRect();
+
+                if (!(sRect.right < tRect.left ||
+                    sRect.left > tRect.right ||
+                    sRect.bottom < tRect.top ||
+                    sRect.top > tRect.bottom)) {
+                    target.textContent = "DROPPED!";
+                    target.classList.add("dropped");
+                }
+            }
+
+            document.addEventListener("mousemove", onMouseMove);
+            document.addEventListener("mouseup", onMouseUp);
+        });
+    </script>
+</body>
+
+</html>
