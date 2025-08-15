@@ -172,7 +172,7 @@ public struct Element: ElementCommandProtocol, Sendable {
     /// - Throws: An error if the drag-and-drop operation fails.
     @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    public func dragAndDrop(to target: Element) async throws -> String? {
+    public func dragAndDrop(to target: Self) async throws -> String? {
         let request = try await PostElementDragAndDropRequest(
             baseURL: baseURL,
             sessionId: sessionId,

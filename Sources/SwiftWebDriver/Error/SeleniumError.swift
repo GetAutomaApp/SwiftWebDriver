@@ -33,10 +33,9 @@ public enum SeleniumErrorType: String, Codable {
     case unexpectedAlertOpen = "unexpected alert open"
     case unknownCommand = "unknown command"
     case unknownError = "unknown error"
-    case unsupportedOperation = "unsupported operation"
-
     /// Fallback value for unrecognized or unknown errors.
     case unrecognized
+    case unsupportedOperation = "unsupported operation"
 }
 
 /// Represents a Selenium error returned from the WebDriver server.

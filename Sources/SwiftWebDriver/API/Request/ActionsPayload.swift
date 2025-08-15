@@ -54,12 +54,26 @@ internal struct PointerAction: Encodable {
     /// Optional duration in milliseconds for pause actions.
     public let duration: Int?
 
-    enum CodingKeys: String, CodingKey {
+    /// Coding keys for encoding/decoding `PointerAction` to/from JSON.
+    ///
+    /// Maps the Swift property names to the corresponding keys expected by the WebDriver Actions API.
+    public enum CodingKeys: String, CodingKey {
+        /// Action type (e.g., "pointerMove", "pointerDown", "pointerUp").
         case type
+
+        /// Origin element for the pointer action.
         case origin
+
+        /// X-coordinate of the pointer action.
         case xCoordinate = "x"
+
+        /// Y-coordinate of the pointer action.
         case yCoordinate = "y"
+
+        /// Mouse button involved in the action (0 = left, 1 = middle, 2 = right).
         case button
+
+        /// Duration of the action in milliseconds.
         case duration
     }
 
@@ -72,7 +86,7 @@ internal struct PointerAction: Encodable {
     ///   - yCoordinate: Y-coordinate (optional).
     ///   - button: Button index for mouse actions (optional).
     ///   - duration: Duration in milliseconds for pause actions (optional).
-    init(
+    public init(
         type: String,
         origin: WebDriverElementOrigin? = nil,
         xCoordinate: Int? = nil,
@@ -96,7 +110,11 @@ internal struct WebDriverElementOrigin: Encodable {
     /// The element ID in WebDriver protocol format.
     public let element: String
 
-    enum CodingKeys: String, CodingKey {
+    /// Coding keys for encoding/decoding `WebDriverElementOrigin` to/from JSON.
+    ///
+    /// Maps the Swift property `element` to the WebDriver protocol’s expected key.
+    public enum CodingKeys: String, CodingKey {
+        /// The WebDriver element identifier key used in actions payloads.
         case element = "element-6066-11e4-a52e-4f735466cecf"
     }
 }
