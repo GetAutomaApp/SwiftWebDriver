@@ -31,37 +31,62 @@ internal struct PostElementDragAndDropRequest: RequestType {
     var headers: HTTPHeaders = [:]
 
     var body: HTTPClient.Body? {
-        let origin = WebDriverElementOrigin(element: elementId)
-        let dragToOrigin = WebDriverElementOrigin(element: toElementId)
+        getEncodedActionsPayload()
+    }
 
-        let targetCenterX = Int(targetElementRect.width / 2)
-        let targetCenterY = Int(targetElementRect.height / 2)
+    private func getEncodedActionsPayload() -> HTTPClient.Body? {
+        let payload = getActionsPayload()
 
-        let pointerActions = [
+        guard
+            let data = encodeActionsPayload(payload: payload)
+        else {
+            return nil
+        }
+
+        return .data(data)
+    }
+
+    private func encodeActionsPayload(payload: ActionsPayload) -> Data? {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        return try? encoder.encode(payload)
+    }
+
+    private func getActionsPayload() -> ActionsPayload {
+        ActionsPayload(actions: [getPointerSource()])
+    }
+
+    private func getPointerSource() -> PointerSource {
+        PointerSource(
+            type: "pointer",
+            id: "mouse",
+            parameters: .init(pointerType: "mouse"),
+            actions: getDragAndDropPointerActions()
+        )
+    }
+
+    private func getDragAndDropPointerActions() -> [PointerAction] {
+        let (origin, dragToOrigin) = getElementOrigins()
+        let (targetCenterX, targetCenterY) = getElementCenterCoordinates()
+
+        return [
             PointerAction(type: "pointerMove", origin: origin, x: 0, y: 0),
             PointerAction(type: "pointerDown", button: 0),
             PointerAction(type: "pause", duration: 100),
             PointerAction(type: "pointerMove", origin: dragToOrigin, x: targetCenterX, y: targetCenterY),
             PointerAction(type: "pointerUp", button: 0)
         ]
+    }
 
-        let pointerSource = PointerSource(
-            type: "pointer",
-            id: "mouse",
-            parameters: .init(pointerType: "mouse"),
-            actions: pointerActions
-        )
+    private func getElementCenterCoordinates() -> (Int, Int) {
+        let targetCenterX = Int(targetElementRect.width / 2)
+        let targetCenterY = Int(targetElementRect.height / 2)
+        return (targetCenterX, targetCenterY)
+    }
 
-        let payload = ActionsPayload(actions: [pointerSource])
-
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        let data = try? encoder.encode(payload)
-
-        guard let data else {
-            return nil
-        }
-
-        return .data(data)
+    private func getElementOrigins() -> (WebDriverElementOrigin, WebDriverElementOrigin) {
+        let origin = WebDriverElementOrigin(element: elementId)
+        let dragToOrigin = WebDriverElementOrigin(element: toElementId)
+        return (origin, dragToOrigin)
     }
 }
