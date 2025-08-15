@@ -23,6 +23,7 @@ public struct ChromeOptions: Codable {
 
 /// Restrict arguments to an enum of allowed arguments
 public extension Args {
+    /// Initialize chrome option argument
     init(_ args: Arguments) {
         self.init(describing: args)
     }
