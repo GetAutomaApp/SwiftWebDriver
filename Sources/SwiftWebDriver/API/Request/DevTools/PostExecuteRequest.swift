@@ -82,9 +82,9 @@ internal extension PostExecuteRequest {
     /// using `AnyEncodable` to allow any `Encodable` value to be passed to the script.
     struct RequestBody: Encodable {
         /// The JavaScript code to execute.
-        let script: String
+        public let script: String
 
         /// The arguments to pass to the script.
-        let args: [AnyEncodable]
+        public let args: [AnyEncodable]
     }
 }
