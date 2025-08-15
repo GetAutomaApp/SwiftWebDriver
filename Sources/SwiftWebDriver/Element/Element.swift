@@ -6,10 +6,47 @@
 import Foundation
 import NIO
 
+/// A protocol defining methods for locating DOM elements within a web page.
+///
+/// Types that conform to `FindElementProtocol` (e.g., `Driver` or `Element`) provide
+/// functionality to find a single element, multiple elements, or wait until an element
+/// exists in the DOM.
 public protocol FindElementProtocol {
+    // MARK: - Element Lookup
+
+    /// Finds a single DOM element matching the specified locator type.
+    ///
+    /// - Parameter locatorType: The strategy used to locate the element
+    ///   (e.g., CSS selector, XPath, ID).
+    /// - Returns: An `Element` representing the found DOM element.
+    /// - Throws: An error if the element cannot be found or if the WebDriver
+    ///           request fails.
     func findElement(_ locatorType: LocatorType) async throws -> Element
+
+    /// Finds all DOM elements matching the specified locator type.
+    ///
+    /// - Parameter locatorType: The strategy used to locate the elements
+    ///   (e.g., CSS selector, XPath, class name).
+    /// - Returns: An array of `Element` objects representing the found elements.
+    /// - Throws: An error if the WebDriver request fails.
     func findElements(_ locatorType: LocatorType) async throws -> Elements
-    func waitUntil(_ locatorType: LocatorType, retryCount: Int, durationSeconds: Int) async throws -> Bool
+
+    // MARK: - Waiting
+
+    /// Waits until at least one element matching the locator type exists in the DOM,
+    /// retrying for a specified number of attempts with a delay between each retry.
+    ///
+    /// - Parameters:
+    ///   - locatorType: The strategy used to locate the element.
+    ///   - retryCount: The number of retry attempts (default is 3).
+    ///   - durationSeconds: The delay in seconds between retries (default is 1).
+    /// - Returns: `true` if the element was found within the retry attempts; otherwise `false`.
+    /// - Throws: Any errors thrown during element lookup that are not handled as "no such element".
+    func waitUntil(
+        _ locatorType: LocatorType,
+        retryCount: Int,
+        durationSeconds: Int
+    ) async throws -> Bool
 }
 
 internal protocol ElementCommandProtocol: FindElementProtocol {
