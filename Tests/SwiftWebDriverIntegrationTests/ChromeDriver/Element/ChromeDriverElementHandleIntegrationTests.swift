@@ -66,8 +66,8 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
         let rect = try await element.rect()
 
         #expect(rect.height == 100)
-        #expect(rect.x > 5)
-        #expect(rect.y > 5)
+        #expect(rect.xPosition > 5)
+        #expect(rect.yPosition > 5)
         #expect(rect.width == 100)
     }
 

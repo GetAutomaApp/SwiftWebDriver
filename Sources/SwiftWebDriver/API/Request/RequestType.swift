@@ -37,7 +37,7 @@ internal extension RequestType {
 }
 
 internal extension HTTPClient {
-    public func execute(request: some RequestType, deadline: NIODeadline? = nil) -> EventLoopFuture<Response> {
+    func execute(request: some RequestType, deadline: NIODeadline? = nil) -> EventLoopFuture<Response> {
         do {
             let request = try HTTPClient.Request(
                 url: request.url,

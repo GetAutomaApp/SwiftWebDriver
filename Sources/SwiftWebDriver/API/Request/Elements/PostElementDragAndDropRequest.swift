@@ -20,8 +20,6 @@ internal struct PostElementDragAndDropRequest: RequestType {
 
     var toElementId: String
 
-    var elementRect: ElementRect
-
     var targetElementRect: ElementRect
 
     var path: String {

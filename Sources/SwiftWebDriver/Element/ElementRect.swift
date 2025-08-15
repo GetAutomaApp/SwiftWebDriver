@@ -4,8 +4,15 @@
 // All rights reserved.
 
 public struct ElementRect: Codable, Sendable {
-    public let x: Double
-    public let y: Double
+    public let xPosition: Double
+    public let yPosition: Double
     public let width: Double
     public let height: Double
+
+    public enum CodingKeys: String, CodingKey {
+        case xPosition = "x"
+        case yPosition = "y"
+        case width
+        case height
+    }
 }
