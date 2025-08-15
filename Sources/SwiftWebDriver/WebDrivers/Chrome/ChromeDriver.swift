@@ -249,9 +249,10 @@ public class ChromeDriver: Driver {
             throw WebDriverError.sessionIdIsNil
         }
 
-        let request = PostExecuteSyncRequest(
+        let request = PostExecuteRequest(
             baseURL: url,
             sessionId: sessionId,
+            type: .sync,
             javascriptSnippet: .init(script: script, args: args)
         )
 
@@ -263,9 +264,10 @@ public class ChromeDriver: Driver {
             throw WebDriverError.sessionIdIsNil
         }
 
-        let request = PostExecuteAsyncRequest(
+        let request = PostExecuteRequest(
             baseURL: url,
             sessionId: sessionId,
+            type: .async,
             javascriptSnippet: .init(script: script, args: args)
         )
 
@@ -319,9 +321,7 @@ public class ChromeDriver: Driver {
         return try await execute(script, args: args, type: .sync)
     }
 
-    public func setProperty(element: Element, propertyName: String,
-                            newValue: String) async throws
-    {
+    public func setProperty(element: Element, propertyName: String, newValue: String) async throws {
         let script = "arguments[0][arguments[1]] = arguments[2];"
         let args: [AnyEncodable] = [
             AnyEncodable(["element-6066-11e4-a52e-4f735466cecf": element.elementId]),

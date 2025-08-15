@@ -2,30 +2,34 @@
 // Copyright (c) 2025 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
-//
-// This package is freely distributable under the MIT license.
-// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
 
 import Foundation
 import NIOCore
 
-public protocol StatableObject: Codable {}
-
+/// Typealias for a single ChromeOptions argument
 public typealias Args = String
 
-public struct ChromeOptions: StatableObject {
+/// ChromeOptions data structure, used to configure Chrome Driver instantiation
+public struct ChromeOptions: Codable {
+    /// Chrome arguments
     public let args: [Args]?
 
+    /// Initialize ChromeOptions
+    /// - Parameter args: an array of arguments
     public init(args: [Args]?) {
         self.args = args
     }
 }
 
+/// Restrict arguments to an enum of allowed arguments
 public extension Args {
+    /// Initialize chrome option argument
     init(_ args: Arguments) {
         self.init(describing: args)
     }
 
+    /// All allowed arguments, with their flag value coupled (research Chrome Driver argument definitions to know what
+    /// each argument means)
     enum Arguments: CustomStringConvertible, Codable {
         case headless
         case noSandbox
@@ -41,6 +45,7 @@ public extension Args {
         case proxyServer(proxyURL: String)
         case userDataDir(dir: String)
 
+        /// Case descriptions
         public var description: String {
             switch self {
             case .headless:
