@@ -16,6 +16,8 @@ internal class ChromeDriverDragAndDropIntegrationTests: ChromeDriverTest {
         try await dragAndDrop()
     }
 
+    /// Drag and drop draggable element to another element, testing the `dragAndDrop` method.
+    /// This test tests the Actions API request to drag the draggable element to the other element.
     @Test("Drag Element To Another (WebDriver Actions API)")
     public func dragAndDropElementToAnother() async throws {
         page = "dragBox.html"

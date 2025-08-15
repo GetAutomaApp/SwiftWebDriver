@@ -2,9 +2,6 @@
 // Copyright (c) 2025 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
-//
-// This package is freely distributable under the MIT license.
-// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
 
 import AsyncHTTPClient
 import Foundation
@@ -40,7 +37,7 @@ internal extension RequestType {
 }
 
 internal extension HTTPClient {
-    func execute(request: some RequestType, deadline: NIODeadline? = nil) -> EventLoopFuture<Response> {
+    public func execute(request: some RequestType, deadline: NIODeadline? = nil) -> EventLoopFuture<Response> {
         do {
             let request = try HTTPClient.Request(
                 url: request.url,
