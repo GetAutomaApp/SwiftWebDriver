@@ -9,7 +9,7 @@ import Testing
 @Suite("Chrome Driver Element Handles", .serialized)
 internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     @Test("Click Button")
-    func clickButton() async throws {
+    public func clickButton() async throws {
         page = "elementHandleTestPage.html"
 
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
@@ -20,7 +20,7 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     }
 
     @Test("Double Click Button")
-    func doubleClickButton() async throws {
+    public func doubleClickButton() async throws {
         page = "elementHandleTestPage.html"
 
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
@@ -31,7 +31,7 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     }
 
     @Test("Drag Element To Another")
-    func dragElementToAnother() async throws {
+    public func dragElementToAnother() async throws {
         page = "dragBox.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -45,7 +45,7 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     }
 
     @Test("Get Element Attributes")
-    func getAttribute() async throws {
+    public func getAttribute() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -56,7 +56,7 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     }
 
     @Test("Get Element Rect")
-    func getRect() async throws {
+    public func getRect() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -66,13 +66,13 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
         let rect = try await element.rect()
 
         #expect(rect.height == 100)
-        #expect(rect.x > 5)
-        #expect(rect.y > 5)
+        #expect(rect.xPosition > 5)
+        #expect(rect.yPosition > 5)
         #expect(rect.width == 100)
     }
 
     @Test("Clear Element")
-    func clearElement() async throws {
+    public func clearElement() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -86,7 +86,7 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     }
 
     @Test("Send Key")
-    func sendKey() async throws {
+    public func sendKey() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
         let element = try await driver.findElement(.css(.id("sendValue")))
@@ -96,7 +96,7 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     }
 
     @Test("Get Screenshot")
-    func getScreenshot() async throws {
+    public func getScreenshot() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
         let element = try await driver.findElement(.css(.id("sendValue")))
@@ -106,7 +106,7 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
     }
 
     @Test("Fail any operation if element becomes stale")
-    func throwStaleError() async throws {
+    public func throwStaleError() async throws {
         let sleepTotal = 3
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)

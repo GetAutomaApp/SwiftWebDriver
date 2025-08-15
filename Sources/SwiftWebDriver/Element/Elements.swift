@@ -2,17 +2,30 @@
 // Copyright (c) 2025 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
-//
-// This package is freely distributable under the MIT license.
-// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
 
 import Foundation
 
+/// A type alias for an array of `Element` instances.
+///
+/// `Elements` is used to represent multiple DOM elements returned by queries
+/// such as `findElements` or batch operations.
 public typealias Elements = [Element]
 
+/// Extension adding convenience methods for working with multiple `Element` instances.
+///
+/// These methods are designed for batch operations, allowing asynchronous actions
+/// (like retrieving text or attributes) to be performed concurrently on each element.
 public extension Elements {
+    /// Retrieves the visible text content of each element in the collection.
+    ///
+    /// This method performs requests concurrently for all elements and returns
+    /// their `innerText` values in the same order they complete (not necessarily
+    /// the order they appear in the array).
+    ///
+    /// - Returns: An array of strings, each representing an element's visible text.
+    /// - Throws: An error if any of the underlying WebDriver requests fail.
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    private func texts() async throws -> [String] {
+    func texts() async throws -> [String] {
         var ids: [String] = []
         try await withThrowingTaskGroup(of: GetElementTextResponse.self) { group in
             for element in self {
@@ -34,8 +47,14 @@ public extension Elements {
         return ids
     }
 
+    /// Retrieves the tag name of each element in the collection.
+    ///
+    /// This method performs requests concurrently for all elements.
+    ///
+    /// - Returns: An array of strings containing each element's tag name.
+    /// - Throws: An error if any of the underlying WebDriver requests fail.
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    private func names() async throws -> [String] {
+    func names() async throws -> [String] {
         var names: [String] = []
         try await withThrowingTaskGroup(of: GetElementNameResponse.self) { group in
             for element in self {
@@ -57,12 +76,18 @@ public extension Elements {
         return names
     }
 
+    /// Finds the first matching descendant element within each element in the collection.
+    ///
+    /// This is equivalent to calling `findElement(_:)` on each element, and it runs all lookups concurrently.
+    ///
+    /// - Parameter locatorType: The method by which to locate the element (e.g., `.css`, `.xpath`).
+    /// - Returns: An array of found `Element` instances.
+    /// - Throws: An error if no matching element is found or if a WebDriver request fails.
     @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    private func findElement(_ locatorType: LocatorType) async throws -> Elements {
+    func findElement(_ locatorType: LocatorType) async throws -> Elements {
         var elements: Elements = []
         try await withThrowingTaskGroup(of: Element.self) { group in
-
             for element in self {
                 group.addTask {
                     try await element.findElement(locatorType)
@@ -77,8 +102,15 @@ public extension Elements {
         return elements
     }
 
+    /// Finds all matching descendant elements within each element in the collection.
+    ///
+    /// This is equivalent to calling `findElements(_:)` on each element, and it runs all lookups concurrently.
+    ///
+    /// - Parameter locatorType: The method by which to locate the elements (e.g., `.css`, `.xpath`).
+    /// - Returns: A flattened array containing all matching `Element` instances.
+    /// - Throws: An error if the WebDriver request fails.
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    private func findElements(_ locatorType: LocatorType) async throws -> Elements {
+    func findElements(_ locatorType: LocatorType) async throws -> Elements {
         var elements = [Elements]()
         try await withThrowingTaskGroup(of: Elements.self) { group in
             for element in self {
@@ -94,9 +126,20 @@ public extension Elements {
         return elements.flatMap(\.self)
     }
 
+    /// Waits until at least one matching descendant element is found within each element in the collection.
+    ///
+    /// This method retries the search until a match is found, the retry count is exceeded,
+    /// or an error other than `noSuchElement` is encountered.
+    ///
+    /// - Parameters:
+    ///   - locatorType: The method by which to locate the element.
+    ///   - retryCount: The maximum number of retries before giving up. Defaults to `3`.
+    ///   - durationSeconds: The delay between retries in seconds. Defaults to `1`.
+    /// - Returns: `true` if an element was found within the retry limit, otherwise `false`.
+    /// - Throws: Any error thrown by `findElement(_:)` that is not a `noSuchElement` Selenium error.
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
-    private func waitUntil(
+    func waitUntil(
         _ locatorType: LocatorType,
         retryCount: Int = 3,
         durationSeconds: Int = 1

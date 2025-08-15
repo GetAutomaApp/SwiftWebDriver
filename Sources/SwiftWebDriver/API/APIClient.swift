@@ -2,9 +2,6 @@
 // Copyright (c) 2025 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
-//
-// This package is freely distributable under the MIT license.
-// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
 
 import AsyncHTTPClient
 import Foundation
@@ -25,14 +22,33 @@ internal enum APIError: Error {
 internal struct APIClient {
     private let httpClient = HTTPClient(eventLoopGroupProvider: .singleton)
 
+    /// The shared singleton instance of `APIClient`.
+    ///
+    /// Use this when you need a shared HTTP client for sending requests to
+    /// the WebDriver server or other API endpoints without creating a new
+    /// instance each time.
     public static let shared = Self()
 
-    /// Request send To API and Parse Codable Models
-    /// - Parameter request: RequestType
-    /// - Returns: EventLoopFuture<RequestType.Response>
+    /// Sends a request to the API and decodes the response into a `Codable` model.
+    ///
+    /// This method executes the given `RequestType` using the underlying
+    /// `AsyncHTTPClient` and decodes the result into the associated `Response`
+    /// type declared by the request. If the server responds with a non-OK
+    /// status code, the response is checked for a `SeleniumError` and thrown
+    /// if present; otherwise, an `APIError.responseStatsFailed` is thrown.
+    ///
+    /// - Parameter request: The request to send. Must conform to `RequestType`
+    ///   and have a `Codable` response type.
+    /// - Returns: An `EventLoopFuture` that will succeed with the decoded
+    ///   response object or fail with an error.
+    ///
+    /// - Throws:
+    ///   - `SeleniumError` if the server returns a known WebDriver error.
+    ///   - `APIError.responseStatsFailed` if the status code indicates failure.
+    ///   - `APIError.responseBodyIsNil` if no response body is returned.
+    ///   - Any `DecodingError` if the response cannot be decoded.
     public func request<R>(_ request: R) -> EventLoopFuture<R.Response> where R: RequestType {
         httpClient.execute(request: request).flatMapResult { response -> Result<R.Response, Error> in
-
             guard response.status == .ok else {
                 if
                     let buffer = response.body,
@@ -58,9 +74,20 @@ internal struct APIClient {
         }
     }
 
-    /// Request send To API and Perse Codable Models
-    /// - Parameter request: RequestType
-    /// - Returns: EventLoopFuture<RequestType.Response>
+    /// Sends a request to the API and decodes the response into a `Codable` model, using Swift concurrency.
+    ///
+    /// This is the async/await variant of `request(_:)`, returning the decoded
+    /// response directly rather than wrapping it in an `EventLoopFuture`.
+    ///
+    /// - Parameter request: The request to send. Must conform to `RequestType`
+    ///   and have a `Codable` response type.
+    /// - Returns: The decoded response object.
+    ///
+    /// - Throws:
+    ///   - `SeleniumError` if the server returns a known WebDriver error.
+    ///   - `APIError.responseStatsFailed` if the status code indicates failure.
+    ///   - `APIError.responseBodyIsNil` if no response body is returned.
+    ///   - Any `DecodingError` if the response cannot be decoded.
     @discardableResult
     public func request<R>(_ request: R) async throws -> R.Response where R: RequestType {
         try await self.request(request).get()

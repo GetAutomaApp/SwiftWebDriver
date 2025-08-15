@@ -8,14 +8,18 @@ import Testing
 
 @Suite("Chrome Driver Drag and Drop Integration Tests", .serialized)
 internal class ChromeDriverDragAndDropIntegrationTests: ChromeDriverTest {
+    /// Drag and drop draggable element to another element, testing the `dragAndDrop` method.
+    /// This test tests the JavaScript script executed in the DOM to drag the draggable element to the other element.
     @Test("Drag Element To Another (JavaScript)")
-    func dragAndDropElementToAnotherWithDraggableElement() async throws {
+    public func dragAndDropDraggableElementToAnother() async throws {
         page = "dragTarget.html"
         try await dragAndDrop()
     }
 
+    /// Drag and drop draggable element to another element, testing the `dragAndDrop` method.
+    /// This test tests the Actions API request to drag the draggable element to the other element.
     @Test("Drag Element To Another (WebDriver Actions API)")
-    func dragAndDropElementToAnother() async throws {
+    public func dragAndDropElementToAnother() async throws {
         page = "dragBox.html"
         try await dragAndDrop()
     }
