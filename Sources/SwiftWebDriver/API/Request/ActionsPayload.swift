@@ -43,10 +43,10 @@ internal struct PointerAction: Encodable {
     public let origin: WebDriverElementOrigin?
 
     /// Optional x-coordinate for the pointer action.
-    public let x: Int?
+    public let xCoordinate: Int?
 
     /// Optional y-coordinate for the pointer action.
-    public let y: Int?
+    public let yCoordinate: Int?
 
     /// Optional button for pointer actions (0 = left, 1 = middle, 2 = right).
     public let button: Int?
@@ -54,27 +54,36 @@ internal struct PointerAction: Encodable {
     /// Optional duration in milliseconds for pause actions.
     public let duration: Int?
 
+    enum CodingKeys: String, CodingKey {
+        case type
+        case origin
+        case xCoordinate = "x"
+        case yCoordinate = "y"
+        case button
+        case duration
+    }
+
     /// Initializes a new `PointerAction`.
     ///
     /// - Parameters:
     ///   - type: The type of pointer action.
     ///   - origin: The element origin for the action (optional).
-    ///   - x: X-coordinate (optional).
-    ///   - y: Y-coordinate (optional).
+    ///   - xCoordinate: X-coordinate (optional).
+    ///   - yCoordinate: Y-coordinate (optional).
     ///   - button: Button index for mouse actions (optional).
     ///   - duration: Duration in milliseconds for pause actions (optional).
     init(
         type: String,
         origin: WebDriverElementOrigin? = nil,
-        x: Int? = nil,
-        y: Int? = nil,
+        xCoordinate: Int? = nil,
+        yCoordinate: Int? = nil,
         button: Int? = nil,
         duration: Int? = nil
     ) {
         self.type = type
         self.origin = origin
-        self.x = x
-        self.y = y
+        self.xCoordinate = xCoordinate
+        self.yCoordinate = yCoordinate
         self.button = button
         self.duration = duration
     }

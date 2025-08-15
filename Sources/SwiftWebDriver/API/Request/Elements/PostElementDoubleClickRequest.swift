@@ -76,7 +76,7 @@ public struct PostElementDoubleClickRequest: RequestType {
         let origin = WebDriverElementOrigin(element: elementId)
 
         let pointerActions = [
-            PointerAction(type: "pointerMove", origin: origin, x: 0, y: 0),
+            PointerAction(type: "pointerMove", origin: origin, xCoordinate: 0, yCoordinate: 0),
             PointerAction(type: "pointerDown", button: 0),
             PointerAction(type: "pointerUp", button: 0),
             PointerAction(type: "pause", duration: 50),

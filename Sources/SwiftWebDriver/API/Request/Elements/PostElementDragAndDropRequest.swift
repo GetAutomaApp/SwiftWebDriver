@@ -112,10 +112,15 @@ internal struct PostElementDragAndDropRequest: RequestType {
         let (targetCenterX, targetCenterY) = getElementCenterCoordinates()
 
         return [
-            PointerAction(type: "pointerMove", origin: origin, x: 0, y: 0),
+            PointerAction(type: "pointerMove", origin: origin, xCoordinate: 0, yCoordinate: 0),
             PointerAction(type: "pointerDown", button: 0),
             PointerAction(type: "pause", duration: 100),
-            PointerAction(type: "pointerMove", origin: dragToOrigin, x: targetCenterX, y: targetCenterY),
+            PointerAction(
+                type: "pointerMove",
+                origin: dragToOrigin,
+                xCoordinate: targetCenterX,
+                yCoordinate: targetCenterY
+            ),
             PointerAction(type: "pointerUp", button: 0)
         ]
     }
