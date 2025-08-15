@@ -249,9 +249,10 @@ public class ChromeDriver: Driver {
             throw WebDriverError.sessionIdIsNil
         }
 
-        let request = PostExecuteSyncRequest(
+        let request = PostExecuteRequest(
             baseURL: url,
             sessionId: sessionId,
+            type: .sync,
             javascriptSnippet: .init(script: script, args: args)
         )
 
@@ -263,9 +264,10 @@ public class ChromeDriver: Driver {
             throw WebDriverError.sessionIdIsNil
         }
 
-        let request = PostExecuteAsyncRequest(
+        let request = PostExecuteRequest(
             baseURL: url,
             sessionId: sessionId,
+            type: .async,
             javascriptSnippet: .init(script: script, args: args)
         )
 

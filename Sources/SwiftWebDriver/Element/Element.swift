@@ -6,7 +6,7 @@
 import Foundation
 import NIO
 
-internal protocol FindElementProtocol {
+public protocol FindElementProtocol {
     func findElement(_ locatorType: LocatorType) async throws -> Element
     func findElements(_ locatorType: LocatorType) async throws -> Elements
     func waitUntil(_ locatorType: LocatorType, retryCount: Int, durationSeconds: Int) async throws -> Bool
