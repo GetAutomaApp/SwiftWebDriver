@@ -1,4 +1,5 @@
-> [!INFO] This codebase is a fork made from this [REPO](https://github.com/ashi-psn/SwiftWebDriver). The majority of the code was written by @ashi-psn. This repo just modernizes it & adapts it for our organizations usecases.
+> [!NOTE]
+> This codebase is a fork made from this [REPO](https://github.com/ashi-psn/SwiftWebDriver). The majority of the code was written by @ashi-psn. This repo just modernizes it & adapts it for our organizations usecases.
 
 # SwiftWebDriver
 [![Docker Image CI](https://github.com/ashi-psn/SwiftWebDriver/actions/workflows/main.yml/badge.svg)](https://github.com/ashi-psn/SwiftWebDriver/actions/workflows/main.yml)
