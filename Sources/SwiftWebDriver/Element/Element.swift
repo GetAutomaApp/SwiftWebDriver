@@ -1,5 +1,5 @@
 // Element.swift
-// Copyright (c) 2025 GetAutomaApp
+// Copyright (c) 2026 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
 
@@ -259,6 +259,23 @@ public struct Element: ElementCommandProtocol, Sendable {
             sessionId: sessionId,
             elementId: elementId,
             text: value.unicode
+        )
+        let response = try await APIClient.shared.request(request)
+        return response.value
+    }
+
+    @discardableResult
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func sendKeys(
+        keys: ElementsTypes.SendValueActionKeyTypes...,
+        characters: String = ""
+    ) async throws -> String? {
+        let text = keys.map(\.rawValue).joined() + characters
+        let request = PostElementSendValueRequest(
+            baseURL: baseURL,
+            sessionId: sessionId,
+            elementId: elementId,
+            text: text
         )
         let response = try await APIClient.shared.request(request)
         return response.value

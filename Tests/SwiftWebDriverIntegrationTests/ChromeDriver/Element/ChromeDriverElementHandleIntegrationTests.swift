@@ -1,5 +1,5 @@
 // ChromeDriverElementHandleIntegrationTests.swift
-// Copyright (c) 2025 GetAutomaApp
+// Copyright (c) 2026 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
 
@@ -93,6 +93,22 @@ internal class ChromeDriverElementHandleIntegrationTests: ChromeDriverTest {
         try await element.send(value: "newValue")
         let text = try await driver.execute("return document.querySelector('#sendValue').value").value?.stringValue
         #expect(text == "newValue")
+    }
+
+    @Test("Send Chord")
+    public func sendChord() async throws {
+        page = "elementHandleTestPage.html"
+        try await driver.navigateTo(urlString: testPageURL.absoluteString)
+        let element = try await driver.findElement(.css(.id("sendValue")))
+        try await element.send(value: "newValue")
+        let text = try await driver.execute("return document.querySelector('#sendValue').value").value?.stringValue
+        #expect(text == "newValue")
+
+        // Remove text from element
+        try await element.sendKeys(keys: .CONTROL, characters: "a")
+        try await element.sendKeys(keys: .BACKSPACE)
+        let newText = try await driver.execute("return document.querySelector('#sendValue').value").value?.stringValue
+        #expect(newText == "")
     }
 
     @Test("Get Screenshot")
