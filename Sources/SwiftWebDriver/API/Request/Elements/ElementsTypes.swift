@@ -1,5 +1,5 @@
 // ElementsTypes.swift
-// Copyright (c) 2025 GetAutomaApp
+// Copyright (c) 2026 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
 
@@ -29,6 +29,30 @@ public enum ElementsTypes {
         ///
         /// Used to move focus between interactive elements (e.g., form fields) in a web page.
         case TAB = "\u{E004}"
+
+        case NULL = "\u{E000}"
+        case CANCEL = "\u{E001}"
+        case HELP = "\u{E002}"
+        case BACKSPACE = "\u{E003}"
+        case CLEAR = "\u{E005}"
+        case SHIFT = "\u{E008}"
+        case CONTROL = "\u{E009}"
+        case ALT = "\u{E00A}"
+        case PAUSE = "\u{E00B}"
+        case ESCAPE = "\u{E00C}"
+        case SPACE = "\u{E00D}"
+        case PAGE_UP = "\u{E00E}"
+        case PAGE_DOWN = "\u{E00F}"
+        case END = "\u{E010}"
+        case HOME = "\u{E011}"
+        case LEFT_ARROW = "\u{E012}"
+        case UP_ARROW = "\u{E013}"
+        case RIGHT_ARROW = "\u{E014}"
+        case DOWN_ARROW = "\u{E015}"
+        case INSERT = "\u{E016}"
+        case DELETE = "\u{E017}"
+        case F1 = "\u{E031}"
+        case F2 = "\u{E032}"
 
         /// The raw Unicode representation of the key.
         ///
