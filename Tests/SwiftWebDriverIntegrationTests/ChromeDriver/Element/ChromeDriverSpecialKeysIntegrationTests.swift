@@ -1,10 +1,7 @@
 // ChromeDriverSpecialKeysIntegrationTests.swift
-// Copyright (c) 2025 GetAutomaApp
+// Copyright (c) 2026 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
-//
-// This package is freely distributable under the MIT license.
-// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
 
 @testable import SwiftWebDriver
 import Testing

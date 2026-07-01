@@ -267,10 +267,13 @@ public struct Element: ElementCommandProtocol, Sendable {
     @discardableResult
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func sendKeys(
-        keys: ElementsTypes.SendValueActionKeyTypes...,
+        keys: ElementsTypes.SendValueActionKeyTypes?...,
         characters: String = ""
     ) async throws -> String? {
-        let text = keys.map(\.rawValue).joined() + characters
+        let text = keys
+            .compactMap(\.self) // unwrap and remove nils
+            .map(\.rawValue)
+            .joined() + characters
         let request = PostElementSendValueRequest(
             baseURL: baseURL,
             sessionId: sessionId,
