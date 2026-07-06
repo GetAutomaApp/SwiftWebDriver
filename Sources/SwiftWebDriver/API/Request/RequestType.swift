@@ -1,5 +1,5 @@
 // RequestType.swift
-// Copyright (c) 2025 GetAutomaApp
+// Copyright (c) 2026 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
 
@@ -22,7 +22,7 @@ public protocol RequestType {
     /// request http method
     var method: NIOHTTP1.HTTPMethod { get }
 
-    /// request http beaders
+    /// request http headers
     var headers: NIOHTTP1.HTTPHeaders { get }
 
     /// request http body

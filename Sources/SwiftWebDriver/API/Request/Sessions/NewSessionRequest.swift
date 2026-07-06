@@ -1,46 +1,37 @@
 // NewSessionRequest.swift
-// Copyright (c) 2025 GetAutomaApp
+// Copyright (c) 2026 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
-//
-// This package is freely distributable under the MIT license.
-// This Package is a modified fork of https://github.com/ashi-psn/SwiftWebDriver.
 
 import AsyncHTTPClient
 import Foundation
 import NIOHTTP1
 
-internal struct NewSessionRequest: RequestType {
+internal struct NewSessionRequest<Options: BrowserOptions>: RequestType {
     public typealias Response = NewSessionResponse
 
     public var baseURL: URL
-
     public var path: String = "session"
-
     public var method: HTTPMethod = .POST
+    public var headers: HTTPHeaders = .init([
+        ("Content-Type", "application/json")
+    ])
 
-    public var headers: HTTPHeaders = .init(
-        [
-            ("Content-Type", "application/json"),
-        ]
-    )
-
-    public let chromeOptions: ChromeOptions
+    public let browserOptions: Options
 
     public var body: HTTPClient.Body? {
-        let requestBody = Self
-            .RequestBody(
-                capabilities: RequestBody.Capabilities(
-                    alwaysMatch: RequestBody.Capabilities.AlwaysMatch(
-                        chromeOptions: chromeOptions
-                    )
+        let requestBody = RequestBody(
+            capabilities: RequestBodyCapabilities(
+                alwaysMatch: RequestBodyCapabilities.AlwaysMatch(
+                    browserOptions: browserOptions
                 )
             )
+        )
+
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
-        let data = try? encoder.encode(requestBody)
 
-        guard let data else {
+        guard let data = try? encoder.encode(requestBody) else {
             return nil
         }
 
@@ -48,33 +39,127 @@ internal struct NewSessionRequest: RequestType {
     }
 }
 
-// MARK: - NewSessionRequest.RequestBody
-
 internal extension NewSessionRequest {
     struct RequestBody: Codable {
-        public let capabilities: Capabilities
+        let capabilities: RequestBodyCapabilities
+    }
+
+    struct Capabilities: Codable {
+        let alwaysMatch: AlwaysMatch
+    }
+
+    struct AlwaysMatch: Decodable, Encodable {
+        let browserName: String
+        let browserOptions: Options
+
+        enum StaticCodingKeys: String, CodingKey {
+            case browserName
+        }
+
+        struct DynamicCodingKey: CodingKey {
+            var stringValue: String
+            var intValue: Int? {
+                nil
+            }
+
+            init(stringValue: String) {
+                self.stringValue = stringValue
+            }
+
+            init?(intValue _: Int) {
+                nil
+            }
+        }
+
+        func encode(to encoder: Encoder) throws {
+            var staticContainer = encoder.container(keyedBy: StaticCodingKeys.self)
+            try staticContainer.encode(browserName, forKey: .browserName)
+
+            var dynamicContainer = encoder.container(keyedBy: DynamicCodingKey.self)
+            try dynamicContainer.encode(
+                browserOptions,
+                forKey: DynamicCodingKey(stringValue: Options.codingKey)
+            )
+        }
     }
 }
 
+// MARK: - NewSessionRequest.RequestBody
+
+// internal extension NewSessionRequest {
+//     struct RequestBody: Codable {
+//         public let capabilities: Capabilities
+//     }
+// }
+
 // MARK: - NewSessionRequest.RequestBody.Capabilities
 
-internal extension NewSessionRequest.RequestBody {
-    struct Capabilities: Codable {
-        public let alwaysMatch: AlwaysMatch
-        public enum CodingKeys: String, CodingKey {
-            case alwaysMatch
+internal extension NewSessionRequest {
+    struct RequestBodyCapabilities: Encodable, Decodable {
+        let alwaysMatch: AlwaysMatch
+
+        struct AlwaysMatch: Encodable, Decodable {
+            let browserOptions: Options
+
+            enum StaticCodingKeys: String, CodingKey {
+                case browserName
+            }
+
+            struct DynamicCodingKey: CodingKey {
+                let stringValue: String
+
+                let intValue: Int? = nil
+
+                init(stringValue: String) {
+                    self.stringValue = stringValue
+                }
+
+                init?(intValue _: Int) {
+                    nil
+                }
+            }
+
+            func encode(to encoder: Encoder) throws {
+                var staticContainer = encoder.container(keyedBy: StaticCodingKeys.self)
+
+                try staticContainer.encode(Options.browserName, forKey: .browserName)
+
+                var dynamicContainer = encoder.container(keyedBy: DynamicCodingKey.self)
+
+                try dynamicContainer.encode(
+                    browserOptions,
+
+                    forKey: DynamicCodingKey(stringValue: Options.codingKey)
+                )
+            }
         }
     }
 }
 
 // MARK: - NewSessionRequest.RequestBody.Capabilities.AlwaysMatch
 
-internal extension NewSessionRequest.RequestBody.Capabilities {
-    struct AlwaysMatch: Codable {
-        public let chromeOptions: ChromeOptions
+// internal extension NewSessionRequest.RequestBody.Capabilities {
+//     struct AlwaysMatch: Codable {
+//         public let chromeOptions: ChromeOptions
+//
+//         public enum CodingKeys: String, CodingKey {
+//             case chromeOptions = "goog:chromeOptions"
+//             case firefoxOptions = "moz:firefoxOptions"
+//         }
+//     }
+// }
 
-        public enum CodingKeys: String, CodingKey {
-            case chromeOptions = "goog:chromeOptions"
-        }
-    }
+internal protocol BrowserOptions: Codable, Decodable {
+    static var browserName: String { get }
+    static var codingKey: String { get }
+}
+
+extension ChromeOptions: BrowserOptions {
+    static let browserName = "chrome"
+    static let codingKey = "goog:chromeOptions"
+}
+
+extension FirefoxOptions: BrowserOptions {
+    static let browserName = "firefox"
+    static let codingKey = "moz:firefoxOptions"
 }

@@ -1,5 +1,5 @@
 // ChromeDriver.swift
-// Copyright (c) 2025 GetAutomaApp
+// Copyright (c) 2026 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
 
@@ -12,7 +12,6 @@ public class ChromeDriver: Driver {
     public typealias BrowserOption = ChromeOptions
 
     public var browserObject: ChromeOptions
-
     public var url: URL
 
     private let client = APIClient.shared
@@ -333,7 +332,7 @@ public class ChromeDriver: Driver {
     }
 
     public func dragAndDrop(from source: Element, to target: Element) async throws {
-        try await ChromeDriverElementDragAndDropper(driver: self, from: source, to: target).dragAndDrop()
+        try await ElementDragAndDropper(driver: self, from: source, to: target).dragAndDrop()
     }
 
     deinit {
@@ -344,21 +343,5 @@ public class ChromeDriver: Driver {
             // swiftlint:disable:next prefer_self_in_static_references
             try await ChromeDriver.stopDriverExternal(url: url, sessionId: sessionId)
         }
-    }
-
-    // NOTE: Due to swift 6 race-condition prevention we can't call the ChromeDriver.stop method
-    // This function just acts as a middleman to ensure the de initialization automatically closes the session
-    private static func stopDriverExternal(url: URL, sessionId: String) async throws {
-        let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
-        _ = try await APIClient.shared.request(request).map(\.value).get()
-    }
-
-    private static func startDriverExternal(
-        url: URL,
-        browserObject: ChromeOptions,
-        client: APIClient
-    ) async throws -> String {
-        let request = NewSessionRequest(baseURL: url, chromeOptions: browserObject)
-        return try await client.request(request).map(\.value.sessionId).get()
     }
 }

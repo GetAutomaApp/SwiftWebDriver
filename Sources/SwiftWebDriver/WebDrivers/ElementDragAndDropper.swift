@@ -1,16 +1,16 @@
-// ChromeDriverElementDragAndDropper.swift
-// Copyright (c) 2025 GetAutomaApp
+// ElementDragAndDropper.swift
+// Copyright (c) 2026 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
 
-/// Handles drag-and-drop operations between two elements in a ChromeDriver session.
+/// Handles drag-and-drop operations between two elements in a Driver session.
 ///
-/// `ChromeDriverElementDragAndDropper` determines whether an element is HTML5-draggable.
+/// `ElementDragAndDropper` determines whether an element is HTML5-draggable.
 /// If it is, it simulates the drag-and-drop using JavaScript events. Otherwise, it
 /// falls back to the standard WebDriver `dragAndDrop` method.
 ///
-/// This struct is intended for internal use with ChromeDriver automation.
-internal struct ChromeDriverElementDragAndDropper {
+/// This struct is intended for internal use with Driver automation.
+internal struct ElementDragAndDropper {
     // MARK: - Properties
 
     /// The source element to drag.
@@ -19,18 +19,18 @@ internal struct ChromeDriverElementDragAndDropper {
     /// The target element to drop onto.
     private let target: Element
 
-    /// The ChromeDriver instance used to execute JavaScript or WebDriver commands.
-    private let driver: ChromeDriver
+    /// The Driver instance used to execute JavaScript or WebDriver commands.
+    private let driver: any Driver
 
     // MARK: - Initializer
 
     /// Creates a new drag-and-drop helper for the given elements and driver.
     ///
     /// - Parameters:
-    ///   - driver: The ChromeDriver instance that will perform the drag-and-drop.
+    ///   - driver: The Driver instance that will perform the drag-and-drop.
     ///   - source: The element to be dragged.
     ///   - target: The element to drop onto.
-    public init(driver: ChromeDriver, from source: Element, to target: Element) {
+    public init(driver: any Driver, from source: Element, to target: Element) {
         self.driver = driver
         self.source = source
         self.target = target
@@ -60,7 +60,7 @@ internal struct ChromeDriverElementDragAndDropper {
     /// Dispatches `dragstart`, `dragover`, and `drop` events on the source and target
     /// elements to mimic a user performing drag-and-drop in the browser.
     ///
-    /// - Throws: Any errors thrown by the ChromeDriver JavaScript execution.
+    /// - Throws: Any errors thrown by the Driver JavaScript execution.
     private func simulateHTML5DragAndDrop() async throws {
         let script = """
         function simulateHTML5DragAndDrop(source, target) {
