@@ -36,7 +36,7 @@ docker-compose run test // Run Tests in Docker
 
 # Testing on Host Machine
 ```bash
-docker compose up selenium httpd -d
+docker compose up selenium_chrome httpd -d
 ```
 2. Run tests via test runner / `swift test`
 

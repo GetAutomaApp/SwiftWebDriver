@@ -11,7 +11,7 @@
     "install:swiftformat": "brew install swiftformat",
     "install:swiftlint": "brew install swiftlint",
     "compose:up": "npm run compose -- up -d",
-    "compose:up:integration-services": "npm run compose:up -- --wait selenium httpd",
+    "compose:up:integration-services": "npm run compose:up -- --wait selenium_chrome httpd",
     "compose:build": "npm run compose -- build",
     "compose:build:no-cache": "npm run compose -- build --no-cache",
     "compose:build-and-up": "npx npm-run-all --sequential compose:build compose:up",

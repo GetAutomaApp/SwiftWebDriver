@@ -64,7 +64,7 @@ extension Driver {
 
     static func startDriverExternal(
         url: URL,
-        browserObject: ChromeOptions,
+        browserObject: some BrowserOptions,
         client: APIClient
     ) async throws -> String {
         let request = NewSessionRequest(baseURL: url, browserOptions: browserObject)
