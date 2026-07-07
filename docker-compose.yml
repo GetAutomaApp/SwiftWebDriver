@@ -1,6 +1,5 @@
 services:
   httpd:
-    network_mode: host
     build:
       context: .
       dockerfile: ./infra/HTTPDDockerfile
@@ -16,7 +15,6 @@ services:
 
   selenium_chrome:
     image: selenium/standalone-chrome:4.2.1-20220531
-    network_mode: host
     ports:
       - 4444:4444
       - 7900:7900
@@ -48,9 +46,10 @@ services:
     volumes:
       - .:/SwiftWebDriver
     working_dir: /SwiftWebDriver
-    network_mode: host
     environment:
-      SELENIUM_URL: http://localhost:4444
+      CHROME_SELENIUM_URL: http://selenium_chrome:4444
+      FIREFOX_SELENIUM_URL: http://selenium_firefox:4444
+      TEST_SERVER_URL: http://httpd
     tty: true
     depends_on:
       selenium_chrome:

@@ -14,11 +14,27 @@
 
 public struct FirefoxOptions: Codable {
     public let binary: String?
-    public let args: [String]?
+    public let args: [FirefoxArgument]?
     public let profile: String?
     public let prefs: [String: FirefoxPreferenceValue]?
     public let log: FirefoxLog?
     public let env: [String: String]?
+
+    init(
+        binary: String? = nil,
+        args: [FirefoxArgument]? = nil,
+        profile: String? = nil,
+        prefs: [String: FirefoxPreferenceValue]? = nil,
+        log: FirefoxLog? = nil,
+        env: [String: String]? = nil
+    ) {
+        self.binary = binary
+        self.args = args
+        self.profile = profile
+        self.prefs = prefs
+        self.log = log
+        self.env = env
+    }
 }
 
 public enum FirefoxArgument: CustomStringConvertible, Codable {

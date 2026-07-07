@@ -25,7 +25,7 @@ public class FirefoxDriver: Driver {
     }
 
     public convenience init(
-        driverURLString urlString: String = "http://localhost:4444",
+        driverURLString urlString: String = "http://selenium_firefox:4444",
         browserObject: FirefoxOptions
     ) throws {
         guard let url = URL(string: urlString) else {
