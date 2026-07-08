@@ -28,8 +28,7 @@ internal class FirefoxDriverTest: FirefoxDriverIntegrationTestsBase {
         let driverURL = URL(string: "http://selenium_firefox:4444")!
 
         let firefoxOptions = FirefoxOptions(
-            args: [.headless],
-            log: FirefoxLog(level: .info),
+            args: [FirefoxArgs(.headless as FirefoxArgs.Argument)],
         )
 
         // Initialize the WebDriver on the main actor

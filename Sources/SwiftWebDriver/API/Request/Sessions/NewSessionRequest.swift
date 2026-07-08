@@ -22,7 +22,7 @@ internal struct NewSessionRequest<Options: BrowserOptions>: RequestType {
     public var body: HTTPClient.Body? {
         let requestBody = RequestBody(
             capabilities: RequestBodyCapabilities(
-                alwaysMatch: RequestBodyCapabilities.AlwaysMatch(
+                alwaysMatch: AlwaysMatch(
                     browserOptions: browserOptions
                 )
             )
@@ -48,8 +48,7 @@ internal extension NewSessionRequest {
         let alwaysMatch: AlwaysMatch
     }
 
-    struct AlwaysMatch: Decodable, Encodable {
-        let browserName: String
+    struct AlwaysMatch: Encodable, Decodable {
         let browserOptions: Options
 
         enum StaticCodingKeys: String, CodingKey {
@@ -57,10 +56,9 @@ internal extension NewSessionRequest {
         }
 
         struct DynamicCodingKey: CodingKey {
-            var stringValue: String
-            var intValue: Int? {
-                nil
-            }
+            let stringValue: String
+
+            let intValue: Int? = nil
 
             init(stringValue: String) {
                 self.stringValue = stringValue
@@ -73,11 +71,14 @@ internal extension NewSessionRequest {
 
         func encode(to encoder: Encoder) throws {
             var staticContainer = encoder.container(keyedBy: StaticCodingKeys.self)
-            try staticContainer.encode(browserName, forKey: .browserName)
+
+            try staticContainer.encode(Options.browserName, forKey: .browserName)
 
             var dynamicContainer = encoder.container(keyedBy: DynamicCodingKey.self)
+
             try dynamicContainer.encode(
                 browserOptions,
+
                 forKey: DynamicCodingKey(stringValue: Options.codingKey)
             )
         }
@@ -97,42 +98,6 @@ internal extension NewSessionRequest {
 internal extension NewSessionRequest {
     struct RequestBodyCapabilities: Encodable, Decodable {
         let alwaysMatch: AlwaysMatch
-
-        struct AlwaysMatch: Encodable, Decodable {
-            let browserOptions: Options
-
-            enum StaticCodingKeys: String, CodingKey {
-                case browserName
-            }
-
-            struct DynamicCodingKey: CodingKey {
-                let stringValue: String
-
-                let intValue: Int? = nil
-
-                init(stringValue: String) {
-                    self.stringValue = stringValue
-                }
-
-                init?(intValue _: Int) {
-                    nil
-                }
-            }
-
-            func encode(to encoder: Encoder) throws {
-                var staticContainer = encoder.container(keyedBy: StaticCodingKeys.self)
-
-                try staticContainer.encode(Options.browserName, forKey: .browserName)
-
-                var dynamicContainer = encoder.container(keyedBy: DynamicCodingKey.self)
-
-                try dynamicContainer.encode(
-                    browserOptions,
-
-                    forKey: DynamicCodingKey(stringValue: Options.codingKey)
-                )
-            }
-        }
     }
 }
 

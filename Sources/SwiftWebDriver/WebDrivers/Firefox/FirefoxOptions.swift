@@ -10,11 +10,10 @@
 //
 // import Foundation
 // import NIOCore
-//
 
 public struct FirefoxOptions: Codable {
     public let binary: String?
-    public let args: [FirefoxArgument]?
+    public let args: [FirefoxArgs]?
     public let profile: String?
     public let prefs: [String: FirefoxPreferenceValue]?
     public let log: FirefoxLog?
@@ -22,7 +21,7 @@ public struct FirefoxOptions: Codable {
 
     init(
         binary: String? = nil,
-        args: [FirefoxArgument]? = nil,
+        args: [FirefoxArgs]? = nil,
         profile: String? = nil,
         prefs: [String: FirefoxPreferenceValue]? = nil,
         log: FirefoxLog? = nil,
@@ -37,46 +36,42 @@ public struct FirefoxOptions: Codable {
     }
 }
 
-public enum FirefoxArgument: CustomStringConvertible, Codable {
-    case headless
-    case profile(path: String)
-    case privateMode
-    case privateWindow
-    case newWindow(url: String)
-    case newTab(url: String)
-    case kiosk(url: String)
-    case devTools
-    case safeMode
+public struct FirefoxArgs: RawRepresentable, Codable, CustomStringConvertible {
+    public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+
+    public init(_ argument: Argument) {
+        rawValue = argument.description
+    }
 
     public var description: String {
-        switch self {
-        case .headless:
-            "-headless"
-        case let .profile(path):
-            "-profile \(path)"
-        case .privateMode:
-            "-private"
-        case .privateWindow:
-            "-private-window"
-        case let .newWindow(url):
-            "-new-window \(url)"
-        case let .newTab(url):
-            "-new-tab \(url)"
-        case let .kiosk(url):
-            "--kiosk \(url)"
-        case .devTools:
-            "-devtools"
-        case .safeMode:
-            "-safe-mode"
-        }
+        rawValue
     }
-}
 
-public typealias FirefoxArg = String
+    public enum Argument: CustomStringConvertible, Codable {
+        case headless
+        case privateMode
+        case privateWindow
+        case devTools
+        case safeMode
 
-public extension FirefoxArg {
-    init(_ argument: FirefoxArgument) {
-        self.init(describing: argument)
+        public var description: String {
+            switch self {
+            case .headless:
+                "-headless"
+            case .privateMode:
+                "-private"
+            case .privateWindow:
+                "-private-window"
+            case .devTools:
+                "-devtools"
+            case .safeMode:
+                "-safe-mode"
+            }
+        }
     }
 }
 

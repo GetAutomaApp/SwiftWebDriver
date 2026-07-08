@@ -10,7 +10,7 @@ internal enum Main {
     public static func main() async throws {
         let chromeOption = ChromeOptions(
             args: [
-                Args(.headless),
+                ChromeArgs(.headless),
             ]
         )
 

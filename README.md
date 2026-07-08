@@ -47,7 +47,7 @@ docker compose up selenium_chrome httpd -d
 ```Swift
 let chromeOption = ChromeOptions(
   args: [
-    Args(.headless),
+    ChromeArgs(.headless),
   ]
 )
 

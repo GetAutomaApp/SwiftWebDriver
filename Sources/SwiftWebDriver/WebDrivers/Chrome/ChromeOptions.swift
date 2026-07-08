@@ -1,5 +1,5 @@
 // ChromeOptions.swift
-// Copyright (c) 2025 GetAutomaApp
+// Copyright (c) 2026 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
 
@@ -7,22 +7,22 @@ import Foundation
 import NIOCore
 
 /// Typealias for a single ChromeOptions argument
-public typealias Args = String
+public typealias ChromeArgs = String
 
 /// ChromeOptions data structure, used to configure Chrome Driver instantiation
 public struct ChromeOptions: Codable {
     /// Chrome arguments
-    public let args: [Args]?
+    public let args: [ChromeArgs]?
 
     /// Initialize ChromeOptions
     /// - Parameter args: an array of arguments
-    public init(args: [Args]?) {
+    public init(args: [ChromeArgs]?) {
         self.args = args
     }
 }
 
 /// Restrict arguments to an enum of allowed arguments
-public extension Args {
+public extension ChromeArgs {
     /// Initialize chrome option argument
     init(_ args: Arguments) {
         self.init(describing: args)
