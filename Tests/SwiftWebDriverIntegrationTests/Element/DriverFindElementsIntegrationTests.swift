@@ -9,7 +9,7 @@ import Testing
 internal class DriverFindElementsIntegrationTestBase<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
-    func runGetElementsCSSElementsTest() async throws {
+    internal func runGetElementsCSSElementsTest() async throws {
         page = "findElementsTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -35,7 +35,7 @@ internal class DriverFindElementsIntegrationTestBase<Configuration: DriverTestCo
         #expect(nameElement2.count == expectedElements2Count)
     }
 
-    func runGetElementsByXPathTest() async throws {
+    internal func runGetElementsByXPathTest() async throws {
         page = "findElementsTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -48,7 +48,7 @@ internal class DriverFindElementsIntegrationTestBase<Configuration: DriverTestCo
         #expect(xpathElements.count == xpathFirstLayerElementsCount)
     }
 
-    func runGetElementsByLinkTextTest() async throws {
+    internal func runGetElementsByLinkTextTest() async throws {
         page = "findElementsTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -68,7 +68,7 @@ internal class DriverFindElementsIntegrationTestBase<Configuration: DriverTestCo
         #expect(linkElement2.count == linkElements2Count)
     }
 
-    func runGetElementsByPartialLinkTest() async throws {
+    internal func runGetElementsByPartialLinkTest() async throws {
         page = "findElementsTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -88,7 +88,7 @@ internal class DriverFindElementsIntegrationTestBase<Configuration: DriverTestCo
         #expect(linkElement2.count == partialLinkElements2Count)
     }
 
-    func runGetElementsByTagNameTest() async throws {
+    internal func runGetElementsByTagNameTest() async throws {
         page = "findElementsTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -114,27 +114,27 @@ internal final class ChromeDriverFindElementsIntegrationTests:
     DriverFindElementsIntegrationTestBase<ChromeTestConfiguration>
 {
     @Test("Get Elements CSS Elements")
-    func getElementsCSSElements() async throws {
+    internal func getElementsCSSElements() async throws {
         try await runGetElementsCSSElementsTest()
     }
 
     @Test("Get Elements By XPath")
-    func getElementsByXPath() async throws {
+    internal func getElementsByXPath() async throws {
         try await runGetElementsByXPathTest()
     }
 
     @Test("Get Elements By Link Text")
-    func getElementsByLinkText() async throws {
+    internal func getElementsByLinkText() async throws {
         try await runGetElementsByLinkTextTest()
     }
 
     @Test("Get Elements By Partial Link Text")
-    func getElementsByPartialLink() async throws {
+    internal func getElementsByPartialLink() async throws {
         try await runGetElementsByPartialLinkTest()
     }
 
     @Test("Get Elements By Tag Name")
-    func getElementByTagName() async throws {
+    internal func getElementByTagName() async throws {
         try await runGetElementsByTagNameTest()
     }
 }
@@ -144,27 +144,27 @@ internal final class FirefoxDriverFindElementsIntegrationTests:
     DriverFindElementsIntegrationTestBase<FirefoxTestConfiguration>
 {
     @Test("Get Elements CSS Elements")
-    func getElementsCSSElements() async throws {
+    internal func getElementsCSSElements() async throws {
         try await runGetElementsCSSElementsTest()
     }
 
     @Test("Get Elements By XPath")
-    func getElementsByXPath() async throws {
+    internal func getElementsByXPath() async throws {
         try await runGetElementsByXPathTest()
     }
 
     @Test("Get Elements By Link Text")
-    func getElementsByLinkText() async throws {
+    internal func getElementsByLinkText() async throws {
         try await runGetElementsByLinkTextTest()
     }
 
     @Test("Get Elements By Partial Link Text")
-    func getElementsByPartialLink() async throws {
+    internal func getElementsByPartialLink() async throws {
         try await runGetElementsByPartialLinkTest()
     }
 
     @Test("Get Elements By Tag Name")
-    func getElementByTagName() async throws {
+    internal func getElementByTagName() async throws {
         try await runGetElementsByTagNameTest()
     }
 }

@@ -9,7 +9,7 @@ import Testing
 internal class DriverFindElementIntegrationTestBase<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
-    func runGetElementCSSElementTest() async throws {
+    internal func runGetElementCSSElementTest() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 
@@ -32,7 +32,7 @@ internal class DriverFindElementIntegrationTestBase<Configuration: DriverTestCon
         #expect(nameElement == "nameElement")
     }
 
-    func runGetElementByXPathTest() async throws {
+    internal func runGetElementByXPathTest() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 
@@ -43,7 +43,7 @@ internal class DriverFindElementIntegrationTestBase<Configuration: DriverTestCon
         #expect(inParentSingleElement == "inParentSingleElement")
     }
 
-    func runGetElementByLinkTextTest() async throws {
+    internal func runGetElementByLinkTextTest() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 
@@ -54,7 +54,7 @@ internal class DriverFindElementIntegrationTestBase<Configuration: DriverTestCon
         #expect(text == "go to next page")
     }
 
-    func runGetElementByPartialLinkTest() async throws {
+    internal func runGetElementByPartialLinkTest() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 
@@ -65,7 +65,7 @@ internal class DriverFindElementIntegrationTestBase<Configuration: DriverTestCon
         #expect(text == "go to next page")
     }
 
-    func runGetElementByTagNameTest() async throws {
+    internal func runGetElementByTagNameTest() async throws {
         page = "index.html"
         try await driver.navigateTo(url: testPageURL)
 
@@ -82,27 +82,27 @@ internal final class ChromeDriverFindElementIntegrationTests:
     DriverFindElementIntegrationTestBase<ChromeTestConfiguration>
 {
     @Test("Get Element By CSS Selector")
-    func getElementCSSElement() async throws {
+    internal func getElementCSSElement() async throws {
         try await runGetElementCSSElementTest()
     }
 
     @Test("Get Element By XPath")
-    func getElementByXPath() async throws {
+    internal func getElementByXPath() async throws {
         try await runGetElementByXPathTest()
     }
 
     @Test("Get Element By Link Text")
-    func getElementByLinkText() async throws {
+    internal func getElementByLinkText() async throws {
         try await runGetElementByLinkTextTest()
     }
 
     @Test("Get Element By Partial Link")
-    func getElementByPartialLink() async throws {
+    internal func getElementByPartialLink() async throws {
         try await runGetElementByPartialLinkTest()
     }
 
     @Test("Get Element By TagName")
-    func getElementByTagName() async throws {
+    internal func getElementByTagName() async throws {
         try await runGetElementByTagNameTest()
     }
 }
@@ -112,27 +112,27 @@ internal final class FirefoxDriverFindElementIntegrationTests:
     DriverFindElementIntegrationTestBase<FirefoxTestConfiguration>
 {
     @Test("Get Element By CSS Selector")
-    func getElementCSSElement() async throws {
+    internal func getElementCSSElement() async throws {
         try await runGetElementCSSElementTest()
     }
 
     @Test("Get Element By XPath")
-    func getElementByXPath() async throws {
+    internal func getElementByXPath() async throws {
         try await runGetElementByXPathTest()
     }
 
     @Test("Get Element By Link Text")
-    func getElementByLinkText() async throws {
+    internal func getElementByLinkText() async throws {
         try await runGetElementByLinkTextTest()
     }
 
     @Test("Get Element By Partial Link")
-    func getElementByPartialLink() async throws {
+    internal func getElementByPartialLink() async throws {
         try await runGetElementByPartialLinkTest()
     }
 
     @Test("Get Element By TagName")
-    func getElementByTagName() async throws {
+    internal func getElementByTagName() async throws {
         try await runGetElementByTagNameTest()
     }
 }

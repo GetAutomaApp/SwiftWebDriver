@@ -9,7 +9,7 @@ import Testing
 internal class DriverNavigationIntegrationTestBase<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
-    func runGetNavigationTitleTest() async throws {
+    internal func runGetNavigationTitleTest() async throws {
         page = "awaitTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -19,7 +19,7 @@ internal class DriverNavigationIntegrationTestBase<Configuration: DriverTestConf
         #expect(title.value == "expect title")
     }
 
-    func runWaitUntilElementsTest() async throws {
+    internal func runWaitUntilElementsTest() async throws {
         page = "awaitTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -45,12 +45,12 @@ internal final class ChromeDriverNavigationIntegrationTests:
     DriverNavigationIntegrationTestBase<ChromeTestConfiguration>
 {
     @Test("Get Navigation Title")
-    func getNavigationTitle() async throws {
+    internal func getNavigationTitle() async throws {
         try await runGetNavigationTitleTest()
     }
 
     @Test("Wait Until Element Exists")
-    func waitUntilElements() async throws {
+    internal func waitUntilElements() async throws {
         try await runWaitUntilElementsTest()
     }
 }
@@ -60,12 +60,12 @@ internal final class FirefoxDriverNavigationIntegrationTests:
     DriverNavigationIntegrationTestBase<FirefoxTestConfiguration>
 {
     @Test("Get Navigation Title")
-    func getNavigationTitle() async throws {
+    internal func getNavigationTitle() async throws {
         try await runGetNavigationTitleTest()
     }
 
     @Test("Wait Until Element Exists")
-    func waitUntilElements() async throws {
+    internal func waitUntilElements() async throws {
         try await runWaitUntilElementsTest()
     }
 }

@@ -9,7 +9,7 @@ import Testing
 internal class DriverSetAttributeIntegrationTestBase<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
-    func runSetAttributeTest() async throws {
+    internal func runSetAttributeTest() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -33,7 +33,7 @@ internal final class ChromeDriverSetAttributeIntegrationTests:
     DriverSetAttributeIntegrationTestBase<ChromeTestConfiguration>
 {
     @Test("Set Attribute")
-    func setAttribute() async throws {
+    internal func setAttribute() async throws {
         try await runSetAttributeTest()
     }
 }
@@ -43,7 +43,7 @@ internal final class FirefoxDriverSetAttributeIntegrationTests:
     DriverSetAttributeIntegrationTestBase<FirefoxTestConfiguration>
 {
     @Test("Set Attribute")
-    func setAttribute() async throws {
+    internal func setAttribute() async throws {
         try await runSetAttributeTest()
     }
 }

@@ -9,7 +9,7 @@ import Testing
 internal class DriverStartTestBase<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
-    func runStartAndStopTest() async throws {
+    internal func runStartAndStopTest() async throws {
         let status = try await driver.status()
         #expect(status.value.message != "")
 
@@ -23,7 +23,7 @@ internal final class ChromeDriverStartTests:
     DriverStartTestBase<ChromeTestConfiguration>
 {
     @Test("Start & Stop")
-    func startAndStop() async throws {
+    internal func startAndStop() async throws {
         try await runStartAndStopTest()
     }
 }
@@ -33,7 +33,7 @@ internal final class FirefoxDriverStartTests:
     DriverStartTestBase<FirefoxTestConfiguration>
 {
     @Test("Start & Stop")
-    func startAndStop() async throws {
+    internal func startAndStop() async throws {
         try await runStartAndStopTest()
     }
 }

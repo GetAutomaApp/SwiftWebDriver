@@ -9,7 +9,7 @@ import Testing
 internal class DriverElementHandleIntegrationTestBase<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
-    func runClickButtonTest() async throws {
+    internal func runClickButtonTest() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -19,7 +19,7 @@ internal class DriverElementHandleIntegrationTestBase<Configuration: DriverTestC
         #expect(try await button.text() == "clicked!")
     }
 
-    func runDoubleClickButtonTest() async throws {
+    internal func runDoubleClickButtonTest() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -29,7 +29,7 @@ internal class DriverElementHandleIntegrationTestBase<Configuration: DriverTestC
         #expect(try await button.text() == "ii")
     }
 
-    func runDragElementToAnotherTest() async throws {
+    internal func runDragElementToAnotherTest() async throws {
         page = "dragBox.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -46,7 +46,7 @@ internal class DriverElementHandleIntegrationTestBase<Configuration: DriverTestC
         #expect(targetText == "DROPPED!", "Target text should be 'DROPPED!' after pointer drag")
     }
 
-    func runGetAttributeTest() async throws {
+    internal func runGetAttributeTest() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -56,7 +56,7 @@ internal class DriverElementHandleIntegrationTestBase<Configuration: DriverTestC
         #expect(attribute == "expect attribute")
     }
 
-    func runGetRectTest() async throws {
+    internal func runGetRectTest() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -69,7 +69,7 @@ internal class DriverElementHandleIntegrationTestBase<Configuration: DriverTestC
         #expect(rect.width == 100)
     }
 
-    func runClearElementTest() async throws {
+    internal func runClearElementTest() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -79,7 +79,7 @@ internal class DriverElementHandleIntegrationTestBase<Configuration: DriverTestC
         #expect(try await inputElement.text() == "")
     }
 
-    func runSendKeyTest() async throws {
+    internal func runSendKeyTest() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -94,7 +94,7 @@ internal class DriverElementHandleIntegrationTestBase<Configuration: DriverTestC
         #expect(text == "newValue")
     }
 
-    func runSendChordTest() async throws {
+    internal func runSendChordTest() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -119,7 +119,7 @@ internal class DriverElementHandleIntegrationTestBase<Configuration: DriverTestC
         #expect(newText == "")
     }
 
-    func runGetScreenshotTest() async throws {
+    internal func runGetScreenshotTest() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -130,7 +130,7 @@ internal class DriverElementHandleIntegrationTestBase<Configuration: DriverTestC
         #expect(data != nil)
     }
 
-    func runThrowStaleErrorTest() async throws {
+    internal func runThrowStaleErrorTest() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -153,52 +153,52 @@ internal final class ChromeDriverElementHandleIntegrationTests:
     DriverElementHandleIntegrationTestBase<ChromeTestConfiguration>
 {
     @Test("Click Button")
-    func clickButton() async throws {
+    internal func clickButton() async throws {
         try await runClickButtonTest()
     }
 
     @Test("Double Click Button")
-    func doubleClickButton() async throws {
+    internal func doubleClickButton() async throws {
         try await runDoubleClickButtonTest()
     }
 
     @Test("Drag Element To Another")
-    func dragElementToAnother() async throws {
+    internal func dragElementToAnother() async throws {
         try await runDragElementToAnotherTest()
     }
 
     @Test("Get Element Attributes")
-    func getAttribute() async throws {
+    internal func getAttribute() async throws {
         try await runGetAttributeTest()
     }
 
     @Test("Get Element Rect")
-    func getRect() async throws {
+    internal func getRect() async throws {
         try await runGetRectTest()
     }
 
     @Test("Clear Element")
-    func clearElement() async throws {
+    internal func clearElement() async throws {
         try await runClearElementTest()
     }
 
     @Test("Send Key")
-    func sendKey() async throws {
+    internal func sendKey() async throws {
         try await runSendKeyTest()
     }
 
     @Test("Send Chord")
-    func sendChord() async throws {
+    internal func sendChord() async throws {
         try await runSendChordTest()
     }
 
     @Test("Get Screenshot")
-    func getScreenshot() async throws {
+    internal func getScreenshot() async throws {
         try await runGetScreenshotTest()
     }
 
     @Test("Fail any operation if element becomes stale")
-    func throwStaleError() async throws {
+    internal func throwStaleError() async throws {
         try await runThrowStaleErrorTest()
     }
 }
@@ -208,52 +208,52 @@ internal final class FirefoxDriverElementHandleIntegrationTests:
     DriverElementHandleIntegrationTestBase<FirefoxTestConfiguration>
 {
     @Test("Click Button")
-    func clickButton() async throws {
+    internal func clickButton() async throws {
         try await runClickButtonTest()
     }
 
     @Test("Double Click Button")
-    func doubleClickButton() async throws {
+    internal func doubleClickButton() async throws {
         try await runDoubleClickButtonTest()
     }
 
     @Test("Drag Element To Another")
-    func dragElementToAnother() async throws {
+    internal func dragElementToAnother() async throws {
         try await runDragElementToAnotherTest()
     }
 
     @Test("Get Element Attributes")
-    func getAttribute() async throws {
+    internal func getAttribute() async throws {
         try await runGetAttributeTest()
     }
 
     @Test("Get Element Rect")
-    func getRect() async throws {
+    internal func getRect() async throws {
         try await runGetRectTest()
     }
 
     @Test("Clear Element")
-    func clearElement() async throws {
+    internal func clearElement() async throws {
         try await runClearElementTest()
     }
 
     @Test("Send Key")
-    func sendKey() async throws {
+    internal func sendKey() async throws {
         try await runSendKeyTest()
     }
 
     @Test("Send Chord")
-    func sendChord() async throws {
+    internal func sendChord() async throws {
         try await runSendChordTest()
     }
 
     @Test("Get Screenshot")
-    func getScreenshot() async throws {
+    internal func getScreenshot() async throws {
         try await runGetScreenshotTest()
     }
 
     @Test("Fail any operation if element becomes stale")
-    func throwStaleError() async throws {
+    internal func throwStaleError() async throws {
         try await runThrowStaleErrorTest()
     }
 }

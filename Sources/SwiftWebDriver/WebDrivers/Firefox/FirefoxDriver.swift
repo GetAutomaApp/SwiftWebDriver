@@ -335,16 +335,6 @@ public class FirefoxDriver: Driver {
         try await ElementDragAndDropper(driver: self, from: source, to: target).dragAndDrop()
     }
 
-    deinit {
-        let url = url
-        let sessionId = sessionId
-
-        Task {
-            guard let sessionId else { return }
-            try await Self.stopDriverExternal(url: url, sessionId: sessionId)
-        }
-    }
-
     private static func stopDriverExternal(url: URL, sessionId: String) async throws {
         let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
         _ = try await APIClient.shared.request(request).map(\.value).get()
@@ -357,5 +347,15 @@ public class FirefoxDriver: Driver {
     ) async throws -> String {
         let request = NewSessionRequest(baseURL: url, browserOptions: browserObject)
         return try await client.request(request).map(\.value.sessionId).get()
+    }
+
+    deinit {
+        let url = url
+        let sessionId = sessionId
+        Task {
+            guard let sessionId else { return }
+            // swiftlint:disable:next prefer_self_in_static_references
+            try await FirefoxDriver.stopDriverExternal(url: url, sessionId: sessionId)
+        }
     }
 }

@@ -9,7 +9,7 @@ import Testing
 internal class DriverDragAndDropIntegrationTestBase<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
-    func runDragAndDropTest(page: String) async throws {
+    internal func runDragAndDropTest(page: String) async throws {
         self.page = page
 
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
@@ -33,12 +33,12 @@ internal final class ChromeDriverDragAndDropIntegrationTests:
     DriverDragAndDropIntegrationTestBase<ChromeTestConfiguration>
 {
     @Test("Drag Element To Another (JavaScript)")
-    func dragAndDropDraggableElementToAnother() async throws {
+    internal func dragAndDropDraggableElementToAnother() async throws {
         try await runDragAndDropTest(page: "dragTarget.html")
     }
 
     @Test("Drag Element To Another (WebDriver Actions API)")
-    func dragAndDropElementToAnother() async throws {
+    internal func dragAndDropElementToAnother() async throws {
         try await runDragAndDropTest(page: "dragBox.html")
     }
 }
@@ -48,12 +48,12 @@ internal final class FirefoxDriverDragAndDropIntegrationTests:
     DriverDragAndDropIntegrationTestBase<FirefoxTestConfiguration>
 {
     @Test("Drag Element To Another (JavaScript)")
-    func dragAndDropDraggableElementToAnother() async throws {
+    internal func dragAndDropDraggableElementToAnother() async throws {
         try await runDragAndDropTest(page: "dragTarget.html")
     }
 
     @Test("Drag Element To Another (WebDriver Actions API)")
-    func dragAndDropElementToAnother() async throws {
+    internal func dragAndDropElementToAnother() async throws {
         try await runDragAndDropTest(page: "dragBox.html")
     }
 }

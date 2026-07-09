@@ -10,7 +10,7 @@ internal class DriverPropertyIntegrationTestBase<Configuration: DriverTestConfig
     DriverIntegrationTest<Configuration>
 {
     /// Test `getProperty()` method, a method to get a specific property value from an element.
-    func runGetPropertyTest() async throws {
+    internal func runGetPropertyTest() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -37,7 +37,7 @@ internal class DriverPropertyIntegrationTestBase<Configuration: DriverTestConfig
     }
 
     /// Test `setProperty()` method, a method to set a specific property value from an element.
-    func runSetPropertyTest() async throws {
+    internal func runSetPropertyTest() async throws {
         page = "elementHandleTestPage.html"
         try await driver.navigateTo(urlString: testPageURL.absoluteString)
 
@@ -69,12 +69,12 @@ internal final class ChromeDriverPropertyIntegrationTests:
     DriverPropertyIntegrationTestBase<ChromeTestConfiguration>
 {
     @Test("Get Property")
-    func getProperty() async throws {
+    internal func getProperty() async throws {
         try await runGetPropertyTest()
     }
 
     @Test("Set Property")
-    func setProperty() async throws {
+    internal func setProperty() async throws {
         try await runSetPropertyTest()
     }
 }
@@ -84,12 +84,12 @@ internal final class FirefoxDriverPropertyIntegrationTests:
     DriverPropertyIntegrationTestBase<FirefoxTestConfiguration>
 {
     @Test("Get Property")
-    func getProperty() async throws {
+    internal func getProperty() async throws {
         try await runGetPropertyTest()
     }
 
     @Test("Set Property")
-    func setProperty() async throws {
+    internal func setProperty() async throws {
         try await runSetPropertyTest()
     }
 }

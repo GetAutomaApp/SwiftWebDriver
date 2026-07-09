@@ -36,7 +36,7 @@ internal enum JavascriptIntegrationTestCases {
 internal class DriverJavascriptIntegrationTestBase<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
-    func runExecuteJavascriptTest(input: (script: String, expected: String)) async throws {
+    internal func runExecuteJavascriptTest(input: (script: String, expected: String)) async throws {
         try await driver.navigateTo(url: testPageURL)
 
         let output = try await driver.execute(input.script, args: [])
@@ -44,7 +44,7 @@ internal class DriverJavascriptIntegrationTestBase<Configuration: DriverTestConf
         #expect(output.value?.stringValue == input.expected)
     }
 
-    func runExecuteAsyncJavascriptTest(input: (script: String, expected: String)) async throws {
+    internal func runExecuteAsyncJavascriptTest(input: (script: String, expected: String)) async throws {
         try await driver.navigateTo(url: testPageURL)
 
         let output = try await driver.execute(
@@ -56,7 +56,7 @@ internal class DriverJavascriptIntegrationTestBase<Configuration: DriverTestConf
         #expect(output.value?.stringValue == input.expected)
     }
 
-    func runThrowSeleniumErrorTest() async throws {
+    internal func runThrowSeleniumErrorTest() async throws {
         do {
             try await driver.navigateTo(url: testPageURL)
             try await driver.execute("throw new Error('Test Error')", args: [])
@@ -78,7 +78,7 @@ internal final class ChromeDriverJavascriptIntegrationTests:
         "Test sync Javascript Execution",
         arguments: JavascriptIntegrationTestCases.syncExecution
     )
-    func executeJavascript(input: (script: String, expected: String)) async throws {
+    internal func executeJavascript(input: (script: String, expected: String)) async throws {
         try await runExecuteJavascriptTest(input: input)
     }
 
@@ -86,12 +86,12 @@ internal final class ChromeDriverJavascriptIntegrationTests:
         "Test async Javascript Execution",
         arguments: JavascriptIntegrationTestCases.asyncExecution
     )
-    func executeAsyncJavascript(input: (script: String, expected: String)) async throws {
+    internal func executeAsyncJavascript(input: (script: String, expected: String)) async throws {
         try await runExecuteAsyncJavascriptTest(input: input)
     }
 
     @Test("Throws `javascript error` if JS fails")
-    func throwSeleniumError() async throws {
+    internal func throwSeleniumError() async throws {
         try await runThrowSeleniumErrorTest()
     }
 }
@@ -104,7 +104,7 @@ internal final class FirefoxDriverJavascriptIntegrationTests:
         "Test sync Javascript Execution",
         arguments: JavascriptIntegrationTestCases.syncExecution
     )
-    func executeJavascript(input: (script: String, expected: String)) async throws {
+    internal func executeJavascript(input: (script: String, expected: String)) async throws {
         try await runExecuteJavascriptTest(input: input)
     }
 
@@ -112,12 +112,12 @@ internal final class FirefoxDriverJavascriptIntegrationTests:
         "Test async Javascript Execution",
         arguments: JavascriptIntegrationTestCases.asyncExecution
     )
-    func executeAsyncJavascript(input: (script: String, expected: String)) async throws {
+    internal func executeAsyncJavascript(input: (script: String, expected: String)) async throws {
         try await runExecuteAsyncJavascriptTest(input: input)
     }
 
     @Test("Throws `javascript error` if JS fails")
-    func throwSeleniumError() async throws {
+    internal func throwSeleniumError() async throws {
         try await runThrowSeleniumErrorTest()
     }
 }
