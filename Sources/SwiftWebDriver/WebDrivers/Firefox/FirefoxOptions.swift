@@ -19,7 +19,7 @@ public struct FirefoxOptions: Codable {
     public let log: FirefoxLog?
     public let env: [String: String]?
 
-    init(
+    public init(
         binary: String? = nil,
         args: [FirefoxArgs]? = nil,
         profile: String? = nil,
@@ -76,9 +76,9 @@ public struct FirefoxArgs: RawRepresentable, Codable, CustomStringConvertible {
 }
 
 public enum FirefoxPreferenceValue: Codable {
-    case string(String)
     case bool(Bool)
     case int(Int)
+    case string(String)
 }
 
 public struct FirefoxLog: Codable {

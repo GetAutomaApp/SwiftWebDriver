@@ -41,35 +41,35 @@ internal struct NewSessionRequest<Options: BrowserOptions>: RequestType {
 
 internal extension NewSessionRequest {
     struct RequestBody: Codable {
-        let capabilities: RequestBodyCapabilities
+        internal let capabilities: RequestBodyCapabilities
     }
 
     struct Capabilities: Codable {
-        let alwaysMatch: AlwaysMatch
+        internal let alwaysMatch: AlwaysMatch
     }
 
     struct AlwaysMatch: Encodable, Decodable {
-        let browserOptions: Options
+        internal let browserOptions: Options
 
-        enum StaticCodingKeys: String, CodingKey {
+        internal enum StaticCodingKeys: String, CodingKey {
             case browserName
         }
 
-        struct DynamicCodingKey: CodingKey {
-            let stringValue: String
+        internal struct DynamicCodingKey: CodingKey {
+            internal let stringValue: String
 
-            let intValue: Int? = nil
+            internal let intValue: Int? = nil
 
-            init(stringValue: String) {
+            internal init(stringValue: String) {
                 self.stringValue = stringValue
             }
 
-            init?(intValue _: Int) {
+            internal init?(intValue _: Int) {
                 nil
             }
         }
 
-        func encode(to encoder: Encoder) throws {
+        internal func encode(to encoder: Encoder) throws {
             var staticContainer = encoder.container(keyedBy: StaticCodingKeys.self)
 
             try staticContainer.encode(Options.browserName, forKey: .browserName)
@@ -97,7 +97,7 @@ internal extension NewSessionRequest {
 
 internal extension NewSessionRequest {
     struct RequestBodyCapabilities: Encodable, Decodable {
-        let alwaysMatch: AlwaysMatch
+        internal let alwaysMatch: AlwaysMatch
     }
 }
 
@@ -120,11 +120,11 @@ internal protocol BrowserOptions: Codable, Decodable {
 }
 
 extension ChromeOptions: BrowserOptions {
-    static let browserName = "chrome"
-    static let codingKey = "goog:chromeOptions"
+    internal static let browserName = "chrome"
+    internal static let codingKey = "goog:chromeOptions"
 }
 
 extension FirefoxOptions: BrowserOptions {
-    static let browserName = "firefox"
-    static let codingKey = "moz:firefoxOptions"
+    internal static let browserName = "firefox"
+    internal static let codingKey = "moz:firefoxOptions"
 }

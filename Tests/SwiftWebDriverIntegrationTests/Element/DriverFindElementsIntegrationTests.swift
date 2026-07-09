@@ -6,6 +6,8 @@
 @testable import SwiftWebDriver
 import Testing
 
+internal enum DriverFindElementsIntegration {}
+
 internal class DriverFindElementsIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
@@ -107,6 +109,8 @@ internal class DriverFindElementsIntegrationTest<Configuration: DriverTestConfig
 
         #expect(tagElement2.count == tagElements2Count)
     }
+
+    deinit {}
 }
 
 @Suite("Chrome Driver Find Elements Tests", .serialized)
@@ -137,6 +141,8 @@ internal final class ChromeDriverFindElementsIntegrationTests:
     internal func getElementByTagName() async throws {
         try await runGetElementsByTagNameTest()
     }
+
+    deinit {}
 }
 
 @Suite("Firefox Driver Find Elements Tests", .serialized)
@@ -167,4 +173,6 @@ internal final class FirefoxDriverFindElementsIntegrationTests:
     internal func getElementByTagName() async throws {
         try await runGetElementsByTagNameTest()
     }
+
+    deinit {}
 }

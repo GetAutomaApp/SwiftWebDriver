@@ -15,45 +15,48 @@ internal protocol DriverTestConfiguration {
 }
 
 internal enum ChromeTestConfiguration: DriverTestConfiguration {
-    static let suiteName = "Chrome"
+    internal static let suiteName = "Chrome"
 
-    static let seleniumURL = URL(string: "http://selenium_chrome:4444")!
+    internal static let seleniumURL = URL(string: "http://selenium_chrome:4444")!
 
-    nonisolated(unsafe) static let browserObject = ChromeOptions(args: [
+    nonisolated(unsafe) internal static let browserObject = ChromeOptions(args: [
         ChromeArgs(.disableDevShmUsage),
         ChromeArgs(.noSandbox)
     ])
 
-    typealias ConcreteDriver = ChromeDriver
+    internal typealias ConcreteDriver = ChromeDriver
 }
 
 internal enum FirefoxTestConfiguration: DriverTestConfiguration {
-    static let suiteName = "Firefox"
+    internal static let suiteName = "Firefox"
 
-    static let seleniumURL = URL(string: "http://selenium_firefox:4444")!
+    internal static let seleniumURL = URL(string: "http://selenium_firefox:4444")!
 
-    nonisolated(unsafe) static let browserObject = FirefoxOptions(
+    nonisolated(unsafe) internal static let browserObject = FirefoxOptions(
         args: [
             FirefoxArgs(FirefoxArgs.Argument.headless)
         ],
         log: FirefoxLog(level: .info)
     )
 
-    typealias ConcreteDriver = FirefoxDriver
+    internal typealias ConcreteDriver = FirefoxDriver
 }
 
 internal class DriverIntegrationTest<Configuration: DriverTestConfiguration> {
-    public let baseUrl = "http://httpd"
+    internal let baseUrl = "http://httpd"
 
-    public var testPageURL: URL {
-        URL(string: "\(baseUrl)/\(page)")!
+    internal var testPageURL: URL {
+        guard let url = URL(string: "\(baseUrl)/\(page)") else {
+            fatalError("Invalid test page URL for page: \(page)")
+        }
+        return url
     }
 
-    public var page = "index.html"
+    internal var page = "index.html"
 
-    public var driver: WebDriver<Configuration.ConcreteDriver>
+    internal var driver: WebDriver<Configuration.ConcreteDriver>
 
-    public required init() async throws {
+    internal required init() async throws {
         driver = WebDriver(
             driver: Configuration.ConcreteDriver(
                 driverURL: Configuration.seleniumURL,
@@ -63,38 +66,6 @@ internal class DriverIntegrationTest<Configuration: DriverTestConfiguration> {
 
         try await driver.start()
     }
-}
 
-// internal class ChromeDriverTest: ChromeDriverIntegrationTestsBase {
-//     public let baseUrl: String = "http://httpd"
-//     public var testPageURL: URL {
-//         // swiftlint:disable:next force_unwrapping
-//         .init(string: "\(baseUrl)/\(page)")!
-//     }
-//
-//     public var page: String = "index.html"
-//     public var driver: WebDriver<ChromeDriver>
-//
-//     public init() async throws {
-//         // swiftlint:disable:next force_unwrapping
-//         let driverURL = URL(string: "http://selenium_chrome:4444")!
-//         let chromeOptions = ChromeOptions(args: [
-//             ChromeArgs(.disableDevShmUsage),
-//             Args(.noSandbox),
-//         ])
-//
-//         // Initialize the WebDriver on the main actor
-//         driver = WebDriver(
-//             driver: ChromeDriver(
-//                 driverURL: driverURL,
-//                 browserObject: chromeOptions
-//             )
-//         )
-//
-//         try await driver.start()
-//     }
-//
-//     deinit {
-//         // Add deinit here
-//     }
-// }
+    deinit {}
+}

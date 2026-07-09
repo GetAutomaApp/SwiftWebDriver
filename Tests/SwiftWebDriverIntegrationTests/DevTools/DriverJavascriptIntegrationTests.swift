@@ -8,7 +8,7 @@ import Foundation
 import Testing
 
 internal enum JavascriptIntegrationTestCases {
-    static let syncExecution: [(script: String, expected: String)] = [
+    internal static let syncExecution: [(script: String, expected: String)] = [
         ("return `${1 + 2}`", "3"),
         ("return `${5 - 3}`", "2"),
         ("return `${3 * 4}`", "12"),
@@ -22,7 +22,7 @@ internal enum JavascriptIntegrationTestCases {
         ("document.body.innerHTML = '<p>Hello, World!</p>'; return document.body.innerText", "Hello, World!")
     ]
 
-    static let asyncExecution: [(script: String, expected: String)] = [
+    internal static let asyncExecution: [(script: String, expected: String)] = [
         (
             """
             var callback = arguments[arguments.length - 1];
@@ -32,6 +32,8 @@ internal enum JavascriptIntegrationTestCases {
         )
     ]
 }
+
+internal enum DriverJavascriptIntegration {}
 
 internal class DriverJavascriptIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
@@ -68,6 +70,8 @@ internal class DriverJavascriptIntegrationTest<Configuration: DriverTestConfigur
             }
         }
     }
+
+    deinit {}
 }
 
 @Suite("Chrome Driver Javascript Integration Tests", .serialized)
@@ -94,6 +98,8 @@ internal final class ChromeDriverJavascriptIntegrationTests:
     internal func throwSeleniumError() async throws {
         try await runThrowSeleniumErrorTest()
     }
+
+    deinit {}
 }
 
 @Suite("Firefox Driver Javascript Integration Tests", .serialized)
@@ -120,4 +126,6 @@ internal final class FirefoxDriverJavascriptIntegrationTests:
     internal func throwSeleniumError() async throws {
         try await runThrowSeleniumErrorTest()
     }
+
+    deinit {}
 }

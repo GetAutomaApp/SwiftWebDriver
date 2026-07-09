@@ -6,6 +6,8 @@
 @testable import SwiftWebDriver
 import Testing
 
+internal enum DriverPropertyIntegration {}
+
 internal class DriverPropertyIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
@@ -62,6 +64,8 @@ internal class DriverPropertyIntegrationTest<Configuration: DriverTestConfigurat
 
         #expect(newPropertyValue == elementInnerTextValue)
     }
+
+    deinit {}
 }
 
 @Suite("Chrome Driver Property Integration Tests", .serialized)
@@ -77,6 +81,8 @@ internal final class ChromeDriverPropertyIntegrationTests:
     internal func setProperty() async throws {
         try await runSetPropertyTest()
     }
+
+    deinit {}
 }
 
 @Suite("Firefox Driver Property Integration Tests", .serialized)
@@ -92,4 +98,6 @@ internal final class FirefoxDriverPropertyIntegrationTests:
     internal func setProperty() async throws {
         try await runSetPropertyTest()
     }
+
+    deinit {}
 }

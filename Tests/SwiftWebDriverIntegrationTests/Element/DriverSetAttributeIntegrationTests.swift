@@ -6,6 +6,8 @@
 @testable import SwiftWebDriver
 import Testing
 
+internal enum DriverSetAttributeIntegration {}
+
 internal class DriverSetAttributeIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
@@ -26,6 +28,8 @@ internal class DriverSetAttributeIntegrationTest<Configuration: DriverTestConfig
 
         #expect(elementId == newIdentifier)
     }
+
+    deinit {}
 }
 
 @Suite("Chrome Driver Set Attribute", .serialized)
@@ -36,6 +40,8 @@ internal final class ChromeDriverSetAttributeIntegrationTests:
     internal func setAttribute() async throws {
         try await runSetAttributeTest()
     }
+
+    deinit {}
 }
 
 @Suite("Firefox Driver Set Attribute", .serialized)
@@ -46,4 +52,6 @@ internal final class FirefoxDriverSetAttributeIntegrationTests:
     internal func setAttribute() async throws {
         try await runSetAttributeTest()
     }
+
+    deinit {}
 }

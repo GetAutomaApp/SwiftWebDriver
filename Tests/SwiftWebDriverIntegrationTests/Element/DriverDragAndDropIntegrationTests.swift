@@ -6,6 +6,8 @@
 @testable import SwiftWebDriver
 import Testing
 
+internal enum DriverDragAndDropIntegration {}
+
 internal class DriverDragAndDropIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
@@ -26,6 +28,8 @@ internal class DriverDragAndDropIntegrationTest<Configuration: DriverTestConfigu
 
         #expect(targetElementText == "DROPPED!")
     }
+
+    deinit {}
 }
 
 @Suite("Chrome Driver Drag and Drop Integration Tests", .serialized)
@@ -41,6 +45,8 @@ internal final class ChromeDriverDragAndDropIntegrationTests:
     internal func dragAndDropElementToAnother() async throws {
         try await runDragAndDropTest(page: "dragBox.html")
     }
+
+    deinit {}
 }
 
 @Suite("Firefox Driver Drag and Drop Integration Tests", .serialized)
@@ -56,4 +62,6 @@ internal final class FirefoxDriverDragAndDropIntegrationTests:
     internal func dragAndDropElementToAnother() async throws {
         try await runDragAndDropTest(page: "dragBox.html")
     }
+
+    deinit {}
 }

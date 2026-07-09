@@ -6,6 +6,8 @@
 @testable import SwiftWebDriver
 import Testing
 
+internal enum DriverNavigationIntegration {}
+
 internal class DriverNavigationIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
@@ -38,6 +40,8 @@ internal class DriverNavigationIntegrationTest<Configuration: DriverTestConfigur
 
         #expect(result)
     }
+
+    deinit {}
 }
 
 @Suite("Chrome Driver Navigation Tests", .serialized)
@@ -53,6 +57,8 @@ internal final class ChromeDriverNavigationIntegrationTests:
     internal func waitUntilElements() async throws {
         try await runWaitUntilElementsTest()
     }
+
+    deinit {}
 }
 
 @Suite("Firefox Driver Navigation Tests", .serialized)
@@ -68,4 +74,6 @@ internal final class FirefoxDriverNavigationIntegrationTests:
     internal func waitUntilElements() async throws {
         try await runWaitUntilElementsTest()
     }
+
+    deinit {}
 }

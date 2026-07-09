@@ -6,6 +6,8 @@
 @testable import SwiftWebDriver
 import Testing
 
+internal enum DriverFindElementIntegration {}
+
 internal class DriverFindElementIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
@@ -75,6 +77,8 @@ internal class DriverFindElementIntegrationTest<Configuration: DriverTestConfigu
 
         #expect(text == "this is h1")
     }
+
+    deinit {}
 }
 
 @Suite("Chrome Driver Find Element Tests", .serialized)
@@ -105,6 +109,8 @@ internal final class ChromeDriverFindElementIntegrationTests:
     internal func getElementByTagName() async throws {
         try await runGetElementByTagNameTest()
     }
+
+    deinit {}
 }
 
 @Suite("Firefox Driver Find Element Tests", .serialized)
@@ -135,4 +141,6 @@ internal final class FirefoxDriverFindElementIntegrationTests:
     internal func getElementByTagName() async throws {
         try await runGetElementByTagNameTest()
     }
+
+    deinit {}
 }

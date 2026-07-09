@@ -6,6 +6,8 @@
 @testable import SwiftWebDriver
 import Testing
 
+internal enum DriverElementHandleIntegration {}
+
 internal class DriverElementHandleIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
@@ -146,6 +148,8 @@ internal class DriverElementHandleIntegrationTest<Configuration: DriverTestConfi
             #expect(Bool(true))
         }
     }
+
+    deinit {}
 }
 
 @Suite("Chrome Driver Element Handles", .serialized)
@@ -201,6 +205,8 @@ internal final class ChromeDriverElementHandleIntegrationTests:
     internal func throwStaleError() async throws {
         try await runThrowStaleErrorTest()
     }
+
+    deinit {}
 }
 
 @Suite("Firefox Driver Element Handles", .serialized)
@@ -256,4 +262,6 @@ internal final class FirefoxDriverElementHandleIntegrationTests:
     internal func throwStaleError() async throws {
         try await runThrowStaleErrorTest()
     }
+
+    deinit {}
 }

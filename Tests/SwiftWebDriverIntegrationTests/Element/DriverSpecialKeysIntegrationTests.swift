@@ -6,6 +6,8 @@
 @testable import SwiftWebDriver
 import Testing
 
+internal enum DriverSpecialKeysIntegration {}
+
 internal class DriverSpecialKeysIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
@@ -24,6 +26,8 @@ internal class DriverSpecialKeysIntegrationTest<Configuration: DriverTestConfigu
 
         #expect(activeElementId == "input2")
     }
+
+    deinit {}
 }
 
 @Suite("Chrome Driver Special Keys", .serialized)
@@ -34,6 +38,8 @@ internal final class ChromeDriverSpecialKeysIntegrationTests:
     internal func tabCycleInputElementFocus() async throws {
         try await runTabCycleInputElementFocusTest()
     }
+
+    deinit {}
 }
 
 @Suite("Firefox Driver Special Keys", .serialized)
@@ -44,4 +50,6 @@ internal final class FirefoxDriverSpecialKeysIntegrationTests:
     internal func tabCycleInputElementFocus() async throws {
         try await runTabCycleInputElementFocusTest()
     }
+
+    deinit {}
 }

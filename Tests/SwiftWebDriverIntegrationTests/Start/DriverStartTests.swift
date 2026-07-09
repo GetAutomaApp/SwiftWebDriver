@@ -6,6 +6,8 @@
 @testable import SwiftWebDriver
 import Testing
 
+internal enum DriverStart {}
+
 internal class DriverStartTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
@@ -16,6 +18,8 @@ internal class DriverStartTest<Configuration: DriverTestConfiguration>:
         let sessionId = try await driver.start()
         #expect(sessionId != "")
     }
+
+    deinit {}
 }
 
 @Suite("Chrome Driver Start Tests", .serialized)
@@ -26,6 +30,8 @@ internal final class ChromeDriverStartTests:
     internal func startAndStop() async throws {
         try await runStartAndStopTest()
     }
+
+    deinit {}
 }
 
 @Suite("Firefox Driver Start Tests", .serialized)
@@ -36,4 +42,6 @@ internal final class FirefoxDriverStartTests:
     internal func startAndStop() async throws {
         try await runStartAndStopTest()
     }
+
+    deinit {}
 }

@@ -6,6 +6,8 @@
 import class Foundation.Bundle
 import XCTest
 
+internal enum SeleniumSwiftExample {}
+
 public final class SeleniumSwiftExampleTests: XCTestCase {
     public func testExample() throws {
         // This is an example of a functional test case.
