@@ -1,5 +1,5 @@
 // APIClient.swift
-// Copyright (c) 2025 GetAutomaApp
+// Copyright (c) 2026 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
 
@@ -47,7 +47,7 @@ internal struct APIClient {
     ///   - `APIError.responseStatsFailed` if the status code indicates failure.
     ///   - `APIError.responseBodyIsNil` if no response body is returned.
     ///   - Any `DecodingError` if the response cannot be decoded.
-    public func request<R>(_ request: R) -> EventLoopFuture<R.Response> where R: RequestType {
+    public func request<R: RequestType>(_ request: R) -> EventLoopFuture<R.Response> {
         httpClient.execute(request: request).flatMapResult { response -> Result<R.Response, Error> in
             guard response.status == .ok else {
                 if
@@ -89,7 +89,7 @@ internal struct APIClient {
     ///   - `APIError.responseBodyIsNil` if no response body is returned.
     ///   - Any `DecodingError` if the response cannot be decoded.
     @discardableResult
-    public func request<R>(_ request: R) async throws -> R.Response where R: RequestType {
+    public func request<R: RequestType>(_ request: R) async throws -> R.Response {
         try await self.request(request).get()
     }
 }

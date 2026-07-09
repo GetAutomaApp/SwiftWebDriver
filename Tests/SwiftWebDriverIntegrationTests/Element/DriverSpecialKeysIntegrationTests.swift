@@ -9,7 +9,7 @@ import Testing
 internal class DriverSpecialKeysIntegrationTestBase<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
-    func runTabCycleInputElementFocusTest() async throws {
+    internal func runTabCycleInputElementFocusTest() async throws {
         page = "testSpecialKeys.html"
 
         try await driver.navigateTo(url: testPageURL)
@@ -31,7 +31,7 @@ internal final class ChromeDriverSpecialKeysIntegrationTests:
     DriverSpecialKeysIntegrationTestBase<ChromeTestConfiguration>
 {
     @Test("Tab Should Cycle Input Elements Focus")
-    func tabCycleInputElementFocus() async throws {
+    internal func tabCycleInputElementFocus() async throws {
         try await runTabCycleInputElementFocusTest()
     }
 }
@@ -41,7 +41,7 @@ internal final class FirefoxDriverSpecialKeysIntegrationTests:
     DriverSpecialKeysIntegrationTestBase<FirefoxTestConfiguration>
 {
     @Test("Tab Should Cycle Input Elements Focus")
-    func tabCycleInputElementFocus() async throws {
+    internal func tabCycleInputElementFocus() async throws {
         try await runTabCycleInputElementFocusTest()
     }
 }

@@ -1,5 +1,5 @@
 // Elements.swift
-// Copyright (c) 2025 GetAutomaApp
+// Copyright (c) 2026 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
 
@@ -111,7 +111,7 @@ public extension Elements {
     /// - Throws: An error if the WebDriver request fails.
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     func findElements(_ locatorType: LocatorType) async throws -> Elements {
-        var elements = [Elements]()
+        var elements = [Self]()
         try await withThrowingTaskGroup(of: Elements.self) { group in
             for element in self {
                 group.addTask {

@@ -36,7 +36,7 @@ public class FirefoxDriver: Driver {
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func start() async throws -> String {
-        let id = try await FirefoxDriver.startDriverExternal(
+        let id = try await Self.startDriverExternal(
             url: url,
             browserObject: browserObject,
             client: client
@@ -341,7 +341,7 @@ public class FirefoxDriver: Driver {
 
         Task {
             guard let sessionId else { return }
-            try await FirefoxDriver.stopDriverExternal(url: url, sessionId: sessionId)
+            try await Self.stopDriverExternal(url: url, sessionId: sessionId)
         }
     }
 

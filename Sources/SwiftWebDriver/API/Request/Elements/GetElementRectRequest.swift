@@ -1,5 +1,5 @@
 // GetElementRectRequest.swift
-// Copyright (c) 2025 GetAutomaApp
+// Copyright (c) 2026 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
 
@@ -25,7 +25,9 @@ internal struct GetElementRectRequest: RequestType {
     public var elementId: String
 
     /// Endpoint path for retrieving the element rectangle.
-    public var path: String { "session/\(sessionId)/element/\(elementId)/rect" }
+    public var path: String {
+        "session/\(sessionId)/element/\(elementId)/rect"
+    }
 
     /// HTTP method used for this request (`GET`).
     public var method: HTTPMethod = .GET
@@ -34,5 +36,7 @@ internal struct GetElementRectRequest: RequestType {
     public var headers: HTTPHeaders = [:]
 
     /// HTTP request body (none required for this request).
-    public var body: HTTPClient.Body? { nil }
+    public var body: HTTPClient.Body? {
+        nil
+    }
 }
