@@ -27,8 +27,8 @@ jobs:
         with:
           compose: "true"
           required_healthy_services_docker_compose: '["selenium_chrome", "selenium_firefox", "httpd"]'
-          compose_services_to_startup: '["selenium_chrome", "selenium_firefox", "httpd", "test"]'
-          skip-tests: "true"
+          compose_services_to_startup: '["selenium_chrome", "selenium_firefox", "httpd"]'
+          tests-as-compose-service-name: "test"
 
     env:
       PATH: "/usr/local/bin:/usr/bin:/bin"
