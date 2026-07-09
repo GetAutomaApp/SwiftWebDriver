@@ -19,7 +19,7 @@ services:
       - 4444:4444
       - 7900:7900
     environment:
-      - SE_NODE_MAX_SESSIONS=4
+      SE_NODE_MAX_SESSIONS: "${SELENIUM_MAX_SESSIONS:-4}"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
       interval: 30s
@@ -32,7 +32,7 @@ services:
       - 4445:4444
       - 7901:7900
     environment:
-      - SE_NODE_MAX_SESSIONS=4
+      SE_NODE_MAX_SESSIONS: "${SELENIUM_MAX_SESSIONS:-4}"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
       interval: 30s

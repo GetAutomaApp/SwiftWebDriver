@@ -8,6 +8,11 @@ on:
 jobs:
   all-tests:
     runs-on: ubuntu-latest
+
+    env:
+      PATH: "/usr/local/bin:/usr/bin:/bin"
+      SELENIUM_MAX_SESSIONS: "1"
+
     steps:
       - uses: actions/checkout@v4
 
@@ -29,6 +34,3 @@ jobs:
           required_healthy_services_docker_compose: '["selenium_chrome", "selenium_firefox", "httpd"]'
           compose_services_to_startup: '["selenium_chrome", "selenium_firefox", "httpd"]'
           tests-as-compose-service-name: "test"
-
-    env:
-      PATH: "/usr/local/bin:/usr/bin:/bin"
