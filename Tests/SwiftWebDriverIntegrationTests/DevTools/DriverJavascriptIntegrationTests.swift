@@ -33,7 +33,7 @@ internal enum JavascriptIntegrationTestCases {
     ]
 }
 
-internal class DriverJavascriptIntegrationTestBase<Configuration: DriverTestConfiguration>:
+internal class DriverJavascriptIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
     internal func runExecuteJavascriptTest(input: (script: String, expected: String)) async throws {
@@ -72,7 +72,7 @@ internal class DriverJavascriptIntegrationTestBase<Configuration: DriverTestConf
 
 @Suite("Chrome Driver Javascript Integration Tests", .serialized)
 internal final class ChromeDriverJavascriptIntegrationTests:
-    DriverJavascriptIntegrationTestBase<ChromeTestConfiguration>
+    DriverJavascriptIntegrationTest<ChromeTestConfiguration>
 {
     @Test(
         "Test sync Javascript Execution",
@@ -98,7 +98,7 @@ internal final class ChromeDriverJavascriptIntegrationTests:
 
 @Suite("Firefox Driver Javascript Integration Tests", .serialized)
 internal final class FirefoxDriverJavascriptIntegrationTests:
-    DriverJavascriptIntegrationTestBase<FirefoxTestConfiguration>
+    DriverJavascriptIntegrationTest<FirefoxTestConfiguration>
 {
     @Test(
         "Test sync Javascript Execution",

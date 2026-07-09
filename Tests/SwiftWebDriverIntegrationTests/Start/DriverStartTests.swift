@@ -6,7 +6,7 @@
 @testable import SwiftWebDriver
 import Testing
 
-internal class DriverStartTestBase<Configuration: DriverTestConfiguration>:
+internal class DriverStartTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
     internal func runStartAndStopTest() async throws {
@@ -20,7 +20,7 @@ internal class DriverStartTestBase<Configuration: DriverTestConfiguration>:
 
 @Suite("Chrome Driver Start Tests", .serialized)
 internal final class ChromeDriverStartTests:
-    DriverStartTestBase<ChromeTestConfiguration>
+    DriverStartTest<ChromeTestConfiguration>
 {
     @Test("Start & Stop")
     internal func startAndStop() async throws {
@@ -30,7 +30,7 @@ internal final class ChromeDriverStartTests:
 
 @Suite("Firefox Driver Start Tests", .serialized)
 internal final class FirefoxDriverStartTests:
-    DriverStartTestBase<FirefoxTestConfiguration>
+    DriverStartTest<FirefoxTestConfiguration>
 {
     @Test("Start & Stop")
     internal func startAndStop() async throws {

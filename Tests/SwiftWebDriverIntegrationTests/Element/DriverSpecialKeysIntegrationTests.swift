@@ -6,7 +6,7 @@
 @testable import SwiftWebDriver
 import Testing
 
-internal class DriverSpecialKeysIntegrationTestBase<Configuration: DriverTestConfiguration>:
+internal class DriverSpecialKeysIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
     internal func runTabCycleInputElementFocusTest() async throws {
@@ -28,7 +28,7 @@ internal class DriverSpecialKeysIntegrationTestBase<Configuration: DriverTestCon
 
 @Suite("Chrome Driver Special Keys", .serialized)
 internal final class ChromeDriverSpecialKeysIntegrationTests:
-    DriverSpecialKeysIntegrationTestBase<ChromeTestConfiguration>
+    DriverSpecialKeysIntegrationTest<ChromeTestConfiguration>
 {
     @Test("Tab Should Cycle Input Elements Focus")
     internal func tabCycleInputElementFocus() async throws {
@@ -38,7 +38,7 @@ internal final class ChromeDriverSpecialKeysIntegrationTests:
 
 @Suite("Firefox Driver Special Keys", .serialized)
 internal final class FirefoxDriverSpecialKeysIntegrationTests:
-    DriverSpecialKeysIntegrationTestBase<FirefoxTestConfiguration>
+    DriverSpecialKeysIntegrationTest<FirefoxTestConfiguration>
 {
     @Test("Tab Should Cycle Input Elements Focus")
     internal func tabCycleInputElementFocus() async throws {

@@ -6,7 +6,7 @@
 @testable import SwiftWebDriver
 import Testing
 
-internal class DriverNavigationIntegrationTestBase<Configuration: DriverTestConfiguration>:
+internal class DriverNavigationIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
     internal func runGetNavigationTitleTest() async throws {
@@ -42,7 +42,7 @@ internal class DriverNavigationIntegrationTestBase<Configuration: DriverTestConf
 
 @Suite("Chrome Driver Navigation Tests", .serialized)
 internal final class ChromeDriverNavigationIntegrationTests:
-    DriverNavigationIntegrationTestBase<ChromeTestConfiguration>
+    DriverNavigationIntegrationTest<ChromeTestConfiguration>
 {
     @Test("Get Navigation Title")
     internal func getNavigationTitle() async throws {
@@ -57,7 +57,7 @@ internal final class ChromeDriverNavigationIntegrationTests:
 
 @Suite("Firefox Driver Navigation Tests", .serialized)
 internal final class FirefoxDriverNavigationIntegrationTests:
-    DriverNavigationIntegrationTestBase<FirefoxTestConfiguration>
+    DriverNavigationIntegrationTest<FirefoxTestConfiguration>
 {
     @Test("Get Navigation Title")
     internal func getNavigationTitle() async throws {

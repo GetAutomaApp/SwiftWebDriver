@@ -6,7 +6,7 @@
 @testable import SwiftWebDriver
 import Testing
 
-internal class DriverDragAndDropIntegrationTestBase<Configuration: DriverTestConfiguration>:
+internal class DriverDragAndDropIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
     internal func runDragAndDropTest(page: String) async throws {
@@ -30,7 +30,7 @@ internal class DriverDragAndDropIntegrationTestBase<Configuration: DriverTestCon
 
 @Suite("Chrome Driver Drag and Drop Integration Tests", .serialized)
 internal final class ChromeDriverDragAndDropIntegrationTests:
-    DriverDragAndDropIntegrationTestBase<ChromeTestConfiguration>
+    DriverDragAndDropIntegrationTest<ChromeTestConfiguration>
 {
     @Test("Drag Element To Another (JavaScript)")
     internal func dragAndDropDraggableElementToAnother() async throws {
@@ -45,7 +45,7 @@ internal final class ChromeDriverDragAndDropIntegrationTests:
 
 @Suite("Firefox Driver Drag and Drop Integration Tests", .serialized)
 internal final class FirefoxDriverDragAndDropIntegrationTests:
-    DriverDragAndDropIntegrationTestBase<FirefoxTestConfiguration>
+    DriverDragAndDropIntegrationTest<FirefoxTestConfiguration>
 {
     @Test("Drag Element To Another (JavaScript)")
     internal func dragAndDropDraggableElementToAnother() async throws {

@@ -6,7 +6,7 @@
 @testable import SwiftWebDriver
 import Testing
 
-internal class DriverPropertyIntegrationTestBase<Configuration: DriverTestConfiguration>:
+internal class DriverPropertyIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
     /// Test `getProperty()` method, a method to get a specific property value from an element.
@@ -66,7 +66,7 @@ internal class DriverPropertyIntegrationTestBase<Configuration: DriverTestConfig
 
 @Suite("Chrome Driver Property Integration Tests", .serialized)
 internal final class ChromeDriverPropertyIntegrationTests:
-    DriverPropertyIntegrationTestBase<ChromeTestConfiguration>
+    DriverPropertyIntegrationTest<ChromeTestConfiguration>
 {
     @Test("Get Property")
     internal func getProperty() async throws {
@@ -81,7 +81,7 @@ internal final class ChromeDriverPropertyIntegrationTests:
 
 @Suite("Firefox Driver Property Integration Tests", .serialized)
 internal final class FirefoxDriverPropertyIntegrationTests:
-    DriverPropertyIntegrationTestBase<FirefoxTestConfiguration>
+    DriverPropertyIntegrationTest<FirefoxTestConfiguration>
 {
     @Test("Get Property")
     internal func getProperty() async throws {

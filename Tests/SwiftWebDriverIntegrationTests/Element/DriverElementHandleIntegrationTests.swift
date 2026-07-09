@@ -6,7 +6,7 @@
 @testable import SwiftWebDriver
 import Testing
 
-internal class DriverElementHandleIntegrationTestBase<Configuration: DriverTestConfiguration>:
+internal class DriverElementHandleIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
     internal func runClickButtonTest() async throws {
@@ -150,7 +150,7 @@ internal class DriverElementHandleIntegrationTestBase<Configuration: DriverTestC
 
 @Suite("Chrome Driver Element Handles", .serialized)
 internal final class ChromeDriverElementHandleIntegrationTests:
-    DriverElementHandleIntegrationTestBase<ChromeTestConfiguration>
+    DriverElementHandleIntegrationTest<ChromeTestConfiguration>
 {
     @Test("Click Button")
     internal func clickButton() async throws {
@@ -205,7 +205,7 @@ internal final class ChromeDriverElementHandleIntegrationTests:
 
 @Suite("Firefox Driver Element Handles", .serialized)
 internal final class FirefoxDriverElementHandleIntegrationTests:
-    DriverElementHandleIntegrationTestBase<FirefoxTestConfiguration>
+    DriverElementHandleIntegrationTest<FirefoxTestConfiguration>
 {
     @Test("Click Button")
     internal func clickButton() async throws {

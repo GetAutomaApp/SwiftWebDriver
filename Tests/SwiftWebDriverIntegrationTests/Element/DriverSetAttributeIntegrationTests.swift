@@ -6,7 +6,7 @@
 @testable import SwiftWebDriver
 import Testing
 
-internal class DriverSetAttributeIntegrationTestBase<Configuration: DriverTestConfiguration>:
+internal class DriverSetAttributeIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
     internal func runSetAttributeTest() async throws {
@@ -30,7 +30,7 @@ internal class DriverSetAttributeIntegrationTestBase<Configuration: DriverTestCo
 
 @Suite("Chrome Driver Set Attribute", .serialized)
 internal final class ChromeDriverSetAttributeIntegrationTests:
-    DriverSetAttributeIntegrationTestBase<ChromeTestConfiguration>
+    DriverSetAttributeIntegrationTest<ChromeTestConfiguration>
 {
     @Test("Set Attribute")
     internal func setAttribute() async throws {
@@ -40,7 +40,7 @@ internal final class ChromeDriverSetAttributeIntegrationTests:
 
 @Suite("Firefox Driver Set Attribute", .serialized)
 internal final class FirefoxDriverSetAttributeIntegrationTests:
-    DriverSetAttributeIntegrationTestBase<FirefoxTestConfiguration>
+    DriverSetAttributeIntegrationTest<FirefoxTestConfiguration>
 {
     @Test("Set Attribute")
     internal func setAttribute() async throws {

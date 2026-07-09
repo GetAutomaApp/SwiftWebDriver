@@ -6,7 +6,7 @@
 @testable import SwiftWebDriver
 import Testing
 
-internal class DriverFindElementsIntegrationTestBase<Configuration: DriverTestConfiguration>:
+internal class DriverFindElementsIntegrationTest<Configuration: DriverTestConfiguration>:
     DriverIntegrationTest<Configuration>
 {
     internal func runGetElementsCSSElementsTest() async throws {
@@ -111,7 +111,7 @@ internal class DriverFindElementsIntegrationTestBase<Configuration: DriverTestCo
 
 @Suite("Chrome Driver Find Elements Tests", .serialized)
 internal final class ChromeDriverFindElementsIntegrationTests:
-    DriverFindElementsIntegrationTestBase<ChromeTestConfiguration>
+    DriverFindElementsIntegrationTest<ChromeTestConfiguration>
 {
     @Test("Get Elements CSS Elements")
     internal func getElementsCSSElements() async throws {
@@ -141,7 +141,7 @@ internal final class ChromeDriverFindElementsIntegrationTests:
 
 @Suite("Firefox Driver Find Elements Tests", .serialized)
 internal final class FirefoxDriverFindElementsIntegrationTests:
-    DriverFindElementsIntegrationTestBase<FirefoxTestConfiguration>
+    DriverFindElementsIntegrationTest<FirefoxTestConfiguration>
 {
     @Test("Get Elements CSS Elements")
     internal func getElementsCSSElements() async throws {
