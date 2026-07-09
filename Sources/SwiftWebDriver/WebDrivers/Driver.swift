@@ -54,6 +54,8 @@ public protocol Driver: FindElementProtocol {
     func setProperty(element: Element, propertyName: String, newValue: String) async throws
 
     func dragAndDrop(from source: Element, to target: Element) async throws
+
+    init(driverURL url: URL, browserObject: BrowserOption)
 }
 
 extension Driver {
