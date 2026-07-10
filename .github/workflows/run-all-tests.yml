@@ -11,8 +11,8 @@ jobs:
 
     env:
       PATH: "/usr/local/bin:/usr/bin:/bin"
-      SELENIUM_MAX_SESSIONS: "1"
-      SWIFT_TEST_WORKERS: "1"
+      SELENIUM_MAX_SESSIONS: "2"
+      SWIFT_TEST_WORKERS: "2"
 
     steps:
       - uses: actions/checkout@v4
