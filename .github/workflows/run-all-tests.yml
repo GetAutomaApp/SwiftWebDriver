@@ -12,6 +12,7 @@ jobs:
     env:
       PATH: "/usr/local/bin:/usr/bin:/bin"
       SELENIUM_MAX_SESSIONS: "1"
+      SWIFT_TEST_WORKERS: "1"
 
     steps:
       - uses: actions/checkout@v4
@@ -29,9 +30,6 @@ jobs:
 
       - name: Run All Tests
         uses: GetAutomaApp/opensource-actions/swifttesting@main
-        env:
-          SELENIUM_MAX_SESSIONS: "1"
-          SWIFT_TEST_WORKERS: "1"
         with:
           compose: "true"
           required_healthy_services_docker_compose: '["selenium_chrome", "selenium_firefox", "httpd"]'

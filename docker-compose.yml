@@ -50,6 +50,8 @@ services:
       CHROME_SELENIUM_URL: http://selenium_chrome:4444
       FIREFOX_SELENIUM_URL: http://selenium_firefox:4444
       TEST_SERVER_URL: http://httpd
+      SANITIZER_ARG: "${SANITIZER_ARG:-}"
+      SWIFT_TEST_WORKERS: "${SWIFT_TEST_WORKERS:-4}"
     tty: true
     depends_on:
       selenium_chrome:
@@ -71,7 +73,7 @@ services:
       --parallel
       --num-workers $${SWIFT_TEST_WORKERS:-4}
       -Xswiftc -warnings-as-errors
-      $${SANITIZER_ARG-}"
+      $${SANITIZER_ARG:-}"
 
   shell:
     <<: *SwiftWebDriver
