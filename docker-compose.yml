@@ -65,7 +65,13 @@ services:
 
   test:
     <<: *SwiftWebDriver
-    command: /bin/bash -xcl "swift test -Xswiftc -warnings-as-errors $${SANITIZER_ARG-}"
+    command: >
+      /bin/bash -xcl
+      "swift test
+      --parallel
+      --num-workers $${SWIFT_TEST_WORKERS:-4}
+      -Xswiftc -warnings-as-errors
+      $${SANITIZER_ARG-}"
 
   shell:
     <<: *SwiftWebDriver
