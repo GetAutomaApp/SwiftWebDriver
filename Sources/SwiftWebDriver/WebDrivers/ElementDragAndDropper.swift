@@ -93,7 +93,7 @@ internal struct ElementDragAndDropper {
             AnyEncodable(["element-6066-11e4-a52e-4f735466cecf": source.elementId]),
             AnyEncodable(["element-6066-11e4-a52e-4f735466cecf": target.elementId])
         ]
-        try await driver.execute(script, args: arguments, type: .sync)
+        _ = try await driver.execute(script, args: arguments, type: .sync)
     }
 
     /// Determines whether the source element is HTML5-draggable.

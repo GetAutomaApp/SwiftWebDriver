@@ -1,47 +1,62 @@
 services:
   httpd:
-      network_mode: host
-      build:
-        context: .
-        dockerfile: ./infra/HTTPDDockerfile
-      volumes:
-          - ./TestAssets:/usr/local/apache2/htdocs/
-      ports:
-          - "80:80"
-      healthcheck:
-        test: ["CMD", "curl", "-f", "http://localhost"]
-        interval: 30s
-        timeout: 10s
-        retries: 3
+    build:
+      context: .
+      dockerfile: ./infra/HTTPDDockerfile
+    volumes:
+      - ./TestAssets:/usr/local/apache2/htdocs/
+    ports:
+      - "80:80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
-  selenium:
+  selenium_chrome:
     image: selenium/standalone-chrome:4.2.1-20220531
-    network_mode: host
     ports:
       - 4444:4444
       - 7900:7900
     environment:
-      - SE_NODE_MAX_SESSIONS=4
+      SE_NODE_MAX_SESSIONS: "${SELENIUM_MAX_SESSIONS:-4}"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
       interval: 30s
       timeout: 10s
       retries: 3
 
-  swift_web_driver:
-    &SwiftWebDriver
+  selenium_firefox:
+    image: selenium/standalone-firefox:152.0-20260606
+    ports:
+      - 4445:4444
+      - 7901:7900
+    environment:
+      SE_NODE_MAX_SESSIONS: "${SELENIUM_MAX_SESSIONS:-4}"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  swift_web_driver: &SwiftWebDriver
     build:
       context: .
       dockerfile: ./infra/Dockerfile
     volumes:
       - .:/SwiftWebDriver
     working_dir: /SwiftWebDriver
-    network_mode: host
     environment:
-      SELENIUM_URL: http://localhost:4444
+      CHROME_SELENIUM_URL: http://selenium_chrome:4444
+      FIREFOX_SELENIUM_URL: http://selenium_firefox:4444
+      TEST_SERVER_URL: http://httpd
+      SANITIZER_ARG: "${SANITIZER_ARG:-}"
+      SWIFT_TEST_WORKERS: "${SWIFT_TEST_WORKERS:-4}"
     tty: true
     depends_on:
-      selenium:
+      selenium_chrome:
+        condition: service_healthy
+      selenium_firefox:
         condition: service_healthy
       httpd:
         condition: service_healthy
@@ -52,7 +67,13 @@ services:
 
   test:
     <<: *SwiftWebDriver
-    command: /bin/bash -xcl "swift test -Xswiftc -warnings-as-errors $${SANITIZER_ARG-}"
+    command: >
+      /bin/bash -xcl
+      "swift test
+      --parallel
+      --num-workers $${SWIFT_TEST_WORKERS:-4}
+      -Xswiftc -warnings-as-errors
+      $${SANITIZER_ARG:-}"
 
   shell:
     <<: *SwiftWebDriver

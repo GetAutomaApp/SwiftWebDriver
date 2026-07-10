@@ -24,7 +24,7 @@ public class ChromeDriver: Driver {
     }
 
     public convenience init(
-        driverURLString urlString: String = "http://localhost:4444",
+        driverURLString urlString: String = "http://selenium_chrome:4444",
         browserObject: ChromeOptions
     ) throws {
         guard let url = URL(string: urlString) else {

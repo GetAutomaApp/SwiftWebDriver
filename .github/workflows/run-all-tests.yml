@@ -3,11 +3,17 @@ name: Run All Tests
 on:
   pull_request:
     paths:
-      - '**.swift'
+      - "**.swift"
 
 jobs:
   all-tests:
     runs-on: ubuntu-latest
+
+    env:
+      PATH: "/usr/local/bin:/usr/bin:/bin"
+      SELENIUM_MAX_SESSIONS: "2"
+      SWIFT_TEST_WORKERS: "2"
+
     steps:
       - uses: actions/checkout@v4
 
@@ -19,15 +25,14 @@ jobs:
         id: cache-build
         uses: actions/cache@v3
         with:
-            key: tests-build-cache-${{ hashFiles('Package.resolved') }}-${{ github.ref_name }}
-            path: ./.build
+          key: tests-build-cache-${{ hashFiles('Package.resolved') }}-${{ github.ref_name }}
+          path: ./.build
 
       - name: Run All Tests
         uses: GetAutomaApp/opensource-actions/swifttesting@main
         with:
           compose: "true"
-          required_healthy_services_docker_compose: '["selenium", "httpd"]'
-          compose_services_to_startup: '["selenium", "httpd"]'
+          required_healthy_services_docker_compose: '["selenium_chrome", "selenium_firefox", "httpd"]'
+          compose_services_to_startup: '["selenium_chrome", "selenium_firefox", "httpd"]'
+          tests-as-compose-service-name: "test"
 
-    env:
-      PATH: "/usr/local/bin:/usr/bin:/bin"

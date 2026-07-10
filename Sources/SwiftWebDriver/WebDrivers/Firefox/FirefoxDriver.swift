@@ -3,349 +3,359 @@
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
 
-//
-// import AsyncHTTPClient
-// import Foundation
-// import NIO
-// import NIOHTTP1
-//
+import AsyncHTTPClient
+import Foundation
+import NIO
+import NIOHTTP1
 
-// public class ChromeDriver: Driver {
-//     public typealias BrowserOption = ChromeOptions
-//
-//     public var browserObject: ChromeOptions
-//
-//     public var url: URL
-//
-//     private let client = APIClient.shared
-//
-//     public var sessionId: String?
-//
-//     public required init(driverURL url: URL, browserObject: ChromeOptions) {
-//         self.url = url
-//         self.browserObject = browserObject
-//     }
-//
-//     public convenience init(
-//         driverURLString urlString: String = "http://localhost:4444",
-//         browserObject: ChromeOptions
-//     ) throws {
-//         guard let url = URL(string: urlString) else {
-//             throw HTTPClientError.invalidURL
-//         }
-//         self.init(driverURL: url, browserObject: browserObject)
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func start() async throws -> String {
-//         // swiftlint:disable:next prefer_self_in_static_references
-//         let id = try await ChromeDriver.startDriverExternal(url: url, browserObject: browserObject, client: client)
-//         sessionId = id
-//         return id
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func stop() async throws -> String? {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
-//         return try await client.request(request).map(\.value).get()
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func status() async throws -> StatusResponse {
-//         let request = StatusRequest(baseURL: url)
-//         return try await client.request(request).get()
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func getNavigation() async throws -> GetNavigationResponse {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = GetNavigationRequest(baseURL: url, sessionId: sessionId)
-//         return try await client.request(request).get()
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func postNavigation(requestURL: String) async throws -> PostNavigationResponse {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = PostNavigationRequest(baseURL: url, sessionId: sessionId, requestURL: requestURL)
-//         return try await client.request(request).get()
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func postNavigationBack() async throws -> PostNavigationBackResponse {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = PostNavigationBackRequest(baseURL: url, sessionId: sessionId)
-//         return try await client.request(request).get()
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func postNavigationForward() async throws -> PostNavigationForwardResponse {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = PostNavigationForwardRequest(baseURL: url, sessionId: sessionId)
-//         return try await client.request(request).get()
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func postNavigationRefresh() async throws -> PostNavigationRefreshResponse {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = PostNavigationRefreshRequest(baseURL: url, sessionId: sessionId)
-//         return try await client.request(request).get()
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func getNavigationTitle() async throws -> GetNavigationTitleResponse {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = GetNavigationTitleRequest(baseURL: url, sessionId: sessionId)
-//         return try await client.request(request).get()
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func postElement(locatorSelector: LocatorSelector) async throws -> PostElementResponse {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = PostElementRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorSelector)
-//         return try await client.request(request).get()
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func postElements(locatorSelector: LocatorSelector) async throws -> PostElementsResponse {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = PostElementsRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorSelector)
-//         return try await client.request(request).get()
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func postElementByElementId(
-//         locatorSelector: LocatorSelector,
-//         elementId: String
-//     ) async throws -> PostElementByIdResponse {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = PostElementByIdRequest(
-//             baseURL: url,
-//             sessionId: sessionId,
-//             elementId: elementId,
-//             cssSelector: locatorSelector
-//         )
-//         return try await client.request(request).get()
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func postElementsByElementId(
-//         locatorSelector: LocatorSelector,
-//         elementId: String
-//     ) async throws -> PostElementsByIdResponse {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = PostElementsByIdRequest(
-//             baseURL: url,
-//             sessionId: sessionId,
-//             elementId: elementId,
-//             cssSelector: locatorSelector
-//         )
-//         return try await client.request(request).get()
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func getElementText(elementId: String) async throws -> GetElementTextResponse {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = GetElementTextRequest(baseURL: url, sessionId: sessionId, elementId: elementId)
-//         return try await client.request(request).get()
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func getElementName(elementId: String) async throws -> GetElementNameResponse {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = GetElementNameRequest(baseURL: url, sessionId: sessionId, elementId: elementId)
-//         return try await client.request(request).get()
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func findElement(_ locatorType: LocatorType) async throws -> Element {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = PostElementRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorType.create())
-//         let response = try await client.request(request)
-//         return Element(baseURL: url, sessionId: sessionId, elementId: response.elementId)
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func findElements(_ locatorType: LocatorType) async throws -> Elements {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = PostElementsRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorType.create())
-//         let response = try await client.request(request)
-//         return response.value.map { elementId in
-//             Element(baseURL: url, sessionId: sessionId, elementId: elementId)
-//         }
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     public func getScreenShot() async throws -> String {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = GetScreenShotRequest(baseURL: url, sessionId: sessionId)
-//         let response = try await client.request(request)
-//         return response.value
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     @discardableResult
-//     public func waitUntil(
-//         _ locatorType: LocatorType,
-//         retryCount: Int = 3,
-//         durationSeconds: Int = 1
-//     ) async throws -> Bool {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//         let request = PostElementRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorType.create())
-//
-//         do {
-//             try await client.request(request)
-//             return true
-//         } catch {
-//             guard
-//                 retryCount > 0,
-//                 error.isSeleniumError(ofType: .noSuchElement)
-//             else {
-//                 return false
-//             }
-//
-//             let retryCount = retryCount - 1
-//
-//             sleep(UInt32(durationSeconds))
-//
-//             return try await waitUntil(locatorType, retryCount: retryCount, durationSeconds: durationSeconds)
-//         }
-//     }
-//
-//     private func executeJavascriptSync(_ script: String, args: [AnyEncodable]) async throws -> PostExecuteResponse {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//
-//         let request = PostExecuteRequest(
-//             baseURL: url,
-//             sessionId: sessionId,
-//             type: .sync,
-//             javascriptSnippet: .init(script: script, args: args)
-//         )
-//
-//         return try await client.request(request)
-//     }
-//
-//     private func executeJavascriptAsync(_ script: String, args: [AnyEncodable]) async throws -> PostExecuteResponse {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//
-//         let request = PostExecuteRequest(
-//             baseURL: url,
-//             sessionId: sessionId,
-//             type: .async,
-//             javascriptSnippet: .init(script: script, args: args)
-//         )
-//
-//         return try await client.request(request)
-//     }
-//
-//     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-//     @discardableResult
-//     public func execute(
-//         _ script: String,
-//         args: [AnyEncodable],
-//         type: DevToolTypes.JavascriptExecutionTypes
-//     ) async throws -> PostExecuteResponse {
-//         try await type == .sync ?
-//             executeJavascriptSync(script, args: args) :
-//             executeJavascriptAsync(
-//                 script,
-//                 args: args
-//             )
-//     }
-//
-//     public func getActiveElement() async throws -> Element {
-//         guard let sessionId else {
-//             throw WebDriverError.sessionIdIsNil
-//         }
-//
-//         let request = GetSessionActiveElementRequest(baseURL: url, sessionId: sessionId)
-//
-//         let response = try await client.request(request)
-//         return Element(baseURL: url, sessionId: sessionId, elementId: response.elementId)
-//     }
-//
-//     public func setAttribute(element: Element, attributeName: String, newValue: String) async throws {
-//         let script = "arguments[0].setAttribute(arguments[1], arguments[2]);"
-//
-//         let args: [AnyEncodable] = [
-//             AnyEncodable(["element-6066-11e4-a52e-4f735466cecf": element.elementId]),
-//             AnyEncodable(attributeName),
-//             AnyEncodable(newValue)
-//         ]
-//         try await execute(script, args: args, type: .sync)
-//     }
-//
-//     public func getProperty(element: Element, propertyName: String) async throws -> PostExecuteResponse {
-//         let script = "return arguments[0][arguments[1]];"
-//
-//         let args: [AnyEncodable] = [
-//             AnyEncodable(["element-6066-11e4-a52e-4f735466cecf": element.elementId]),
-//             AnyEncodable(propertyName)
-//         ]
-//         return try await execute(script, args: args, type: .sync)
-//     }
-//
-//     public func setProperty(element: Element, propertyName: String, newValue: String) async throws {
-//         let script = "arguments[0][arguments[1]] = arguments[2];"
-//         let args: [AnyEncodable] = [
-//             AnyEncodable(["element-6066-11e4-a52e-4f735466cecf": element.elementId]),
-//             AnyEncodable(propertyName),
-//             AnyEncodable(newValue)
-//         ]
-//
-//         try await execute(script, args: args, type: .sync)
-//     }
-//
-//     public func dragAndDrop(from source: Element, to target: Element) async throws {
-//         try await ElementDragAndDropper(driver: self, from: source, to: target).dragAndDrop()
-//     }
-//
-//     deinit {
-//         let url = url
-//         let sessionId = sessionId
-//         Task {
-//             guard let sessionId else { return }
-//             // swiftlint:disable:next prefer_self_in_static_references
-//             try await ChromeDriver.stopDriverExternal(url: url, sessionId: sessionId)
-//         }
-//     }
-//
-// }
+public class FirefoxDriver: Driver {
+    public typealias BrowserOption = FirefoxOptions
+
+    public var browserObject: FirefoxOptions
+
+    public var url: URL
+
+    private let client = APIClient.shared
+
+    public var sessionId: String?
+
+    public required init(driverURL url: URL, browserObject: FirefoxOptions) {
+        self.url = url
+        self.browserObject = browserObject
+    }
+
+    public convenience init(
+        driverURLString urlString: String = "http://selenium_firefox:4444",
+        browserObject: FirefoxOptions
+    ) throws {
+        guard let url = URL(string: urlString) else {
+            throw HTTPClientError.invalidURL
+        }
+        self.init(driverURL: url, browserObject: browserObject)
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func start() async throws -> String {
+        let id = try await Self.startDriverExternal(
+            url: url,
+            browserObject: browserObject,
+            client: client
+        )
+        sessionId = id
+        return id
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func stop() async throws -> String? {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
+        return try await client.request(request).map(\.value).get()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func status() async throws -> StatusResponse {
+        let request = StatusRequest(baseURL: url)
+        return try await client.request(request).get()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func getNavigation() async throws -> GetNavigationResponse {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = GetNavigationRequest(baseURL: url, sessionId: sessionId)
+        return try await client.request(request).get()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func postNavigation(requestURL: String) async throws -> PostNavigationResponse {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = PostNavigationRequest(baseURL: url, sessionId: sessionId, requestURL: requestURL)
+        return try await client.request(request).get()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func postNavigationBack() async throws -> PostNavigationBackResponse {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = PostNavigationBackRequest(baseURL: url, sessionId: sessionId)
+        return try await client.request(request).get()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func postNavigationForward() async throws -> PostNavigationForwardResponse {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = PostNavigationForwardRequest(baseURL: url, sessionId: sessionId)
+        return try await client.request(request).get()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func postNavigationRefresh() async throws -> PostNavigationRefreshResponse {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = PostNavigationRefreshRequest(baseURL: url, sessionId: sessionId)
+        return try await client.request(request).get()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func getNavigationTitle() async throws -> GetNavigationTitleResponse {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = GetNavigationTitleRequest(baseURL: url, sessionId: sessionId)
+        return try await client.request(request).get()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func postElement(locatorSelector: LocatorSelector) async throws -> PostElementResponse {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = PostElementRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorSelector)
+        return try await client.request(request).get()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func postElements(locatorSelector: LocatorSelector) async throws -> PostElementsResponse {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = PostElementsRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorSelector)
+        return try await client.request(request).get()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func postElementByElementId(
+        locatorSelector: LocatorSelector,
+        elementId: String
+    ) async throws -> PostElementByIdResponse {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = PostElementByIdRequest(
+            baseURL: url,
+            sessionId: sessionId,
+            elementId: elementId,
+            cssSelector: locatorSelector
+        )
+        return try await client.request(request).get()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func postElementsByElementId(
+        locatorSelector: LocatorSelector,
+        elementId: String
+    ) async throws -> PostElementsByIdResponse {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = PostElementsByIdRequest(
+            baseURL: url,
+            sessionId: sessionId,
+            elementId: elementId,
+            cssSelector: locatorSelector
+        )
+        return try await client.request(request).get()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func getElementText(elementId: String) async throws -> GetElementTextResponse {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = GetElementTextRequest(baseURL: url, sessionId: sessionId, elementId: elementId)
+        return try await client.request(request).get()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func getElementName(elementId: String) async throws -> GetElementNameResponse {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = GetElementNameRequest(baseURL: url, sessionId: sessionId, elementId: elementId)
+        return try await client.request(request).get()
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func findElement(_ locatorType: LocatorType) async throws -> Element {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = PostElementRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorType.create())
+        let response = try await client.request(request)
+        return Element(baseURL: url, sessionId: sessionId, elementId: response.elementId)
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func findElements(_ locatorType: LocatorType) async throws -> Elements {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = PostElementsRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorType.create())
+        let response = try await client.request(request)
+        return response.value.map { elementId in
+            Element(baseURL: url, sessionId: sessionId, elementId: elementId)
+        }
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func getScreenShot() async throws -> String {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = GetScreenShotRequest(baseURL: url, sessionId: sessionId)
+        let response = try await client.request(request)
+        return response.value
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    @discardableResult
+    public func waitUntil(
+        _ locatorType: LocatorType,
+        retryCount: Int = 3,
+        durationSeconds: Int = 1
+    ) async throws -> Bool {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+        let request = PostElementRequest(baseURL: url, sessionId: sessionId, cssSelector: locatorType.create())
+
+        do {
+            try await client.request(request)
+            return true
+        } catch {
+            guard retryCount > 0, error.isSeleniumError(ofType: .noSuchElement) else {
+                return false
+            }
+
+            sleep(UInt32(durationSeconds))
+
+            return try await waitUntil(
+                locatorType,
+                retryCount: retryCount - 1,
+                durationSeconds: durationSeconds
+            )
+        }
+    }
+
+    private func executeJavascriptSync(_ script: String, args: [AnyEncodable]) async throws -> PostExecuteResponse {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+
+        let request = PostExecuteRequest(
+            baseURL: url,
+            sessionId: sessionId,
+            type: .sync,
+            javascriptSnippet: .init(script: script, args: args)
+        )
+
+        return try await client.request(request)
+    }
+
+    private func executeJavascriptAsync(_ script: String, args: [AnyEncodable]) async throws -> PostExecuteResponse {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+
+        let request = PostExecuteRequest(
+            baseURL: url,
+            sessionId: sessionId,
+            type: .async,
+            javascriptSnippet: .init(script: script, args: args)
+        )
+
+        return try await client.request(request)
+    }
+
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    @discardableResult
+    public func execute(
+        _ script: String,
+        args: [AnyEncodable],
+        type: DevToolTypes.JavascriptExecutionTypes
+    ) async throws -> PostExecuteResponse {
+        try await type == .sync
+            ? executeJavascriptSync(script, args: args)
+            : executeJavascriptAsync(script, args: args)
+    }
+
+    public func getActiveElement() async throws -> Element {
+        guard let sessionId else {
+            throw WebDriverError.sessionIdIsNil
+        }
+
+        let request = GetSessionActiveElementRequest(baseURL: url, sessionId: sessionId)
+        let response = try await client.request(request)
+
+        return Element(baseURL: url, sessionId: sessionId, elementId: response.elementId)
+    }
+
+    public func setAttribute(element: Element, attributeName: String, newValue: String) async throws {
+        let script = "arguments[0].setAttribute(arguments[1], arguments[2]);"
+        let args: [AnyEncodable] = [
+            AnyEncodable(["element-6066-11e4-a52e-4f735466cecf": element.elementId]),
+            AnyEncodable(attributeName),
+            AnyEncodable(newValue)
+        ]
+
+        try await execute(script, args: args, type: .sync)
+    }
+
+    public func getProperty(element: Element, propertyName: String) async throws -> PostExecuteResponse {
+        let script = "return arguments[0][arguments[1]];"
+        let args: [AnyEncodable] = [
+            AnyEncodable(["element-6066-11e4-a52e-4f735466cecf": element.elementId]),
+            AnyEncodable(propertyName)
+        ]
+
+        return try await execute(script, args: args, type: .sync)
+    }
+
+    public func setProperty(element: Element, propertyName: String, newValue: String) async throws {
+        let script = "arguments[0][arguments[1]] = arguments[2];"
+        let args: [AnyEncodable] = [
+            AnyEncodable(["element-6066-11e4-a52e-4f735466cecf": element.elementId]),
+            AnyEncodable(propertyName),
+            AnyEncodable(newValue)
+        ]
+
+        try await execute(script, args: args, type: .sync)
+    }
+
+    public func dragAndDrop(from source: Element, to target: Element) async throws {
+        try await ElementDragAndDropper(driver: self, from: source, to: target).dragAndDrop()
+    }
+
+    private static func stopDriverExternal(url: URL, sessionId: String) async throws {
+        let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
+        _ = try await APIClient.shared.request(request).map(\.value).get()
+    }
+
+    private static func startDriverExternal(
+        url: URL,
+        browserObject: FirefoxOptions,
+        client: APIClient
+    ) async throws -> String {
+        let request = NewSessionRequest(baseURL: url, browserOptions: browserObject)
+        return try await client.request(request).map(\.value.sessionId).get()
+    }
+
+    deinit {
+        let url = url
+        let sessionId = sessionId
+        Task {
+            guard let sessionId else { return }
+            // swiftlint:disable:next prefer_self_in_static_references
+            try await FirefoxDriver.stopDriverExternal(url: url, sessionId: sessionId)
+        }
+    }
+}

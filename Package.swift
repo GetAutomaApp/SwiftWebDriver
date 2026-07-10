@@ -2,7 +2,6 @@
 
 import PackageDescription
 
-/// A
 public let package = Package(
     name: "swift-webdriver",
     platforms: [

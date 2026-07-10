@@ -54,17 +54,19 @@ public protocol Driver: FindElementProtocol {
     func setProperty(element: Element, propertyName: String, newValue: String) async throws
 
     func dragAndDrop(from source: Element, to target: Element) async throws
+
+    init(driverURL url: URL, browserObject: BrowserOption)
 }
 
 extension Driver {
-    static func stopDriverExternal(url: URL, sessionId: String) async throws {
+    internal static func stopDriverExternal(url: URL, sessionId: String) async throws {
         let request = DeleteSessionRequest(baseURL: url, sessionId: sessionId)
         _ = try await APIClient.shared.request(request).map(\.value).get()
     }
 
-    static func startDriverExternal(
+    internal static func startDriverExternal(
         url: URL,
-        browserObject: ChromeOptions,
+        browserObject: some BrowserOptions,
         client: APIClient
     ) async throws -> String {
         let request = NewSessionRequest(baseURL: url, browserOptions: browserObject)

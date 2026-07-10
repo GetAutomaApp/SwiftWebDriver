@@ -1,5 +1,5 @@
-// Main.swift
-// Copyright (c) 2025 GetAutomaApp
+// main.swift
+// Copyright (c) 2026 GetAutomaApp
 // All source code and related assets are the property of GetAutomaApp.
 // All rights reserved.
 
@@ -10,12 +10,12 @@ internal enum Main {
     public static func main() async throws {
         let chromeOption = ChromeOptions(
             args: [
-                Args(.headless),
+                ChromeArgs(.headless),
             ]
         )
 
         let chromeDriver = try ChromeDriver(
-            driverURLString: "http://localhost:4444",
+            driverURLString: "http://selenium_chrome:4444",
             browserObject: chromeOption
         )
 

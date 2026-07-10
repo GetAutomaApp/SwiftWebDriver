@@ -22,7 +22,7 @@ internal struct NewSessionRequest<Options: BrowserOptions>: RequestType {
     public var body: HTTPClient.Body? {
         let requestBody = RequestBody(
             capabilities: RequestBodyCapabilities(
-                alwaysMatch: RequestBodyCapabilities.AlwaysMatch(
+                alwaysMatch: AlwaysMatch(
                     browserOptions: browserOptions
                 )
             )
@@ -41,43 +41,44 @@ internal struct NewSessionRequest<Options: BrowserOptions>: RequestType {
 
 internal extension NewSessionRequest {
     struct RequestBody: Codable {
-        let capabilities: RequestBodyCapabilities
+        internal let capabilities: RequestBodyCapabilities
     }
 
     struct Capabilities: Codable {
-        let alwaysMatch: AlwaysMatch
+        internal let alwaysMatch: AlwaysMatch
     }
 
-    struct AlwaysMatch: Decodable, Encodable {
-        let browserName: String
-        let browserOptions: Options
+    struct AlwaysMatch: Encodable, Decodable {
+        internal let browserOptions: Options
 
-        enum StaticCodingKeys: String, CodingKey {
+        internal enum StaticCodingKeys: String, CodingKey {
             case browserName
         }
 
-        struct DynamicCodingKey: CodingKey {
-            var stringValue: String
-            var intValue: Int? {
-                nil
-            }
+        internal struct DynamicCodingKey: CodingKey {
+            internal let stringValue: String
 
-            init(stringValue: String) {
+            internal let intValue: Int? = nil
+
+            internal init(stringValue: String) {
                 self.stringValue = stringValue
             }
 
-            init?(intValue _: Int) {
+            internal init?(intValue _: Int) {
                 nil
             }
         }
 
-        func encode(to encoder: Encoder) throws {
+        internal func encode(to encoder: Encoder) throws {
             var staticContainer = encoder.container(keyedBy: StaticCodingKeys.self)
-            try staticContainer.encode(browserName, forKey: .browserName)
+
+            try staticContainer.encode(Options.browserName, forKey: .browserName)
 
             var dynamicContainer = encoder.container(keyedBy: DynamicCodingKey.self)
+
             try dynamicContainer.encode(
                 browserOptions,
+
                 forKey: DynamicCodingKey(stringValue: Options.codingKey)
             )
         }
@@ -96,43 +97,7 @@ internal extension NewSessionRequest {
 
 internal extension NewSessionRequest {
     struct RequestBodyCapabilities: Encodable, Decodable {
-        let alwaysMatch: AlwaysMatch
-
-        struct AlwaysMatch: Encodable, Decodable {
-            let browserOptions: Options
-
-            enum StaticCodingKeys: String, CodingKey {
-                case browserName
-            }
-
-            struct DynamicCodingKey: CodingKey {
-                let stringValue: String
-
-                let intValue: Int? = nil
-
-                init(stringValue: String) {
-                    self.stringValue = stringValue
-                }
-
-                init?(intValue _: Int) {
-                    nil
-                }
-            }
-
-            func encode(to encoder: Encoder) throws {
-                var staticContainer = encoder.container(keyedBy: StaticCodingKeys.self)
-
-                try staticContainer.encode(Options.browserName, forKey: .browserName)
-
-                var dynamicContainer = encoder.container(keyedBy: DynamicCodingKey.self)
-
-                try dynamicContainer.encode(
-                    browserOptions,
-
-                    forKey: DynamicCodingKey(stringValue: Options.codingKey)
-                )
-            }
-        }
+        internal let alwaysMatch: AlwaysMatch
     }
 }
 
@@ -155,11 +120,11 @@ internal protocol BrowserOptions: Codable, Decodable {
 }
 
 extension ChromeOptions: BrowserOptions {
-    static let browserName = "chrome"
-    static let codingKey = "goog:chromeOptions"
+    internal static let browserName = "chrome"
+    internal static let codingKey = "goog:chromeOptions"
 }
 
 extension FirefoxOptions: BrowserOptions {
-    static let browserName = "firefox"
-    static let codingKey = "moz:firefoxOptions"
+    internal static let browserName = "firefox"
+    internal static let codingKey = "moz:firefoxOptions"
 }

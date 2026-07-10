@@ -1,0 +1,67 @@
+// DriverDragAndDropIntegrationTests.swift
+// Copyright (c) 2026 GetAutomaApp
+// All source code and related assets are the property of GetAutomaApp.
+// All rights reserved.
+
+@testable import SwiftWebDriver
+import Testing
+
+internal enum DriverDragAndDropIntegration {}
+
+internal class DriverDragAndDropIntegrationTest<Configuration: DriverTestConfiguration>:
+    DriverIntegrationTest<Configuration>
+{
+    internal func runDragAndDropTest(page: String) async throws {
+        self.page = page
+
+        try await driver.navigateTo(urlString: testPageURL.absoluteString)
+
+        let sourceElement = try await driver.findElement(.css(.id("source")))
+        let targetElement = try await driver.findElement(.css(.id("target")))
+
+        try await driver.dragAndDrop(from: sourceElement, to: targetElement)
+
+        let targetElementText = try await driver
+            .getProperty(element: targetElement, propertyName: "innerText")
+            .value?
+            .stringValue
+
+        #expect(targetElementText == "DROPPED!")
+    }
+
+    deinit {}
+}
+
+@Suite("Chrome Driver Drag and Drop Integration Tests", .serialized)
+internal final class ChromeDriverDragAndDropIntegrationTests:
+    DriverDragAndDropIntegrationTest<ChromeTestConfiguration>
+{
+    @Test("Drag Element To Another (JavaScript)")
+    internal func dragAndDropDraggableElementToAnother() async throws {
+        try await runDragAndDropTest(page: "dragTarget.html")
+    }
+
+    @Test("Drag Element To Another (WebDriver Actions API)")
+    internal func dragAndDropElementToAnother() async throws {
+        try await runDragAndDropTest(page: "dragBox.html")
+    }
+
+    deinit {}
+}
+
+@Suite("Firefox Driver Drag and Drop Integration Tests", .serialized)
+internal final class FirefoxDriverDragAndDropIntegrationTests:
+    DriverDragAndDropIntegrationTest<FirefoxTestConfiguration>
+{
+    @Test("Drag Element To Another (JavaScript)")
+    internal func dragAndDropDraggableElementToAnother() async throws {
+        try await runDragAndDropTest(page: "dragTarget.html")
+    }
+
+    @Test("Drag Element To Another (WebDriver Actions API)")
+    internal func dragAndDropElementToAnother() async throws {
+        try await runDragAndDropTest(page: "dragBox.html")
+    }
+
+    deinit {}
+}
