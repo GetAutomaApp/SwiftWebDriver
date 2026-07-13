@@ -36,7 +36,7 @@ public struct FirefoxOptions: Codable {
     }
 }
 
-public struct FirefoxArgs: RawRepresentable, Codable, CustomStringConvertible {
+public struct FirefoxArgs: RawRepresentable, Hashable, Codable, CustomStringConvertible {
     public let rawValue: String
 
     public init(rawValue: String) {
